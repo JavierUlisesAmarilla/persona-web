@@ -57,7 +57,7 @@ export default function VoiceChat() {
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter user text here' ref={userInputRef}></input>
+          <input className='w-full rounded-full' type='text' placeholder='Enter user text here' ref={userInputRef} defaultValue='User'></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={() => {
@@ -72,7 +72,7 @@ export default function VoiceChat() {
           <div className='w-32'></div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter assistant text here' ref={assistantInputRef}></input>
+          <input className='w-full rounded-full' type='text' placeholder='Enter assistant text here' ref={assistantInputRef} defaultValue='Assistant'></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={() => {
@@ -88,7 +88,7 @@ export default function VoiceChat() {
           <div className='w-32'></div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter initial message here' ref={initialInputRef}></input>
+          <input className='w-full rounded-full' type='text' placeholder='Enter initial message here' ref={initialInputRef} defaultValue='Initialization'></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={async () => {
@@ -114,7 +114,7 @@ export default function VoiceChat() {
           <div className='w-32'>{initialMsgState}</div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter rate limit message here' ref={rateLimitInputRef}></input>
+          <input className='w-full rounded-full' type='text' placeholder='Enter rate limit message here' ref={rateLimitInputRef} defaultValue='Rate limit'></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={async () => {
@@ -154,7 +154,7 @@ export default function VoiceChat() {
       <div className='flex w-full gap-4'>
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Prompt</div>
-          <textarea rows={20} placeholder='Enter the prompt here' ref={promptTextRef}></textarea>
+          <textarea rows={20} placeholder='Enter the prompt here' ref={promptTextRef} defaultValue='Prompt'></textarea>
           <div className='flex flex-col'>
             <div>Possible variables:</div>
             <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
@@ -190,13 +190,13 @@ export default function VoiceChat() {
         </div>
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Actions schema</div>
-          <textarea rows={20}></textarea>
+          <textarea rows={20} placeholder='Enter the actions schema here' defaultValue='Actions schema'></textarea>
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update actions schema</div>
         </div>
       </div>
       <div className='flex flex-col w-full gap-2'>
-        <div className='text-lg'>Current State</div>
-        <textarea rows={20} placeholder=''></textarea>
+        <div className='text-lg'>Current state</div>
+        <textarea rows={20} placeholder='' defaultValue='Current state'></textarea>
         <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update state</div>
         <div>Error</div>
       </div>

@@ -1,9 +1,34 @@
 "use client"
+import { API_KEY } from '@/lib/constants'
+import { useZustand } from '@/lib/store/use-zustand';
 import { useEffect } from 'react'
 
+declare global {
+  interface Window {
+    PersonaClient: any;
+  }
+}
+let isFirstRender = true
+
 export default function VoiceChat() {
+  const { personaClient, setPersonaClient } = useZustand()
+
   useEffect(() => {
-    console.log('VoiceChat#useEffect')
+    if (!isFirstRender) {
+      return
+    }
+
+    isFirstRender = false
+    const script = document.createElement("script");
+    script.src = `https://app.sindarin.tech/PersonaClient?apikey=${API_KEY}`;
+    document.head.appendChild(script);
+
+    script.addEventListener("load", async () => {
+      const newPersonaClient = new window.PersonaClient(API_KEY);
+      console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
+      setPersonaClient(newPersonaClient)
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

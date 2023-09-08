@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev",
-    "build": "prisma generate && prisma db push && next build",
+    "build": "next build",
+    "build:all": "prisma generate && prisma db push && next build",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
@@ -12,6 +13,7 @@
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
+    "@nuxtjs/web-vitals": "^0.2.6",
     "@prisma/client": "^4.8.1",
     "@radix-ui/react-popover": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.2",

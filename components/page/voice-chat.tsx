@@ -1,7 +1,7 @@
 "use client"
 import { API_KEY } from '@/lib/constants'
 import { useZustand } from '@/lib/store/use-zustand';
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 
 declare global {
@@ -9,6 +9,7 @@ declare global {
     PersonaClient: any;
   }
 }
+
 let isFirstRender = true
 
 export default function VoiceChat() {
@@ -16,8 +17,14 @@ export default function VoiceChat() {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,
   } = useZustand()
+  const [initialMsgState, setInitialMsgState] = useState('')
+  const [rateLimitMsgState, setRateLimitMsgState] = useState('')
+
   const userInputRef = useRef<any>()
   const assistantInputRef = useRef<any>()
+  const initialInputRef = useRef<any>()
+  const rateLimitInputRef = useRef<any>()
+  const personaSelRef = useRef<any>()
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -70,6 +77,7 @@ export default function VoiceChat() {
               if (!personaClient || !assistantInputRef.current.value) {
                 return
               }
+
               personaClient.sayText(assistantInputRef.current.value)
             }}
           >
@@ -78,26 +86,56 @@ export default function VoiceChat() {
           <div className='w-32'></div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter initial message here'></input>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Submit</div>
-          <div className='w-32'></div>
+          <input className='w-full rounded-full' type='text' placeholder='Enter initial message here' ref={initialInputRef}></input>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={async () => {
+              const initialMsg = initialInputRef.current.value
+              const selPersonaId = personaSelRef.current.value
+
+              if (!personaClient || !initialMsg || !selPersonaId) {
+                return
+              }
+
+              setInitialMsgState('Saving...')
+              const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, { initialMessage: initialMsg });
+
+              if (res.status === 200) {
+                setInitialMsgState('Success')
+              } else {
+                setInitialMsgState('Error')
+              }
+            }}
+          >
+            Submit
+          </div>
+          <div className='w-32'>{initialMsgState}</div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter rate limit message here'></input>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Submit</div>
-          <div className='w-32'></div>
+          <input className='w-full rounded-full' type='text' placeholder='Enter rate limit message here' ref={rateLimitInputRef}></input>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={() => {
+              if (!personaClient || !rateLimitInputRef.current.value) {
+                return
+              }
+            }}
+          >
+            Submit
+          </div>
+          <div className='w-32'>{rateLimitMsgState}</div>
         </div>
       </div>
       <div className='flex items-center w-full gap-4'>
-        <select className='w-full rounded-full cursor-pointer'>
-          {personaArr.map((persona, index) => <option key={index} value={persona.name}>{persona.name}</option>)}
+        <select className='w-full rounded-full cursor-pointer' ref={personaSelRef}>
+          {personaArr.map((persona, index) => <option key={index} value={persona._id}>{persona.name}</option>)}
         </select>
         <div className='w-32'></div>
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='text-lg '>For guidance on prompt engineering techniques for your Persona, see:</div>
-        <a className='text-blue-500 hover:text-blue-900' href="https://www.promptingguide.ai/introduction" target="_blank" rel="noreferrer">Prompt Engineering Guide 1</a>
-        <a className='text-blue-500 hover:text-blue-900' href="https://github.com/brexhq/prompt-engineering" target="_blank" rel="noreferrer">Prompt Engineering Guide 2</a>
+        <a className='text-blue-500 hover:text-blue-900 w-fit' href="https://www.promptingguide.ai/introduction" target="_blank" rel="noreferrer">Prompt Engineering Guide 1</a>
+        <a className='text-blue-500 hover:text-blue-900 w-fit' href="https://github.com/brexhq/prompt-engineering" target="_blank" rel="noreferrer">Prompt Engineering Guide 2</a>
       </div>
       <div className='flex w-full gap-4'>
         <div className='flex flex-col w-full gap-2'>

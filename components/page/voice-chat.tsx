@@ -19,12 +19,14 @@ export default function VoiceChat() {
   } = useZustand()
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
+  const [promptState, setPromptState] = useState('')
 
   const userInputRef = useRef<any>()
   const assistantInputRef = useRef<any>()
   const initialInputRef = useRef<any>()
   const rateLimitInputRef = useRef<any>()
   const personaSelRef = useRef<any>()
+  const promptTextRef = useRef<any>()
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -152,14 +154,38 @@ export default function VoiceChat() {
       <div className='flex w-full gap-4'>
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Prompt</div>
-          <textarea rows={20} placeholder='Enter the prompt here'></textarea>
+          <textarea rows={20} placeholder='Enter the prompt here' ref={promptTextRef}></textarea>
           <div className='flex flex-col'>
             <div>Possible variables:</div>
             <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
             <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
             <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call; e.g. &quot;***DETAILS.firstName***&quot;</div>
           </div>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update prompt</div>
+          <div className='flex items-center gap-4'>
+            <div
+              className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+              onClick={async () => {
+                const promptText = promptTextRef.current.value
+                const selPersonaId = personaSelRef.current.value
+
+                if (!personaClient || !promptText || !selPersonaId) {
+                  return
+                }
+
+                setPromptState('Saving...')
+                const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, { prompt: promptText });
+
+                if (res.status === 200) {
+                  setPromptState('Success')
+                } else {
+                  setPromptState('Error')
+                }
+              }}
+            >
+              Update prompt
+            </div>
+            <div>{promptState}</div>
+          </div>
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>New chat (continuous)</div>
         </div>
         <div className='flex flex-col w-full gap-2'>

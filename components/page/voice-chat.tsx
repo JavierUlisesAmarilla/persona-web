@@ -2,6 +2,7 @@
 import { API_KEY } from '@/lib/constants'
 import { useZustand } from '@/lib/store/use-zustand';
 import { useEffect, useRef } from 'react'
+import axios from 'axios'
 
 declare global {
   interface Window {
@@ -11,7 +12,10 @@ declare global {
 let isFirstRender = true
 
 export default function VoiceChat() {
-  const { personaClient, setPersonaClient } = useZustand()
+  const {
+    personaClient, setPersonaClient,
+    personaArr, setPersonaArr,
+  } = useZustand()
   const userInputRef = useRef<any>()
   const assistantInputRef = useRef<any>()
 
@@ -21,6 +25,7 @@ export default function VoiceChat() {
     }
 
     isFirstRender = false
+
     const script = document.createElement("script");
     script.src = `https://app.sindarin.tech/PersonaClient?apikey=${API_KEY}`;
     document.head.appendChild(script);
@@ -30,6 +35,12 @@ export default function VoiceChat() {
       console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
       setPersonaClient(newPersonaClient)
     });
+
+    (async () => {
+      const personaArrRes = await axios.get(`https://app.sindarin.tech/api/personas?apikey=${API_KEY}`)
+      console.log('VoiceChat#useEffect: personaArrRes: ', personaArrRes)
+      setPersonaArr(personaArrRes.data)
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -79,8 +90,7 @@ export default function VoiceChat() {
       </div>
       <div className='flex items-center w-full gap-4'>
         <select className='w-full rounded-full cursor-pointer'>
-          <option value='Character1'>Character1</option>
-          <option value='Character2'>Character2</option>
+          {personaArr.map((persona, index) => <option key={index} value={persona.name}>{persona.name}</option>)}
         </select>
         <div className='w-32'></div>
       </div>

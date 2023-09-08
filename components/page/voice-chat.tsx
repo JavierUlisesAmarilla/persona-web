@@ -1,7 +1,7 @@
 "use client"
 import { API_KEY } from '@/lib/constants'
 import { useZustand } from '@/lib/store/use-zustand';
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 declare global {
   interface Window {
@@ -12,6 +12,8 @@ let isFirstRender = true
 
 export default function VoiceChat() {
   const { personaClient, setPersonaClient } = useZustand()
+  const userInputRef = useRef<any>()
+  const assistantInputRef = useRef<any>()
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -35,13 +37,33 @@ export default function VoiceChat() {
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter user text here'></input>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Submit</div>
+          <input className='w-full rounded-full' type='text' placeholder='Enter user text here' ref={userInputRef}></input>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={() => {
+              if (!personaClient || !userInputRef.current.value) {
+                return
+              }
+              personaClient.sendUserText(userInputRef.current.value)
+            }}
+          >
+            Submit
+          </div>
           <div className='w-32'></div>
         </div>
         <div className='flex items-center w-full gap-4'>
-          <input className='w-full rounded-full' type='text' placeholder='Enter assistant text here'></input>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Submit</div>
+          <input className='w-full rounded-full' type='text' placeholder='Enter assistant text here' ref={assistantInputRef}></input>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={() => {
+              if (!personaClient || !assistantInputRef.current.value) {
+                return
+              }
+              personaClient.sayText(assistantInputRef.current.value)
+            }}
+          >
+            Submit
+          </div>
           <div className='w-32'></div>
         </div>
         <div className='flex items-center w-full gap-4'>

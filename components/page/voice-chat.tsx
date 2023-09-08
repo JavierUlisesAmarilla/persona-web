@@ -115,9 +115,21 @@ export default function VoiceChat() {
           <input className='w-full rounded-full' type='text' placeholder='Enter rate limit message here' ref={rateLimitInputRef}></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-            onClick={() => {
-              if (!personaClient || !rateLimitInputRef.current.value) {
+            onClick={async () => {
+              const rateLimitMsg = rateLimitInputRef.current.value
+              const selPersonaId = personaSelRef.current.value
+
+              if (!personaClient || !rateLimitMsg || !selPersonaId) {
                 return
+              }
+
+              setRateLimitMsgState('Saving...')
+              const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, { rateLimitMessage: rateLimitMsg });
+
+              if (res.status === 200) {
+                setRateLimitMsgState('Success')
+              } else {
+                setRateLimitMsgState('Error')
               }
             }}
           >

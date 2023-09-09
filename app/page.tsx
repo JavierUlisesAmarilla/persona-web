@@ -5,5 +5,5 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  return session ? <VoiceChat /> : await Home()
+  return session ? <VoiceChat /> : <Home />
 }

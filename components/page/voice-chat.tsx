@@ -340,7 +340,7 @@ export default function VoiceChat() {
           {personaArr[selPersonaIndex].scenarios?.map((scenario: any, index: number) =>
             <Scenario
               key={index}
-              index={index}
+              scenarioIndex={index}
               scenario={scenario}
             ></Scenario>
           )}

@@ -7,8 +7,10 @@ interface ZustandState {
   setPersonaArr: (personaArr: Array<any>) => void;
   selPersonaIndex: number;
   setSelPersonaIndex: (selPersonaIndex: number) => void;
-  saveScenarioPersonaSay: (personaIndex: number, scenarioIndex: number, personaSayIndex: number, text: string) => void;
-  saveScenarioUserSay: (personaIndex: number, scenarioIndex: number, userSayIndex: number, text: string) => void;
+  setScenarioPersonaSay: (personaIndex: number, scenarioIndex: number, personaSayIndex: number, text: string) => void;
+  setScenarioUserSay: (personaIndex: number, scenarioIndex: number, userSayIndex: number, text: string) => void;
+  setScenarioContext: (personaIndex: number, scenarioIndex: number, text: string) => void;
+  setScenarioResponse: (personaIndex: number, scenarioIndex: number, text: string) => void;
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -18,14 +20,24 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setPersonaArr: (personaArr) => set((state) => ({ ...state, personaArr })),
   selPersonaIndex: 0,
   setSelPersonaIndex: (selPersonaIndex) => set((state) => ({ ...state, selPersonaIndex })),
-  saveScenarioPersonaSay: (personaIndex, scenarioIndex, personaSayIndex, text) => set((state) => {
+  setScenarioPersonaSay: (personaIndex, scenarioIndex, personaSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].scenarios[scenarioIndex].personaSays[personaSayIndex] = text
     return { ...state, personaArr }
   }),
-  saveScenarioUserSay: (personaIndex, scenarioIndex, userSayIndex, text) => set((state) => {
+  setScenarioUserSay: (personaIndex, scenarioIndex, userSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].scenarios[scenarioIndex].userSays[userSayIndex] = text
+    return { ...state, personaArr }
+  }),
+  setScenarioContext: (personaIndex, scenarioIndex, text) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].scenarios[scenarioIndex].context = text
+    return { ...state, personaArr }
+  }),
+  setScenarioResponse: (personaIndex, scenarioIndex, text) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].scenarios[scenarioIndex].responseGuidelines = text
     return { ...state, personaArr }
   }),
 }));

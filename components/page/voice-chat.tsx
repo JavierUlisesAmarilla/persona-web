@@ -21,6 +21,7 @@ export default function VoiceChat() {
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
   const [promptState, setPromptState] = useState('')
   const [schemaState, setSchemaState] = useState('')
+  const [stateState, setStateState] = useState('')
 
   const userInputRef = useRef<any>()
   const assistantInputRef = useRef<any>()
@@ -129,6 +130,18 @@ export default function VoiceChat() {
     setSchemaState('Loading (this can take a few seconds)...')
     const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(actionsSchemaText));
     setSchemaState(res.status === 200 ? res.data : 'Error')
+  }
+
+  const onState = () => {
+    const currentStateText = currentStateTextRef.current.value
+
+    if (!personaClient || !currentStateText) {
+      return
+    }
+
+    setStateState('Saving...')
+    personaClient.updateState(JSON.parse(currentStateText));
+    setStateState('Success')
   }
 
   useEffect(() => {
@@ -305,11 +318,18 @@ export default function VoiceChat() {
         <textarea
           ref={currentStateTextRef}
           rows={20}
-          defaultValue='Current state'
+          defaultValue='{}'
           placeholder=''
         ></textarea>
-        <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update state</div>
-        <div>Error</div>
+        <div className='flex items-center gap-4'>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            onClick={onState}
+          >
+            Update state
+          </div>
+          <div>{stateState}</div>
+        </div>
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='flex w-full gap-4'>

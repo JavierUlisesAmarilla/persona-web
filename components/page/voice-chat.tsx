@@ -17,8 +17,8 @@ export default function VoiceChat() {
   const {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,
+    selPersonaIndex, setSelPersonaIndex,
   } = useZustand()
-  const [selPersonaIndex, setSelPersonaIndex] = useState(0)
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
   const [promptState, setPromptState] = useState('')
@@ -337,9 +337,10 @@ export default function VoiceChat() {
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Save scenarios</div>
         </div>
         <div className='flex flex-col w-full gap-2'>
-          {personaArr[selPersonaIndex].scenarios?.map((scenario: any, index: Key | null | undefined) =>
+          {personaArr[selPersonaIndex].scenarios?.map((scenario: any, index: number) =>
             <Scenario
               key={index}
+              index={index}
               scenario={scenario}
             ></Scenario>
           )}

@@ -1,12 +1,16 @@
 "use client"
 
+import { useZustand } from "@/lib/store/use-zustand";
 import { Key } from "react";
 
 interface Props {
   scenario: any;
+  index: number;
 }
 
-export default function Scenario({ scenario }: Props) {
+export default function Scenario({ scenario, index }: Props) {
+  const { selPersonaIndex, saveScenarioPersonaSay, saveScenarioUserSay } = useZustand()
+
   return (
     <div className='flex flex-col w-full gap-4 p-4 border border-black'>
       <div className='flex flex-col w-full gap-2'>
@@ -22,6 +26,10 @@ export default function Scenario({ scenario }: Props) {
           <div>When the persona says something like</div>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            onClick={() => {
+              const newPersonaSayIndex = scenario?.personaSays?.length || 0
+              saveScenarioPersonaSay(selPersonaIndex, index, newPersonaSayIndex, '')
+            }}
           >
             Add new example
           </div>
@@ -40,6 +48,10 @@ export default function Scenario({ scenario }: Props) {
           <div>And the user responds with something like</div>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            onClick={() => {
+              const newUserSayIndex = scenario?.userSays?.length || 0
+              saveScenarioUserSay(selPersonaIndex, index, newUserSayIndex, '')
+            }}
           >
             Add new example
           </div>

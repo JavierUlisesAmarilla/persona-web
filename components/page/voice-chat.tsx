@@ -27,6 +27,8 @@ export default function VoiceChat() {
   const rateLimitInputRef = useRef<any>()
   const personaSelRef = useRef<any>()
   const promptTextRef = useRef<any>()
+  const actionsSchemaTextRef = useRef<any>()
+  const currentStateTextRef = useRef<any>()
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -65,7 +67,7 @@ export default function VoiceChat() {
                 return
               }
 
-              // personaClient.sendUserText(userInputRef.current.value)
+              personaClient.sendUserText(userInputRef.current.value)
             }}
           >
             Submit
@@ -81,7 +83,7 @@ export default function VoiceChat() {
                 return
               }
 
-              // personaClient.sayText(assistantInputRef.current.value)
+              personaClient.sayText(assistantInputRef.current.value)
             }}
           >
             Submit
@@ -187,17 +189,36 @@ export default function VoiceChat() {
             </div>
             <div>{promptState}</div>
           </div>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>New chat (continuous)</div>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            onClick={async () => {
+              const selPersonaId = personaSelRef.current.value
+
+              if (!personaArr.length || !selPersonaId) {
+                return
+              }
+
+              const selPersonName = personaArr.find((persona) => persona._id === selPersonaId)?.name
+
+              if (!personaClient || !selPersonName) {
+                return
+              }
+
+              await personaClient.init('admin', selPersonName)
+            }}
+          >
+            New chat (continuous)
+          </div>
         </div>
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Actions schema</div>
-          <textarea rows={20} placeholder='Enter the actions schema here' defaultValue='Actions schema'></textarea>
+          <textarea rows={20} placeholder='Enter the actions schema here' defaultValue='Actions schema' ref={actionsSchemaTextRef}></textarea>
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update actions schema</div>
         </div>
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='text-lg'>Current state</div>
-        <textarea rows={20} placeholder='' defaultValue='Current state'></textarea>
+        <textarea rows={20} placeholder='' defaultValue='Current state' ref={currentStateTextRef}></textarea>
         <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update state</div>
         <div>Error</div>
       </div>

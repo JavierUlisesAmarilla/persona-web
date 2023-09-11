@@ -30,8 +30,14 @@ export default function VoiceChat() {
 
   const [userInput, setUserInput] = useState('')
   const [assistantInput, setAssistantInput] = useState('')
-  const [schemaText, setSchemaText] = useState('{}')
-  const [stateText, setStateText] = useState('{}')
+  const [schemaText, setSchemaText] = useState(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
+  const [stateText, setStateText] = useState('')
+
+  const onPersona = (e: any) => {
+    const newPersonaIndex = parseInt(e.target.value)
+    setSelPersonaIndex(newPersonaIndex)
+    setSchemaText(JSON.stringify(personaArr[newPersonaIndex].currentVoiceSchema, null, 2))
+  }
 
   const onUser = () => {
     if (!personaClient || !userInput) {
@@ -170,7 +176,7 @@ export default function VoiceChat() {
         <div className='flex items-center w-full gap-4'>
           <select
             className='w-full rounded-full cursor-pointer'
-            onChange={(e) => setSelPersonaIndex(parseInt(e.target.value))}
+            onChange={onPersona}
           >
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </select>
@@ -354,7 +360,7 @@ export default function VoiceChat() {
           )}
         </div>
       </div>
-    </div>
+    </div >
   ) : (
     <div className='z-10 w-full p-4 text-center'>Loading...</div>
   )

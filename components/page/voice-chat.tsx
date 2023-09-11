@@ -64,7 +64,8 @@ export default function VoiceChat() {
               if (!personaClient || !userInputRef.current.value) {
                 return
               }
-              personaClient.sendUserText(userInputRef.current.value)
+
+              // personaClient.sendUserText(userInputRef.current.value)
             }}
           >
             Submit
@@ -80,7 +81,7 @@ export default function VoiceChat() {
                 return
               }
 
-              personaClient.sayText(assistantInputRef.current.value)
+              // personaClient.sayText(assistantInputRef.current.value)
             }}
           >
             Submit

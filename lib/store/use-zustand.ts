@@ -46,11 +46,21 @@ export const useZustand = create<ZustandState>((set, get) => ({
   }),
   setScenarioPersonaSay: (personaIndex, scenarioIndex, personaSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
+
+    if (!personaArr[personaIndex].scenarios[scenarioIndex].personaSays) {
+      personaArr[personaIndex].scenarios[scenarioIndex].personaSays = []
+    }
+
     personaArr[personaIndex].scenarios[scenarioIndex].personaSays[personaSayIndex] = text
     return { ...state, personaArr }
   }),
   setScenarioUserSay: (personaIndex, scenarioIndex, userSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
+
+    if (!personaArr[personaIndex].scenarios[scenarioIndex].userSays) {
+      personaArr[personaIndex].scenarios[scenarioIndex].userSays = []
+    }
+
     personaArr[personaIndex].scenarios[scenarioIndex].userSays[userSayIndex] = text
     return { ...state, personaArr }
   }),
@@ -61,6 +71,11 @@ export const useZustand = create<ZustandState>((set, get) => ({
   }),
   addNewScenario: (personaIndex) => set((state) => {
     const personaArr = get().personaArr
+
+    if (!personaArr[personaIndex].scenarios) {
+      personaArr[personaIndex].scenarios = []
+    }
+
     personaArr[personaIndex].scenarios.push({})
     return { ...state, personaArr }
   }),

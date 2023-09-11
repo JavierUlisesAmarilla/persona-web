@@ -279,7 +279,7 @@ export default function VoiceChat() {
             <div>Possible variables:</div>
             <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
             <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
-            <div>- ***DETAILS.detail***: where &quotdetail&quot is a variable passed into the &quotdetails&quot object in an API-driven call e.g. &quot***DETAILS.firstName***&quot</div>
+            <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call e.g. &quot;***DETAILS.firstName***&quot;</div>
           </div>
           <div className='flex items-center gap-4'>
             <div

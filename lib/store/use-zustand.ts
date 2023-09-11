@@ -11,6 +11,7 @@ interface ZustandState {
   setScenarioUserSay: (personaIndex: number, scenarioIndex: number, userSayIndex: number, text: string) => void;
   setScenarioContext: (personaIndex: number, scenarioIndex: number, text: string) => void;
   setScenarioResponse: (personaIndex: number, scenarioIndex: number, text: string) => void;
+  addNewScenario: (personaIndex: number) => void;
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -38,6 +39,11 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setScenarioResponse: (personaIndex, scenarioIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].scenarios[scenarioIndex].responseGuidelines = text
+    return { ...state, personaArr }
+  }),
+  addNewScenario: (personaIndex) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].scenarios.push({})
     return { ...state, personaArr }
   }),
 }));

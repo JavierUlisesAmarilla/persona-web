@@ -18,6 +18,7 @@ export default function VoiceChat() {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,
     selPersonaIndex, setSelPersonaIndex,
+    addNewScenario,
   } = useZustand()
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
@@ -142,6 +143,10 @@ export default function VoiceChat() {
     setStateState('Saving...')
     personaClient.updateState(JSON.parse(currentStateText));
     setStateState('Success')
+  }
+
+  const onNewScenario = () => {
+    addNewScenario(selPersonaIndex)
   }
 
   useEffect(() => {
@@ -333,7 +338,12 @@ export default function VoiceChat() {
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='flex w-full gap-4'>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Add new scenario</div>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={onNewScenario}
+          >
+            Add new scenario
+          </div>
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Save scenarios</div>
         </div>
         <div className='flex flex-col w-full gap-2'>

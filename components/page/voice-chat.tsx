@@ -20,6 +20,7 @@ export default function VoiceChat() {
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
   const [promptState, setPromptState] = useState('')
+  const [schemaState, setSchemaState] = useState('')
 
   const userInputRef = useRef<any>()
   const assistantInputRef = useRef<any>()
@@ -116,6 +117,20 @@ export default function VoiceChat() {
     await personaClient.init('admin', selPersonName)
   }
 
+  const onActionsSchema = async () => {
+    const selPersonaId = personaSelRef.current.value
+    const actionsSchemaText = actionsSchemaTextRef.current.value
+    console.log(selPersonaId, actionsSchemaText)
+
+    if (!selPersonaId || !actionsSchemaText) {
+      return
+    }
+
+    setSchemaState('Loading (this can take a few seconds)...')
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(actionsSchemaText));
+    setSchemaState(res.status === 200 ? res.data : 'Error')
+  }
+
   useEffect(() => {
     if (!isFirstRender) {
       return
@@ -141,7 +156,7 @@ export default function VoiceChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
+  return personaArr.length ? (
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
@@ -273,10 +288,16 @@ export default function VoiceChat() {
           <textarea
             ref={actionsSchemaTextRef}
             rows={20}
-            defaultValue='Actions schema'
+            defaultValue='{}'
             placeholder='Enter the actions schema here'
           ></textarea>
-          <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'>Update actions schema</div>
+          <div className='flex items-center gap-4'>
+            <div
+              className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit whitespace-nowrap'
+              onClick={onActionsSchema}
+            >Update actions schema</div>
+            <div>{schemaState}</div>
+          </div>
         </div>
       </div>
       <div className='flex flex-col w-full gap-2'>
@@ -298,5 +319,7 @@ export default function VoiceChat() {
         <div>Scenarios</div>
       </div>
     </div>
+  ) : (
+    <></>
   )
 }

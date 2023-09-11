@@ -1,11 +1,11 @@
 "use client"
 
-import { useZustand } from "@/lib/store/use-zustand";
-import { Key } from "react";
+import { useZustand } from "@/lib/store/use-zustand"
+import { Key } from "react"
 
 interface Props {
-  scenarioIndex: number;
-  scenario: any;
+  scenarioIndex: number
+  scenario: any
 }
 
 export default function Scenario({ scenario, scenarioIndex }: Props) {

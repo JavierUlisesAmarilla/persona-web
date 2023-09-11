@@ -1,13 +1,13 @@
 "use client"
 import { API_KEY } from '@/lib/constants'
-import { useZustand } from '@/lib/store/use-zustand';
-import { Key, useEffect, useRef, useState } from 'react'
+import { useZustand } from '@/lib/store/use-zustand'
+import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-import Scenario from './scenario';
+import Scenario from './scenario'
 
 declare global {
   interface Window {
-    PersonaClient: any;
+    PersonaClient: any
   }
 }
 
@@ -18,8 +18,9 @@ export default function VoiceChat() {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,
     selPersonaIndex, setSelPersonaIndex,
-    addNewScenario,
+    setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
   } = useZustand()
+
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
   const [promptState, setPromptState] = useState('')
@@ -27,71 +28,65 @@ export default function VoiceChat() {
   const [stateState, setStateState] = useState('')
   const [saveScenarioState, setSaveScenarioState] = useState('')
 
-  const userInputRef = useRef<any>()
-  const assistantInputRef = useRef<any>()
-  const initialInputRef = useRef<any>()
-  const rateLimitInputRef = useRef<any>()
-  const promptTextRef = useRef<any>()
-  const actionsSchemaTextRef = useRef<any>()
-  const currentStateTextRef = useRef<any>()
+  const [userInput, setUserInput] = useState('')
+  const [assistantInput, setAssistantInput] = useState('')
+  const [schemaText, setSchemaText] = useState('{}')
+  const [stateText, setStateText] = useState('{}')
 
   const onUser = () => {
-    if (!personaClient || !userInputRef.current.value) {
+    if (!personaClient || !userInput) {
       return
     }
 
-    personaClient.sendUserText(userInputRef.current.value)
+    personaClient.sendUserText(userInput)
   }
 
   const onAssistant = () => {
-    if (!personaClient || !assistantInputRef.current.value) {
+    if (!personaClient || !assistantInput) {
       return
     }
 
-    personaClient.sayText(assistantInputRef.current.value)
+    personaClient.sayText(assistantInput)
   }
 
   const onInitialization = async () => {
-    const initialMsg = initialInputRef.current.value
-    const selPersonaId = personaArr[selPersonaIndex]._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    if (!personaClient || !initialMsg || !selPersonaId) {
+    if (!selPersonaId) {
       return
     }
 
     setInitialMsgState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, { initialMessage: initialMsg });
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, { initialMessage: personaArr[selPersonaIndex].initialMessage })
     setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
   }
 
   const onRateLimit = async () => {
-    const rateLimitMsg = rateLimitInputRef.current.value
-    const selPersonaId = personaArr[selPersonaIndex]._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    if (!personaClient || !rateLimitMsg || !selPersonaId) {
+    if (!selPersonaId) {
       return
     }
 
     setRateLimitMsgState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, { rateLimitMessage: rateLimitMsg });
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, { rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage })
     setRateLimitMsgState(res.status === 200 ? 'Success' : 'Error')
   }
 
   const onPrompt = async () => {
-    const promptText = promptTextRef.current.value
-    const selPersonaId = personaArr[selPersonaIndex]._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    if (!personaClient || !promptText || !selPersonaId) {
+    if (!selPersonaId) {
       return
     }
 
     setPromptState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, { prompt: promptText });
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, { prompt: personaArr[selPersonaIndex].currentVoicePrompt })
     setPromptState(res.status === 200 ? 'Success' : 'Error')
   }
 
   const onNewChat = async () => {
-    const selPersonaId = personaArr[selPersonaIndex]._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
     if (!personaArr.length || !selPersonaId) {
       return
@@ -106,28 +101,25 @@ export default function VoiceChat() {
     await personaClient.init('admin', selPersonName)
   }
 
-  const onActionsSchema = async () => {
-    const selPersonaId = personaArr[selPersonaIndex]._id
-    const actionsSchemaText = actionsSchemaTextRef.current.value
+  const onSchema = async () => {
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    if (!selPersonaId || !actionsSchemaText) {
+    if (!selPersonaId || !schemaText) {
       return
     }
 
     setSchemaState('Loading (this can take a few seconds)...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(actionsSchemaText));
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(schemaText))
     setSchemaState(res.status === 200 ? 'Success' : 'Error')
   }
 
   const onState = () => {
-    const currentStateText = currentStateTextRef.current.value
-
-    if (!personaClient || !currentStateText) {
+    if (!personaClient || !stateText) {
       return
     }
 
     setStateState('Saving...')
-    personaClient.updateState(JSON.parse(currentStateText));
+    personaClient.updateState(stateText)
     setStateState('Success')
   }
 
@@ -136,14 +128,14 @@ export default function VoiceChat() {
   }
 
   const onSaveScenarios = async () => {
-    const selPersonaId = personaArr[selPersonaIndex]._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
     if (!selPersonaId) {
       return
     }
 
     setSaveScenarioState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, { scenarios: personaArr[selPersonaIndex].scenarios });
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, { scenarios: personaArr[selPersonaIndex].scenarios })
     setSaveScenarioState(res.status === 200 ? 'Success' : 'Error')
   }
 
@@ -154,12 +146,12 @@ export default function VoiceChat() {
 
     isFirstRender = false
 
-    const script = document.createElement("script");
-    script.src = `https://app.sindarin.tech/PersonaClient?apikey=${API_KEY}`;
-    document.head.appendChild(script);
+    const script = document.createElement("script")
+    script.src = `https://app.sindarin.tech/PersonaClient?apikey=${API_KEY}`
+    document.head.appendChild(script)
 
     script.addEventListener("load", async () => {
-      const newPersonaClient = new window.PersonaClient(API_KEY);
+      const newPersonaClient = new window.PersonaClient(API_KEY)
       console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
       setPersonaClient(newPersonaClient)
     });
@@ -176,12 +168,21 @@ export default function VoiceChat() {
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
+          <select
+            className='w-full rounded-full cursor-pointer'
+            onChange={(e) => setSelPersonaIndex(parseInt(e.target.value))}
+          >
+            {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
+          </select>
+          <div className='w-32'></div>
+        </div>
+        <div className='flex items-center w-full gap-4'>
           <input
             className='w-full rounded-full'
-            ref={userInputRef}
             type='text'
-            defaultValue='User'
+            value={userInput}
             placeholder='Enter user text here'
+            onChange={(e) => setUserInput(e.target.value)}
           ></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
@@ -194,10 +195,10 @@ export default function VoiceChat() {
         <div className='flex items-center w-full gap-4'>
           <input
             className='w-full rounded-full'
-            ref={assistantInputRef}
             type='text'
-            defaultValue='Assistant'
+            value={assistantInput}
             placeholder='Enter assistant text here'
+            onChange={(e) => setAssistantInput(e.target.value)}
           ></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
@@ -210,10 +211,10 @@ export default function VoiceChat() {
         <div className='flex items-center w-full gap-4'>
           <input
             className='w-full rounded-full'
-            ref={initialInputRef}
             type='text'
-            defaultValue='Initialization'
+            value={personaArr[selPersonaIndex]?.initialMessage || ''}
             placeholder='Enter initial message here'
+            onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
           ></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
@@ -226,10 +227,10 @@ export default function VoiceChat() {
         <div className='flex items-center w-full gap-4'>
           <input
             className='w-full rounded-full'
-            ref={rateLimitInputRef}
             type='text'
-            defaultValue='Rate limit'
+            value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
             placeholder='Enter rate limit message here'
+            onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
           ></input>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
@@ -239,15 +240,6 @@ export default function VoiceChat() {
           </div>
           <div className='w-32'>{rateLimitMsgState}</div>
         </div>
-      </div>
-      <div className='flex items-center w-full gap-4'>
-        <select
-          className='w-full rounded-full cursor-pointer'
-          onChange={(e) => setSelPersonaIndex(parseInt(e.target.value))}
-        >
-          {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
-        </select>
-        <div className='w-32'></div>
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='text-lg '>For guidance on prompt engineering techniques for your Persona, see:</div>
@@ -272,16 +264,16 @@ export default function VoiceChat() {
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Prompt</div>
           <textarea
-            ref={promptTextRef}
             rows={20}
-            defaultValue='Prompt'
+            value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
             placeholder='Enter the prompt here'
+            onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
           ></textarea>
           <div className='flex flex-col'>
             <div>Possible variables:</div>
             <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
             <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
-            <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call; e.g. &quot;***DETAILS.firstName***&quot;</div>
+            <div>- ***DETAILS.detail***: where &quotdetail&quot is a variable passed into the &quotdetails&quot object in an API-driven call e.g. &quot***DETAILS.firstName***&quot</div>
           </div>
           <div className='flex items-center gap-4'>
             <div
@@ -302,15 +294,15 @@ export default function VoiceChat() {
         <div className='flex flex-col w-full gap-2'>
           <div className='text-lg'>Actions schema</div>
           <textarea
-            ref={actionsSchemaTextRef}
             rows={20}
-            defaultValue='{}'
+            value={schemaText}
             placeholder='Enter the actions schema here'
+            onChange={(e) => setSchemaText(e.target.value)}
           ></textarea>
           <div className='flex items-center gap-4'>
             <div
               className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit whitespace-nowrap'
-              onClick={onActionsSchema}
+              onClick={onSchema}
             >Update actions schema</div>
             <div>{schemaState}</div>
           </div>
@@ -319,10 +311,10 @@ export default function VoiceChat() {
       <div className='flex flex-col w-full gap-2'>
         <div className='text-lg'>Current state</div>
         <textarea
-          ref={currentStateTextRef}
           rows={20}
-          defaultValue='{}'
+          value={stateText}
           placeholder=''
+          onChange={(e) => setStateText(e.target.value)}
         ></textarea>
         <div className='flex items-center gap-4'>
           <div

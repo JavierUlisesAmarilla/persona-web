@@ -1,10 +1,10 @@
-import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import cx from "classnames";
-import { sfPro, inter } from "./fonts";
-import Nav from "@/components/layout/nav";
-import Footer from "@/components/layout/footer";
-import { Suspense } from "react";
+import "./globals.css"
+import { Analytics } from "@vercel/analytics/react"
+import cx from "classnames"
+import { sfPro, inter } from "./fonts"
+import Nav from "@/components/layout/nav"
+import Footer from "@/components/layout/footer"
+import { Suspense } from "react"
 
 export const metadata = {
   title: "Precedent - Building blocks for your Next.js project",
@@ -19,12 +19,12 @@ export const metadata = {
   },
   metadataBase: new URL("https://precedent.dev"),
   themeColor: "#FFF",
-};
+}
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -41,5 +41,5 @@ export default async function RootLayout({
         <Analytics />
       </body>
     </html>
-  );
+  )
 }

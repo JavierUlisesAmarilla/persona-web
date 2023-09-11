@@ -1,8 +1,9 @@
 "use client"
 import { API_KEY } from '@/lib/constants'
 import { useZustand } from '@/lib/store/use-zustand';
-import { useEffect, useRef, useState } from 'react'
+import { Key, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
+import Scenario from './scenario';
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ export default function VoiceChat() {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,
   } = useZustand()
+  const [selPersonaIndex, setSelPersonaIndex] = useState(0)
   const [initialMsgState, setInitialMsgState] = useState('')
   const [rateLimitMsgState, setRateLimitMsgState] = useState('')
   const [promptState, setPromptState] = useState('')
@@ -27,7 +29,6 @@ export default function VoiceChat() {
   const assistantInputRef = useRef<any>()
   const initialInputRef = useRef<any>()
   const rateLimitInputRef = useRef<any>()
-  const personaSelRef = useRef<any>()
   const promptTextRef = useRef<any>()
   const actionsSchemaTextRef = useRef<any>()
   const currentStateTextRef = useRef<any>()
@@ -50,7 +51,7 @@ export default function VoiceChat() {
 
   const onInitialization = async () => {
     const initialMsg = initialInputRef.current.value
-    const selPersonaId = personaSelRef.current.value
+    const selPersonaId = personaArr[selPersonaIndex]._id
 
     if (!personaClient || !initialMsg || !selPersonaId) {
       return
@@ -68,7 +69,7 @@ export default function VoiceChat() {
 
   const onRateLimit = async () => {
     const rateLimitMsg = rateLimitInputRef.current.value
-    const selPersonaId = personaSelRef.current.value
+    const selPersonaId = personaArr[selPersonaIndex]._id
 
     if (!personaClient || !rateLimitMsg || !selPersonaId) {
       return
@@ -86,7 +87,7 @@ export default function VoiceChat() {
 
   const onPrompt = async () => {
     const promptText = promptTextRef.current.value
-    const selPersonaId = personaSelRef.current.value
+    const selPersonaId = personaArr[selPersonaIndex]._id
 
     if (!personaClient || !promptText || !selPersonaId) {
       return
@@ -103,7 +104,7 @@ export default function VoiceChat() {
   }
 
   const onNewChat = async () => {
-    const selPersonaId = personaSelRef.current.value
+    const selPersonaId = personaArr[selPersonaIndex]._id
 
     if (!personaArr.length || !selPersonaId) {
       return
@@ -119,9 +120,8 @@ export default function VoiceChat() {
   }
 
   const onActionsSchema = async () => {
-    const selPersonaId = personaSelRef.current.value
+    const selPersonaId = personaArr[selPersonaIndex]._id
     const actionsSchemaText = actionsSchemaTextRef.current.value
-    console.log(selPersonaId, actionsSchemaText)
 
     if (!selPersonaId || !actionsSchemaText) {
       return
@@ -240,9 +240,9 @@ export default function VoiceChat() {
       <div className='flex items-center w-full gap-4'>
         <select
           className='w-full rounded-full cursor-pointer'
-          ref={personaSelRef}
+          onChange={(e) => setSelPersonaIndex(parseInt(e.target.value))}
         >
-          {personaArr.map((persona, index) => <option key={index} value={persona._id}>{persona.name}</option>)}
+          {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
         </select>
         <div className='w-32'></div>
       </div>
@@ -336,10 +336,17 @@ export default function VoiceChat() {
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Add new scenario</div>
           <div className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'>Save scenarios</div>
         </div>
-        <div>Scenarios</div>
+        <div className='flex flex-col w-full gap-2'>
+          {personaArr[selPersonaIndex].scenarios?.map((scenario: any, index: Key | null | undefined) =>
+            <Scenario
+              key={index}
+              scenario={scenario}
+            ></Scenario>
+          )}
+        </div>
       </div>
     </div>
   ) : (
-    <></>
+    <div className='z-10 w-full p-4 text-center'>Loading...</div>
   )
 }

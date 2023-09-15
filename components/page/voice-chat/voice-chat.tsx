@@ -1,5 +1,5 @@
 "use client"
-import { API_KEY } from '@/lib/constants'
+import { COMMON_API_KEY } from '@/lib/constants'
 import { useZustand } from '@/lib/store/use-zustand'
 import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
@@ -19,6 +19,7 @@ export default function VoiceChat() {
     personaArr, setPersonaArr,
     selPersonaIndex, setSelPersonaIndex,
     setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
+    emailKeyArr, curEmail,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -32,6 +33,8 @@ export default function VoiceChat() {
   const [assistantInput, setAssistantInput] = useState('')
   const [schemaText, setSchemaText] = useState(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
   const [stateText, setStateText] = useState('')
+
+  const API_KEY = emailKeyArr.find((emailKey) => emailKey.email === curEmail)?.apiKey || COMMON_API_KEY
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)

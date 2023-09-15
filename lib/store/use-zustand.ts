@@ -18,6 +18,9 @@ interface ZustandState {
 
   selMenu: string
   setSelMenu: (selMenu: string) => void
+
+  emailKeyArr: Array<any>
+  setEmailKeyArr: (emailKeyArr: Array<any>) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -85,4 +88,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
 
   selMenu: 'setting',
   setSelMenu: (selMenu) => set((state) => ({ ...state, selMenu })),
+
+  emailKeyArr: [],
+  setEmailKeyArr: (emailKeyArr) => set((state) => ({ ...state, emailKeyArr })),
 }))

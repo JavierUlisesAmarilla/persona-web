@@ -1,47 +1,43 @@
 "use client"
 
 import { getAllData, removeData, saveData } from "@/lib/mongo-db"
-import { useEffect, useState } from "react"
+import { useZustand } from "@/lib/store/use-zustand"
+import { useEffect } from "react"
 
 
 let isFirstRender = true
 
 
 export default function ApiKeyAssign() {
-  const [dataArr, setDataArr] = useState<Array<any>>([])
+  const { emailKeyArr, setEmailKeyArr } = useZustand()
 
   const onAdd = () => {
-    // console.log('ApiKeyAssign#onAdd')
-    setDataArr([...dataArr, {}])
+    setEmailKeyArr([...emailKeyArr, { email: '', apiKey: '' }])
   }
 
   const onEmailChange = (dataIndex: number, email: string) => {
-    // console.log('ApiKeyAssign#onEmailChange: dataIndex: ', dataIndex)
-    // console.log('ApiKeyAssign#onEmailChange: email: ', email)
-    dataArr[dataIndex].email = email
-    setDataArr(dataArr)
+    const newEmailKeyArr = [...emailKeyArr]
+    newEmailKeyArr[dataIndex].email = email
+    setEmailKeyArr(newEmailKeyArr)
   }
 
   const onApiKeyChange = (dataIndex: number, apiKey: string) => {
-    // console.log('ApiKeyAssign#onApiKeyChange: dataIndex: ', dataIndex)
-    // console.log('ApiKeyAssign#onApiKeyChange: apiKey: ', apiKey)
-    dataArr[dataIndex].apiKey = apiKey
-    setDataArr(dataArr)
+    const newEmailKeyArr = [...emailKeyArr]
+    newEmailKeyArr[dataIndex].apiKey = apiKey
+    setEmailKeyArr(newEmailKeyArr)
   }
 
   const onSave = () => {
-    console.log('ApiKeyAssign#onSave: dataArr: ', dataArr)
-    dataArr.forEach((data) => saveData(data))
+    console.log('ApiKeyAssign#onSave: emailKeyArr: ', emailKeyArr)
+    emailKeyArr.forEach((data) => saveData(data))
   }
 
   const onRemove = (dataIndex: number) => {
-    console.log('ApiKeyAssign#onRemove: dataIndex: ', dataIndex)
-
-    if (dataArr[dataIndex]?._id) {
-      removeData(dataArr[dataIndex]._id)
+    if (emailKeyArr[dataIndex]?._id) {
+      removeData(emailKeyArr[dataIndex]._id)
     }
 
-    setDataArr(dataArr.filter((data, i) => i !== dataIndex))
+    setEmailKeyArr(emailKeyArr.filter((data, i) => i !== dataIndex))
   }
 
   useEffect(() => {
@@ -52,16 +48,17 @@ export default function ApiKeyAssign() {
     isFirstRender = false;
 
     (async () => {
-      const newDataArr = await getAllData()
-      setDataArr(newDataArr)
+      const newEmailKeyArr = await getAllData()
+      setEmailKeyArr(newEmailKeyArr)
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div className="flex flex-col items-center gap-4 p-4 border border-black rounded">
       <div>API Key Assignment</div>
       <div className="flex flex-col items-center gap-2">
-        {dataArr.map((data, dataIndex) =>
+        {emailKeyArr.map((data, dataIndex) =>
           <div
             key={dataIndex}
             className="flex items-center gap-4"
@@ -70,14 +67,14 @@ export default function ApiKeyAssign() {
             <input
               className="rounded-full"
               type="text"
-              defaultValue={data.email}
+              value={data.email}
               placeholder="Email"
               onChange={(event) => onEmailChange(dataIndex, event.target.value)}
             ></input>
             <input
               className="rounded-full"
               type="text"
-              defaultValue={data.apiKey}
+              value={data.apiKey}
               placeholder="API Key"
               onChange={(event) => onApiKeyChange(dataIndex, event.target.value)}
             ></input>

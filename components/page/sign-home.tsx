@@ -1,7 +1,7 @@
 "use client"
 import { useZustand } from '@/lib/store/use-zustand'
-import Setting from './setting'
-import VoiceChat from './voice-chat'
+import Setting from './setting/setting'
+import VoiceChat from './voice-chat/voice-chat'
 
 export default function SignHome() {
   const { selMenu } = useZustand()

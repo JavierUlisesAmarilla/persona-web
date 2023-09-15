@@ -5,3 +5,10 @@ export const DEPLOY_URL = `https://vercel.com/new/clone?repository-url=https://g
 export const API_KEY = 'abc'
 
 export const BACKEND_URL = IS_DEV_MODE ? 'http://127.0.0.1:4000/main' : ''
+
+export const menus: any = {
+  setting: 'Setting',
+  voiceChat: 'VoiceChat',
+}
+
+export const withoutSign = true

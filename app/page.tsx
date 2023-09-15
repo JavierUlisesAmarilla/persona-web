@@ -1,9 +1,10 @@
 import Home from '@/components/page/home'
-import VoiceChat from '@/components/page/voice-chat'
+import SignHome from '@/components/page/sign-home'
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { withoutSign } from '@/lib/constants'
 
 export default async function Page() {
   const session = await getServerSession(authOptions)
-  return !session ? <VoiceChat /> : <Home />
+  return session || withoutSign ? <SignHome /> : <Home />
 }

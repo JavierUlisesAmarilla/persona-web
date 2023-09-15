@@ -15,6 +15,9 @@ interface ZustandState {
   setScenarioUserSay: (personaIndex: number, scenarioIndex: number, userSayIndex: number, text: string) => void
   setScenarioResponse: (personaIndex: number, scenarioIndex: number, text: string) => void
   addNewScenario: (personaIndex: number) => void
+
+  selMenu: string
+  setSelMenu: (selMenu: string) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -79,4 +82,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
     personaArr[personaIndex].scenarios.push({})
     return { ...state, personaArr }
   }),
+
+  selMenu: 'setting',
+  setSelMenu: (selMenu) => set((state) => ({ ...state, selMenu })),
 }))

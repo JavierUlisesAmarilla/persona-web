@@ -9,11 +9,16 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { useZustand } from "@/lib/store/use-zustand";
 import { menus, withoutSign } from "@/lib/constants";
+import { useEffect } from "react";
 
 export default function NavBar({ session }: { session: Session | null }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
   const { selMenu, setSelMenu } = useZustand()
+
+  useEffect(() => {
+    console.log('NavBar#useEffect: session: ', session)
+  }, [session])
 
   return (
     <>

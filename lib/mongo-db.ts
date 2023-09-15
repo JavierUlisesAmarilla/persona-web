@@ -13,7 +13,7 @@ export const saveData = async (data: any) => {
     const res = await axios.post(saveUrl, data)
     return res
   } catch (e) {
-    console.log('mongo.db#saveData: e: ', e)
+    console.log('mongo-db#saveData: e: ', e)
   }
 }
 
@@ -28,7 +28,7 @@ export const getData = async (id: string) => {
     const res = await axios.get(getUrl)
     return res?.data
   } catch (e) {
-    console.log('mongo.db#getData: e: ', e)
+    console.log('mongo-db#getData: e: ', e)
   }
 }
 
@@ -39,7 +39,7 @@ export const getAllData = async () => {
     const res = await axios.get(getAllUrl)
     return res?.data
   } catch (e) {
-    console.log('mongo.db#getAllData: e: ', e)
+    console.log('mongo-db#getAllData: e: ', e)
   }
 }
 
@@ -54,7 +54,7 @@ export const removeData = async (id: string) => {
     const res = await axios.post(removeUrl)
     return res
   } catch (e) {
-    console.log('mongo.db#removeData: e: ', e)
+    console.log('mongo-db#removeData: e: ', e)
   }
 }
 
@@ -69,6 +69,6 @@ export const getEmailData = async (email: string) => {
     const res = await axios.get(getUrl)
     return res?.data
   } catch (e) {
-    console.log('mongo.db#getData: e: ', e)
+    console.log('mongo-db#getData: e: ', e)
   }
 }

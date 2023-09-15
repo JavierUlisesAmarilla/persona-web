@@ -11,6 +11,6 @@ export const menus: any = {
   voiceChat: 'VoiceChat',
 }
 
-export const withoutSign = true
+export const withoutSign = false
 
 export const adminEmail = 'temp'

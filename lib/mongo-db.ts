@@ -57,18 +57,3 @@ export const removeData = async (id: string) => {
     console.log('mongo-db#removeData: e: ', e)
   }
 }
-
-
-export const getEmailData = async (email: string) => {
-  try {
-    if (!email) {
-      return
-    }
-
-    const getUrl = `${BACKEND_URL}/getemaildata/${email}`
-    const res = await axios.get(getUrl)
-    return res?.data
-  } catch (e) {
-    console.log('mongo-db#getData: e: ', e)
-  }
-}

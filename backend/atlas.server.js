@@ -92,16 +92,6 @@ client.connect((connErr) => {
       response.json(obj)
     })
   })
-
-  // This section will help you get data list by email
-  mainRoute.route('/getemaildata/:email').get((req, res) => {
-    mainCollection.find({ email: req.params.email }).toArray((err, result) => {
-      if (err) {
-        throw err
-      }
-      res.json(result)
-    })
-  })
 })
 
 app.listen(PORT, () => {

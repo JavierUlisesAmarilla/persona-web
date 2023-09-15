@@ -19,7 +19,7 @@ export default function VoiceChat() {
     personaArr, setPersonaArr,
     selPersonaIndex, setSelPersonaIndex,
     setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
-    emailKeyArr, curEmail,
+    apiKeyArr, curEmail,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -34,7 +34,7 @@ export default function VoiceChat() {
   const [schemaText, setSchemaText] = useState(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
   const [stateText, setStateText] = useState('')
 
-  const API_KEY = emailKeyArr.find((emailKey) => emailKey.email === curEmail)?.apiKey || COMMON_API_KEY
+  const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)

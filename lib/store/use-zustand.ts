@@ -22,8 +22,8 @@ interface ZustandState {
   curEmail: string
   setCurEmail: (curEmail: string) => void
 
-  emailKeyArr: Array<any>
-  setEmailKeyArr: (emailKeyArr: Array<any>) => void
+  apiKeyArr: Array<any>
+  setApiKeyArr: (apiKeyArr: Array<any>) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -95,6 +95,6 @@ export const useZustand = create<ZustandState>((set, get) => ({
   curEmail: 'temp',
   setCurEmail: (curEmail) => set((state) => ({ ...state, curEmail })),
 
-  emailKeyArr: [],
-  setEmailKeyArr: (emailKeyArr) => set((state) => ({ ...state, emailKeyArr })),
+  apiKeyArr: [],
+  setApiKeyArr: (apiKeyArr) => set((state) => ({ ...state, apiKeyArr })),
 }))

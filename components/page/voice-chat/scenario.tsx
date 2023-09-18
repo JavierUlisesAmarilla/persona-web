@@ -1,15 +1,22 @@
-"use client"
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsdoc/require-returns */
+'use client'
 
-import { useZustand } from "@/lib/store/use-zustand"
-import { Key } from "react"
+import React from 'react'
+import {useZustand} from '@/lib/store/use-zustand'
+
 
 interface Props {
   scenarioIndex: number
   scenario: any
 }
 
-export default function Scenario({ scenario, scenarioIndex }: Props) {
-  const { selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse } = useZustand()
+/**
+ *
+ */
+export default function Scenario({scenario, scenarioIndex}: Props) {
+  const {selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse} = useZustand()
 
   return (
     <div className='flex flex-col w-full gap-4 p-4 border border-black'>
@@ -20,7 +27,7 @@ export default function Scenario({ scenario, scenarioIndex }: Props) {
           type='text'
           defaultValue={scenario?.context}
           onChange={(e) => setScenarioContext(selPersonaIndex, scenarioIndex, e.target.value)}
-        ></input>
+        />
       </div>
       <div className='flex flex-col w-full gap-2'>
         <div className='flex items-center gap-4'>
@@ -42,7 +49,7 @@ export default function Scenario({ scenario, scenarioIndex }: Props) {
             type='text'
             defaultValue={personaSay}
             onChange={(e) => setScenarioPersonaSay(selPersonaIndex, scenarioIndex, personaSayIndex, e.target.value)}
-          ></input>
+          />,
         )}
       </div>
       <div className='flex flex-col w-full gap-2'>
@@ -65,7 +72,7 @@ export default function Scenario({ scenario, scenarioIndex }: Props) {
             type='text'
             defaultValue={userSay}
             onChange={(e) => setScenarioUserSay(selPersonaIndex, scenarioIndex, userSayIndex, e.target.value)}
-          ></input>
+          />,
         )}
       </div>
       <div className='flex flex-col w-full gap-2'>
@@ -75,7 +82,7 @@ export default function Scenario({ scenario, scenarioIndex }: Props) {
           type='text'
           defaultValue={scenario?.responseGuidelines}
           onChange={(e) => setScenarioResponse(selPersonaIndex, scenarioIndex, e.target.value)}
-        ></input>
+        />
       </div>
     </div>
   )

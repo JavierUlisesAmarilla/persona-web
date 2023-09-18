@@ -1,25 +1,32 @@
-"use client";
+/* eslint-disable jsdoc/require-returns */
+'use client'
 
-import { Dispatch, SetStateAction, ReactNode, useRef } from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import useWindowSize from "@/lib/hooks/use-window-size";
-import Leaflet from "./leaflet";
+import React, {Dispatch, SetStateAction, ReactNode} from 'react'
+import * as PopoverPrimitive from '@radix-ui/react-popover'
+import useWindowSize from '@/lib/hooks/use-window-size'
+import Leaflet from './leaflet'
 
+
+/**
+ *
+ */
 export default function Popover({
   children,
   content,
-  align = "center",
+  align = 'center',
   openPopover,
   setOpenPopover,
 }: {
   children: ReactNode;
   content: ReactNode | string;
-  align?: "center" | "start" | "end";
+  align?: 'center' | 'start' | 'end';
   openPopover: boolean;
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { isMobile, isDesktop } = useWindowSize();
-  if (!isMobile && !isDesktop) return <>{children}</>;
+  const {isMobile, isDesktop} = useWindowSize()
+  if (!isMobile && !isDesktop) {
+    return <>{children}</>
+  }
   return (
     <>
       {isMobile && children}
@@ -37,12 +44,12 @@ export default function Popover({
           <PopoverPrimitive.Content
             sideOffset={4}
             align={align}
-            className="z-20 animate-slide-up-fade items-center rounded-md border border-gray-200 bg-white drop-shadow-lg"
+            className="z-20 items-center bg-white border border-gray-200 rounded-md animate-slide-up-fade drop-shadow-lg"
           >
             {content}
           </PopoverPrimitive.Content>
         </PopoverPrimitive.Root>
       )}
     </>
-  );
+  )
 }

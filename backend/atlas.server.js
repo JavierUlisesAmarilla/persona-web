@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb')
+const {MongoClient, ServerApiVersion} = require('mongodb')
 
 
 const uri = 'mongodb+srv://personaWebappUser:wWHDZE9OcqID13e1@cluster0.30jw4wc.mongodb.net/?retryWrites=true&w=majority'
@@ -16,7 +16,7 @@ const app = express()
 const PORT = 4000
 
 app.use(cors())
-app.use(bodyParser.json({ limit: '50mb', extended: true }))
+app.use(bodyParser.json({limit: '50mb', extended: true}))
 
 // mainRoute is an instance of the express router
 // We use it to define our routes
@@ -49,7 +49,7 @@ client.connect((connErr) => {
 
   // This section will help you get a single data by id
   mainRoute.route('/:id').get((req, res) => {
-    const myQuery = { _id: objectId(req.params.id) }
+    const myQuery = {_id: objectId(req.params.id)}
     mainCollection.findOne(myQuery, (err, result) => {
       if (err) {
         throw err
@@ -70,7 +70,7 @@ client.connect((connErr) => {
 
   // This section will help you update a data by id
   mainRoute.route('/update/:id').post((req, response) => {
-    const myQuery = { _id: objectId(req.params.id) }
+    const myQuery = {_id: objectId(req.params.id)}
     const newValues = {
       $set: req.body,
     }
@@ -84,7 +84,7 @@ client.connect((connErr) => {
 
   // This section will help you delete a data
   mainRoute.route('/remove/:id').post((req, response) => {
-    const myQuery = { _id: objectId(req.params.id) }
+    const myQuery = {_id: objectId(req.params.id)}
     mainCollection.deleteOne(myQuery, (err, obj) => {
       if (err) {
         throw err

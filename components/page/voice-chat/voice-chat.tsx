@@ -1,9 +1,14 @@
-"use client"
-import { COMMON_API_KEY } from '@/lib/constants'
-import { useZustand } from '@/lib/store/use-zustand'
-import { useEffect, useRef, useState } from 'react'
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsdoc/require-returns */
+/* eslint-disable no-unused-vars */
+'use client'
+import React, {useEffect, useState} from 'react'
+import {COMMON_API_KEY} from '@/lib/constants'
+import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import Scenario from './scenario'
+
 
 declare global {
   interface Window {
@@ -13,6 +18,9 @@ declare global {
 
 let isFirstRender = true
 
+/**
+ *
+ */
 export default function VoiceChat() {
   const {
     personaClient, setPersonaClient,
@@ -66,7 +74,7 @@ export default function VoiceChat() {
     }
 
     setInitialMsgState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, { initialMessage: personaArr[selPersonaIndex].initialMessage })
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, {initialMessage: personaArr[selPersonaIndex].initialMessage})
     setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
   }
 
@@ -78,7 +86,7 @@ export default function VoiceChat() {
     }
 
     setRateLimitMsgState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, { rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage })
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, {rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage})
     setRateLimitMsgState(res.status === 200 ? 'Success' : 'Error')
   }
 
@@ -90,7 +98,7 @@ export default function VoiceChat() {
     }
 
     setPromptState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, { prompt: personaArr[selPersonaIndex].currentVoicePrompt })
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
     setPromptState(res.status === 200 ? 'Success' : 'Error')
   }
 
@@ -144,7 +152,7 @@ export default function VoiceChat() {
     }
 
     setSaveScenarioState('Saving...')
-    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, { scenarios: personaArr[selPersonaIndex].scenarios })
+    const res = await axios.put(`https://app.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, {scenarios: personaArr[selPersonaIndex].scenarios})
     setSaveScenarioState(res.status === 200 ? 'Success' : 'Error')
   }
 
@@ -155,11 +163,11 @@ export default function VoiceChat() {
 
     isFirstRender = false
 
-    const script = document.createElement("script")
+    const script = document.createElement('script')
     script.src = `https://app.sindarin.tech/PersonaClient?apikey=${API_KEY}`
     document.head.appendChild(script)
 
-    script.addEventListener("load", async () => {
+    script.addEventListener('load', () => {
       const newPersonaClient = new window.PersonaClient(API_KEY)
       console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
       setPersonaClient(newPersonaClient)
@@ -183,7 +191,7 @@ export default function VoiceChat() {
           >
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </select>
-          <div className='w-32'></div>
+          <div className='w-32'/>
         </div>
         <div className='flex items-center w-full gap-4'>
           <input
@@ -192,14 +200,14 @@ export default function VoiceChat() {
             value={userInput}
             placeholder='Enter user text here'
             onChange={(e) => setUserInput(e.target.value)}
-          ></input>
+          />
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={onUser}
           >
             Submit
           </div>
-          <div className='w-32'></div>
+          <div className='w-32'/>
         </div>
         <div className='flex items-center w-full gap-4'>
           <input
@@ -208,14 +216,14 @@ export default function VoiceChat() {
             value={assistantInput}
             placeholder='Enter assistant text here'
             onChange={(e) => setAssistantInput(e.target.value)}
-          ></input>
+          />
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={onAssistant}
           >
             Submit
           </div>
-          <div className='w-32'></div>
+          <div className='w-32'/>
         </div>
         <div className='flex items-center w-full gap-4'>
           <input
@@ -224,7 +232,7 @@ export default function VoiceChat() {
             value={personaArr[selPersonaIndex]?.initialMessage || ''}
             placeholder='Enter initial message here'
             onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
-          ></input>
+          />
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={onInitialization}
@@ -240,7 +248,7 @@ export default function VoiceChat() {
             value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
             placeholder='Enter rate limit message here'
             onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
-          ></input>
+          />
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={onRateLimit}
@@ -277,7 +285,7 @@ export default function VoiceChat() {
             value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
             placeholder='Enter the prompt here'
             onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
-          ></textarea>
+          />
           <div className='flex flex-col'>
             <div>Possible variables:</div>
             <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
@@ -307,12 +315,13 @@ export default function VoiceChat() {
             value={schemaText}
             placeholder='Enter the actions schema here'
             onChange={(e) => setSchemaText(e.target.value)}
-          ></textarea>
+          />
           <div className='flex items-center gap-4'>
             <div
               className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit whitespace-nowrap'
               onClick={onSchema}
-            >Update actions schema</div>
+            >Update actions schema
+            </div>
             <div>{schemaState}</div>
           </div>
         </div>
@@ -324,7 +333,7 @@ export default function VoiceChat() {
           value={stateText}
           placeholder=''
           onChange={(e) => setStateText(e.target.value)}
-        ></textarea>
+        />
         <div className='flex items-center gap-4'>
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
@@ -359,7 +368,7 @@ export default function VoiceChat() {
               key={index}
               scenarioIndex={index}
               scenario={scenario}
-            ></Scenario>
+            />,
           )}
         </div>
       </div>

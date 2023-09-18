@@ -1,4 +1,5 @@
-import { create } from 'zustand'
+import {create} from 'zustand'
+
 
 interface ZustandState {
   personaClient: any
@@ -28,30 +29,30 @@ interface ZustandState {
 
 export const useZustand = create<ZustandState>((set, get) => ({
   personaClient: null,
-  setPersonaClient: (personaClient) => set((state) => ({ ...state, personaClient })),
+  setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
   personaArr: [],
-  setPersonaArr: (personaArr) => set((state) => ({ ...state, personaArr })),
+  setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
   selPersonaIndex: 0,
-  setSelPersonaIndex: (selPersonaIndex) => set((state) => ({ ...state, selPersonaIndex })),
+  setSelPersonaIndex: (selPersonaIndex) => set((state) => ({...state, selPersonaIndex})),
   setScenarioInitMsg: (personaIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].initialMessage = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioRateLimit: (personaIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].rateLimitMessage = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioPrompt: (personaIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].currentVoicePrompt = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioContext: (personaIndex, scenarioIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].scenarios[scenarioIndex].context = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioPersonaSay: (personaIndex, scenarioIndex, personaSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
@@ -61,7 +62,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
     }
 
     personaArr[personaIndex].scenarios[scenarioIndex].personaSays[personaSayIndex] = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioUserSay: (personaIndex, scenarioIndex, userSayIndex, text) => set((state) => {
     const personaArr = get().personaArr
@@ -71,12 +72,12 @@ export const useZustand = create<ZustandState>((set, get) => ({
     }
 
     personaArr[personaIndex].scenarios[scenarioIndex].userSays[userSayIndex] = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   setScenarioResponse: (personaIndex, scenarioIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].scenarios[scenarioIndex].responseGuidelines = text
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
   addNewScenario: (personaIndex) => set((state) => {
     const personaArr = get().personaArr
@@ -86,15 +87,15 @@ export const useZustand = create<ZustandState>((set, get) => ({
     }
 
     personaArr[personaIndex].scenarios.push({})
-    return { ...state, personaArr }
+    return {...state, personaArr}
   }),
 
   selMenu: 'setting',
-  setSelMenu: (selMenu) => set((state) => ({ ...state, selMenu })),
+  setSelMenu: (selMenu) => set((state) => ({...state, selMenu})),
 
   curEmail: 'temp',
-  setCurEmail: (curEmail) => set((state) => ({ ...state, curEmail })),
+  setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
   apiKeyArr: [],
-  setApiKeyArr: (apiKeyArr) => set((state) => ({ ...state, apiKeyArr })),
+  setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),
 }))

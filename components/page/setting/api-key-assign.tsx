@@ -1,16 +1,22 @@
-"use client"
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsdoc/require-returns */
+'use client'
 
-import { useEffect } from "react"
-import { useZustand } from "@/lib/store/use-zustand"
-import { getAllData } from "@/lib/mongo-db"
-import TeamKey from "./team-key"
+import React, {useEffect} from 'react'
+import {useZustand} from '@/lib/store/use-zustand'
+import {getAllData} from '@/lib/mongo-db'
+import TeamKey from './team-key'
 
 
 let isFirstRender = true
 
 
+/**
+ *
+ */
 export default function ApiKeyAssign() {
-  const { apiKeyArr, setApiKeyArr } = useZustand()
+  const {apiKeyArr, setApiKeyArr} = useZustand()
 
   const onAddTeam = () => {
     setApiKeyArr([
@@ -53,7 +59,7 @@ export default function ApiKeyAssign() {
           key={index}
           apiKeyIndex={index}
           data={apiKeyObj}
-        ></TeamKey>
+        />,
       )}
     </div>
   )

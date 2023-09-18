@@ -1,13 +1,20 @@
-"use client"
-import Card from "@/components/home/card";
-import Balancer from "react-wrap-balancer";
-import { DEPLOY_URL } from "@/lib/constants";
-import { Github, Twitter } from "@/components/shared/icons";
-import WebVitals from "@/components/home/web-vitals";
-import ComponentGrid from "@/components/home/component-grid";
-import Image from "next/image";
-import { nFormatter } from "@/lib/utils";
+/* eslint-disable max-len */
+/* eslint-disable jsdoc/require-returns */
+'use client'
 
+import React from 'react'
+import Card from '@/components/home/card'
+import Balancer from 'react-wrap-balancer'
+import {DEPLOY_URL} from '@/lib/constants'
+import {Github, Twitter} from '@/components/shared/icons'
+import WebVitals from '@/components/home/web-vitals'
+import ComponentGrid from '@/components/home/component-grid'
+import Image from 'next/image'
+
+
+/**
+ *
+ */
 export default function Home() {
   return (
     <>
@@ -18,20 +25,20 @@ export default function Home() {
           rel="noreferrer"
           className="flex items-center justify-center py-2 mx-auto mb-5 space-x-2 overflow-hidden transition-colors bg-blue-100 rounded-full max-w-fit animate-fade-up px-7 hover:bg-blue-200"
         >
-          <Twitter className="h-5 w-5 text-[#1d9bf0]" />
+          <Twitter className="h-5 w-5 text-[#1d9bf0]"/>
           <p className="text-sm font-semibold text-[#1d9bf0]">
             Introducing Precedent
           </p>
         </a>
         <h1
           className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:text-7xl md:leading-[5rem]"
-          style={{ animationDelay: "0.15s", animationFillMode: "forwards" }}
+          style={{animationDelay: '0.15s', animationFillMode: 'forwards'}}
         >
           <Balancer>Building blocks for your Next project</Balancer>
         </h1>
         <p
           className="mt-6 text-center text-gray-500 opacity-0 animate-fade-up md:text-xl"
-          style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
+          style={{animationDelay: '0.25s', animationFillMode: 'forwards'}}
         >
           <Balancer>
             An opinionated collection of components, hooks, and utilities for
@@ -40,7 +47,7 @@ export default function Home() {
         </p>
         <div
           className="flex items-center justify-center mx-auto mt-6 space-x-5 opacity-0 animate-fade-up"
-          style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+          style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}
         >
           <a
             className="flex items-center justify-center px-5 py-2 space-x-2 text-sm text-white transition-colors bg-black border border-black rounded-full group max-w-fit hover:bg-white hover:text-black"
@@ -70,23 +77,23 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Github />
+            <Github/>
             <p>
-              <span className="hidden sm:inline-block">Star on</span> GitHub{" "}
+              <span className="hidden sm:inline-block">Star on</span> GitHub{' '}
               {/* <span className="font-semibold">{nFormatter(stars)}</span> */}
             </p>
           </a>
         </div>
       </div>
       <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 px-5 my-10 animate-fade-up md:grid-cols-3 xl:px-0">
-        {features.map(({ title, description, demo, large }) => (
+        {features.map(({title, description, demo, large}) => (
           <Card
             key={title}
             title={title}
             description={description}
             demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
+              title === 'Beautiful, reusable components' ? (
+                <ComponentGrid/>
               ) : (
                 demo
               )
@@ -96,26 +103,26 @@ export default function Home() {
         ))}
       </div>
     </>
-  );
+  )
 }
 
 const features = [
   {
-    title: "Beautiful, reusable components",
+    title: 'Beautiful, reusable components',
     description:
-      "Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)",
+      'Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)',
     large: true,
   },
   {
-    title: "Performance first",
+    title: 'Performance first',
     description:
-      "Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.",
-    demo: <WebVitals />,
+      'Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.',
+    demo: <WebVitals/>,
   },
   {
-    title: "One-click Deploy",
+    title: 'One-click Deploy',
     description:
-      "Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.",
+      'Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.',
     demo: (
       <a href={DEPLOY_URL}>
         <Image
@@ -129,20 +136,20 @@ const features = [
     ),
   },
   {
-    title: "Built-in Auth + Database",
+    title: 'Built-in Auth + Database',
     description:
-      "Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)",
+      'Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)',
     demo: (
       <div className="flex items-center justify-center space-x-20">
-        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50} />
-        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50} />
+        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50}/>
+        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50}/>
       </div>
     ),
   },
   {
-    title: "Hooks, utilities, and more",
+    title: 'Hooks, utilities, and more',
     description:
-      "Precedent offers a collection of hooks, utilities, and `@vercel/og`",
+      'Precedent offers a collection of hooks, utilities, and `@vercel/og`',
     demo: (
       <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
         <span className="font-mono font-semibold">useIntersectionObserver</span>
@@ -154,4 +161,4 @@ const features = [
       </div>
     ),
   },
-];
+]

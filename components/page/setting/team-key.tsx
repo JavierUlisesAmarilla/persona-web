@@ -1,13 +1,19 @@
-"use client"
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsdoc/require-returns */
+'use client'
 
-import { useState } from 'react'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { removeData, saveData } from "@/lib/mongo-db"
-import { useZustand } from "@/lib/store/use-zustand"
+import React, {useState} from 'react'
+import {AiOutlineCloseCircle} from 'react-icons/ai'
+import {removeData, saveData} from '@/lib/mongo-db'
+import {useZustand} from '@/lib/store/use-zustand'
 
 
-export default function TeamKey({ apiKeyIndex, data }: any) {
-  const { apiKeyArr, setApiKeyArr } = useZustand()
+/**
+ *
+ */
+export default function TeamKey({apiKeyIndex, data}: any) {
+  const {apiKeyArr, setApiKeyArr} = useZustand()
   const [status, setStatus] = useState('')
 
   const onNameChange = (event: any) => {
@@ -24,7 +30,7 @@ export default function TeamKey({ apiKeyIndex, data }: any) {
 
   const onAddEmail = () => {
     const newApiKeyArr = [...apiKeyArr]
-    newApiKeyArr[apiKeyIndex].emailArr.push({ name: '' })
+    newApiKeyArr[apiKeyIndex].emailArr.push({name: ''})
     setApiKeyArr(newApiKeyArr)
   }
 
@@ -65,14 +71,14 @@ export default function TeamKey({ apiKeyIndex, data }: any) {
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
-        ></input>
+        />
         <input
           className="rounded-full"
           type="text"
           value={data?.apiKey}
           placeholder="API Key"
           onChange={onApiKeyChange}
-        ></input>
+        />
         <div
           className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
           onClick={onAddEmail}
@@ -106,13 +112,12 @@ export default function TeamKey({ apiKeyIndex, data }: any) {
                 value={emailObj.name}
                 placeholder="Email"
                 onChange={(event) => onEmailChange(index, event.target.value)}
-              >
-              </input>
+              />
               <AiOutlineCloseCircle
                 className="text-xl cursor-pointer hover:text-gray-500"
                 onClick={() => onEmailRemove(index)}
-              ></AiOutlineCloseCircle>
-            </div>
+              />
+            </div>,
           )}
         </div>
       }

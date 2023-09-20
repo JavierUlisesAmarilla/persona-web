@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-var */
 import {PrismaClient} from '@prisma/client'
+import {NODE_ENV} from './constants'
 
 
 declare global {
@@ -9,7 +10,7 @@ declare global {
 
 const prisma = global.prisma || new PrismaClient()
 
-if (process.env.NODE_ENV === 'development') {
+if (NODE_ENV === 'development') {
   global.prisma = prisma
 }
 

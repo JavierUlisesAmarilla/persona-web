@@ -1,17 +1,19 @@
-/* eslint-disable max-len */
-export const IS_DEV_MODE = process.env.NODE_ENV === 'development'
+// Environment
 
-export const DEPLOY_URL = `https://vercel.com/new/clone?repository-url=https://github.com/sindarin-ventures/persona-webapp&project-name=precedent&repository-name=precedent&demo-title=Precedent&demo-description=An%20opinionated%20collection%20of%20components%2C%20hooks%2C%20and%20utilities%20for%20your%20Next%20project.&demo-url=https://precedent.dev&demo-image=https://precedent.dev/opengraph-image&env=GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,NEXTAUTH_SECRET&envDescription=How%20to%20get%20these%20env%20variables:&envLink=https://github.com/steven-tey/precedent/blob/main/.env.example&stores=%5B%7B"type":"postgres"%7D%5D`
+export const DEPLOY_URL = process.env.DEPLOY_URL || 'http://localhost:3000'
+export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+export const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
+export const MONGODB_API_URL = process.env.MONGODB_API_URL || 'http://localhost:3000/api/mongodb?'
+export const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://personaWebappUser:wWHDZE9OcqID13e1@cluster0.30jw4wc.mongodb.net/?retryWrites=true&w=majority'
+export const DB_NAME = process.env.DB_NAME || 'persona'
+export const NODE_ENV = process.env.NODE_ENV || 'development'
+export const withoutSign = true
+
+// Setting
 
 export const COMMON_API_KEY = 'abc'
-
-export const BACKEND_URL = IS_DEV_MODE ? 'http://127.0.0.1:4000/main' : ''
-
 export const menus: any = {
   setting: 'Setting',
   voiceChat: 'VoiceChat',
 }
-
-export const withoutSign = false
-
 export const adminEmail = 'temp'

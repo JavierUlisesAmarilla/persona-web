@@ -5,7 +5,7 @@
 import React from 'react'
 import Card from '@/components/home/card'
 import Balancer from 'react-wrap-balancer'
-import {NEXT_PUBLIC_DEPLOY_URL} from '@/lib/constants'
+import {DEPLOY_URL} from '@/lib/constants'
 import {Github, Twitter} from '@/components/shared/icons'
 import WebVitals from '@/components/home/web-vitals'
 import ComponentGrid from '@/components/home/component-grid'
@@ -51,7 +51,7 @@ export default function Home() {
         >
           <a
             className="flex items-center justify-center px-5 py-2 space-x-2 text-sm text-white transition-colors bg-black border border-black rounded-full group max-w-fit hover:bg-white hover:text-black"
-            href={NEXT_PUBLIC_DEPLOY_URL}
+            href={DEPLOY_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -124,7 +124,7 @@ const features = [
     description:
       'Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.',
     demo: (
-      <a href={NEXT_PUBLIC_DEPLOY_URL}>
+      <a href={DEPLOY_URL}>
         <Image
           src="https://vercel.com/button"
           alt="Deploy with Vercel"

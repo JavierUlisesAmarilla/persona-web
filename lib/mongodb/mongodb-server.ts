@@ -1,5 +1,5 @@
 import {MongoClient, ServerApiVersion} from 'mongodb'
-import {NEXT_PUBLIC_DB_NAME, NEXT_PUBLIC_MONGODB_URI} from '../constants'
+import {DB_NAME, MONGODB_URI} from '../constants'
 
 
 let cachedClient: any = null
@@ -17,7 +17,7 @@ export const connectToDatabase = async () => {
   }
 
   // Connect to cluster
-  const client = new MongoClient(NEXT_PUBLIC_MONGODB_URI, {
+  const client = new MongoClient(MONGODB_URI, {
     serverApi: {
       version: ServerApiVersion.v1,
       strict: true,
@@ -27,7 +27,7 @@ export const connectToDatabase = async () => {
   console.log('Before db connection')
   await client.connect()
   console.log('After db connection')
-  const db = client.db(NEXT_PUBLIC_DB_NAME)
+  const db = client.db(DB_NAME)
 
   // Set cache
   cachedClient = client

@@ -14,7 +14,6 @@ export default function SignHome({session}: { session: Session | null }) {
   const {selMenu, setCurEmail} = useZustand()
 
   useEffect(() => {
-    console.log('test: ', session?.user?.email)
     setCurEmail(session?.user?.email || '')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user?.email])

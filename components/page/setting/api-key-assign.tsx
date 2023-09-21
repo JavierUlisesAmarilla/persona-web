@@ -7,13 +7,15 @@ import React, {useEffect} from 'react'
 import {useZustand} from '@/lib/store/use-zustand'
 import {getAllData} from '@/lib/mongodb/mongodb-client'
 import TeamKey from './team-key'
+import {ADMIN_EMAIL} from '@/lib/constants'
 
 
 /**
  *
  */
 export default function ApiKeyAssign() {
-  const {apiKeyArr, setApiKeyArr, status, setStatus} = useZustand()
+  const {apiKeyArr, setApiKeyArr, status, setStatus, curEmail} = useZustand()
+  const isAdmin = curEmail === ADMIN_EMAIL
 
   const onAddTeam = () => {
     setApiKeyArr([
@@ -45,7 +47,7 @@ export default function ApiKeyAssign() {
       <div className="flex items-center justify-center gap-4">
         <div className="text-xl">API Key Assignment</div>
         {status ?
-          <div className='text-xl text-blue-500'>{status}</div> :
+          <div className='text-xl text-blue-500'>{status}</div> : isAdmin &&
           <div
             className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
             onClick={onAddTeam}

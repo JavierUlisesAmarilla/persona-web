@@ -7,14 +7,17 @@ import React, {useState} from 'react'
 import {AiOutlineCloseCircle} from 'react-icons/ai'
 import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
+import {ADMIN_EMAIL} from '@/lib/constants'
 
 
 /**
  *
  */
 export default function TeamKey({apiKeyIndex, data}: any) {
-  const {apiKeyArr, setApiKeyArr} = useZustand()
+  const {apiKeyArr, setApiKeyArr, curEmail} = useZustand()
   const [status, setStatus] = useState('')
+  const isAdmin = curEmail === ADMIN_EMAIL
+  const isManager = isAdmin || curEmail === apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.manager
 
   const onNameChange = (event: any) => {
     const newApiKeyArr = [...apiKeyArr]
@@ -25,6 +28,12 @@ export default function TeamKey({apiKeyIndex, data}: any) {
   const onApiKeyChange = (event: any) => {
     const newApiKeyArr = [...apiKeyArr]
     newApiKeyArr[apiKeyIndex].apiKey = event.target.value
+    setApiKeyArr(newApiKeyArr)
+  }
+
+  const onManagerChange = (event: any) => {
+    const newApiKeyArr = [...apiKeyArr]
+    newApiKeyArr[apiKeyIndex].manager = event.target.value
     setApiKeyArr(newApiKeyArr)
   }
 
@@ -65,48 +74,77 @@ export default function TeamKey({apiKeyIndex, data}: any) {
 
   const onEmailRemove = (emailIndex: number) => {
     const newApiKeyArr = [...apiKeyArr]
-    newApiKeyArr[apiKeyIndex].emailArr = newApiKeyArr[apiKeyIndex].emailArr.filter((emailObj: any, index: number) => index !== emailIndex)
+    const emailArr = newApiKeyArr[apiKeyIndex].emailArr.filter((emailObj: any, index: number) => index !== emailIndex)
+    newApiKeyArr[apiKeyIndex].emailArr = emailArr
+
+    if (newApiKeyArr[apiKeyIndex].manager && !emailArr.find((emailObj: any) => emailObj.name === newApiKeyArr[apiKeyIndex].manager)) {
+      newApiKeyArr[apiKeyIndex].manager = ''
+    }
+
     setApiKeyArr(newApiKeyArr)
   }
 
   return (
     <div className="flex flex-col w-full gap-2 p-2 border border-gray-500">
+      {isManager &&
+        <div className="flex items-center w-full gap-4">
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={onAddEmail}
+          >
+            Add Email
+          </div>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={onSave}
+          >
+            Save
+          </div>
+          <div
+            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            onClick={onRemove}
+          >
+            Remove
+          </div>
+          <div className='text-blue-500'>{status}</div>
+        </div>
+      }
       <div className="flex items-center w-full gap-4">
+        <div className='whitespace-nowrap'>Team Name:</div>
         <input
           className="rounded-full"
           type="text"
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
+          disabled={!isAdmin && !isManager}
         />
+        <div className='whitespace-nowrap'>API Key:</div>
         <input
           className="rounded-full"
           type="text"
           value={data?.apiKey}
           placeholder="API Key"
           onChange={onApiKeyChange}
+          disabled={!isAdmin && !isManager}
         />
-        <div
-          className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-          onClick={onAddEmail}
-        >
-          Add Email
-        </div>
-        <div
-          className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-          onClick={onSave}
-        >
-          Save
-        </div>
-        <div
-          className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-          onClick={onRemove}
-        >
-          Remove
-        </div>
-        <div className='text-blue-500'>{status}</div>
+        {isAdmin &&
+          <>
+            <div className='whitespace-nowrap'>Manager:</div>
+            <select
+              className='w-full rounded-full cursor-pointer'
+              value={data?.manager}
+              onChange={onManagerChange}
+            >
+              <option value=''/>
+              {Array.isArray(data?.emailArr) && data.emailArr.map((emailObj: any, index: number) =>
+                emailObj.name && <option key={index} value={emailObj.name}>{emailObj.name}</option>,
+              )}
+            </select>
+          </>
+        }
       </div>
-      {!!data?.emailArr?.length &&
+      {Array.isArray(data?.emailArr) && data.emailArr.length &&
         <div className="flex flex-wrap items-center w-full gap-2">
           {data?.emailArr?.map((emailObj: any, index: number) =>
             <div
@@ -119,11 +157,14 @@ export default function TeamKey({apiKeyIndex, data}: any) {
                 value={emailObj.name}
                 placeholder="Email"
                 onChange={(event) => onEmailChange(index, event.target.value)}
+                disabled={!isAdmin && (!isManager || curEmail === emailObj.name)}
               />
-              <AiOutlineCloseCircle
-                className="text-xl cursor-pointer hover:text-gray-500"
-                onClick={() => onEmailRemove(index)}
-              />
+              {(isAdmin || (isManager && curEmail !== emailObj.name)) &&
+                <AiOutlineCloseCircle
+                  className="text-xl cursor-pointer hover:text-gray-500"
+                  onClick={() => onEmailRemove(index)}
+                />
+              }
             </div>,
           )}
         </div>

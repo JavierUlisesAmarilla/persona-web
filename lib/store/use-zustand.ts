@@ -17,11 +17,11 @@ interface ZustandState {
   setScenarioResponse: (personaIndex: number, scenarioIndex: number, text: string) => void
   addNewScenario: (personaIndex: number) => void
 
-  selMenu: string
-  setSelMenu: (selMenu: string) => void
-
   curEmail: string
   setCurEmail: (curEmail: string) => void
+
+  selMenu: string
+  setSelMenu: (selMenu: string) => void
 
   apiKeyArr: Array<any>
   setApiKeyArr: (apiKeyArr: Array<any>) => void
@@ -93,11 +93,11 @@ export const useZustand = create<ZustandState>((set, get) => ({
     return {...state, personaArr}
   }),
 
-  selMenu: 'setting',
-  setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
-
   curEmail: '',
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
+
+  selMenu: 'setting',
+  setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
 
   apiKeyArr: [],
   setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),

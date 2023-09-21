@@ -12,7 +12,7 @@ import classnames from 'classnames'
 import {useSignInModal} from './sign-in-modal'
 import UserDropdown from './user-dropdown'
 import {useZustand} from '@/lib/store/use-zustand'
-import {menus, withoutSign} from '@/lib/constants'
+import {MENUS, WITHOUT_SIGN} from '@/lib/constants'
 
 
 /**
@@ -48,7 +48,7 @@ export default function NavBar({session}: { session: Session | null }) {
               />
               <p>Precedent</p>
             </Link>
-            {(session || withoutSign) && Object.keys(menus).map((menuKey) =>
+            {(session || WITHOUT_SIGN) && Object.keys(MENUS).map((menuKey) =>
               <div
                 key={menuKey}
                 className={classnames({
@@ -59,7 +59,7 @@ export default function NavBar({session}: { session: Session | null }) {
                   setSelMenu(menuKey)
                 }}
               >
-                {menus[menuKey]}
+                {MENUS[menuKey]}
               </div>,
             )}
           </div>

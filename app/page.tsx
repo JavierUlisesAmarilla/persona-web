@@ -11,5 +11,5 @@ import {WITHOUT_SIGN} from '@/lib/constants'
  */
 export default async function Page() {
   const session = await getServerSession(authOptions)
-  return session || WITHOUT_SIGN ? <SignHome/> : <Home/>
+  return session || WITHOUT_SIGN ? <SignHome session={session}/> : <Home/>
 }

@@ -1,6 +1,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
-import React from 'react'
+import React, {useEffect} from 'react'
+import {Session} from 'next-auth'
 import {useZustand} from '@/lib/store/use-zustand'
 import Setting from './setting/setting'
 import VoiceChat from './voice-chat/voice-chat'
@@ -9,8 +10,14 @@ import VoiceChat from './voice-chat/voice-chat'
 /**
  *
  */
-export default function SignHome() {
-  const {selMenu} = useZustand()
+export default function SignHome({session}: { session: Session | null }) {
+  const {selMenu, setCurEmail} = useZustand()
+
+  useEffect(() => {
+    console.log('test: ', session?.user?.email)
+    setCurEmail(session?.user?.email || '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.email])
 
   return (
     <>

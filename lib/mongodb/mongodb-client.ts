@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {DEPLOY_URL} from '../constants'
+import {NEXT_PUBLIC_DEPLOY_URL} from '../constants'
 
 
 export const saveData = async (data: any) => {
@@ -10,7 +10,8 @@ export const saveData = async (data: any) => {
       return
     }
 
-    const res = await axios.post(`${DEPLOY_URL}/api/mongodb/save`, data)
+    // const res = await axios.post(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb/save`, data)
+    const res = await axios.post(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb`, data)
     console.log('mongodb#saveData: res: ', res)
     return res
   } catch (e) {
@@ -27,8 +28,8 @@ export const getData = async (id: string) => {
       return
     }
 
-    const getUrl = `${DEPLOY_URL}/api/mongodb/get?id=${id}`
-    const res = await axios.get(getUrl)
+    // const res = await axios.get(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb/get?id=${id}`)
+    const res = await axios.get(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb?id=${id}`)
     console.log('mongodb#getData: res: ', res)
     return res?.data
   } catch (e) {
@@ -39,7 +40,8 @@ export const getData = async (id: string) => {
 
 export const getAllData = async () => {
   try {
-    const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get`)
+    // const res = await axios.get(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb/get`)
+    const res = await axios.get(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb`)
     console.log('mongodb#getAllData: res: ', res)
     return res?.data
   } catch (e) {
@@ -56,8 +58,8 @@ export const removeData = async (id: string) => {
       return
     }
 
-    const removeUrl = `${DEPLOY_URL}/api/mongodb/remove?id=${id}`
-    const res = await axios.delete(removeUrl)
+    // const res = await axios.delete(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb/remove?id=${id}`)
+    const res = await axios.delete(`${NEXT_PUBLIC_DEPLOY_URL}/api/mongodb?id=${id}`)
     console.log('mongodb#removeData: res: ', res)
     return res
   } catch (e) {

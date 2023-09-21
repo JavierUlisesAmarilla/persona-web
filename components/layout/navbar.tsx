@@ -52,8 +52,9 @@ export default function NavBar({session}: { session: Session | null }) {
               <div
                 key={menuKey}
                 className={classnames({
-                  'text-xl cursor-pointer hover:text-gray-500': true,
-                  'text-gray-500': selMenu === menuKey,
+                  'text-xl cursor-pointer hover:text-black': true,
+                  'text-black': selMenu === menuKey,
+                  'text-gray-500': selMenu !== menuKey,
                 })}
                 onClick={() => {
                   setSelMenu(menuKey)

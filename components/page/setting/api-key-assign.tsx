@@ -3,21 +3,17 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {useZustand} from '@/lib/store/use-zustand'
 import {getAllData} from '@/lib/mongodb/mongodb-client'
 import TeamKey from './team-key'
-
-
-let isFirstRender = true
 
 
 /**
  *
  */
 export default function ApiKeyAssign() {
-  const {apiKeyArr, setApiKeyArr} = useZustand()
-  const [status, setStatus] = useState('Loading...')
+  const {apiKeyArr, setApiKeyArr, status, setStatus} = useZustand()
 
   const onAddTeam = () => {
     setApiKeyArr([
@@ -31,13 +27,12 @@ export default function ApiKeyAssign() {
   }
 
   useEffect(() => {
-    if (!isFirstRender) {
-      return
-    }
-
-    isFirstRender = false;
-
     (async () => {
+      if (status) {
+        return
+      }
+
+      setStatus('Loading...')
       const newApiKeyArr = await getAllData()
       setApiKeyArr(newApiKeyArr)
       setStatus('')
@@ -59,7 +54,7 @@ export default function ApiKeyAssign() {
           </div>
         }
       </div>
-      {apiKeyArr.map((apiKeyObj, index) =>
+      {!status && apiKeyArr?.map((apiKeyObj, index) =>
         <TeamKey
           key={index}
           apiKeyIndex={index}

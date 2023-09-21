@@ -25,6 +25,9 @@ interface ZustandState {
 
   apiKeyArr: Array<any>
   setApiKeyArr: (apiKeyArr: Array<any>) => void
+
+  status: string
+  setStatus: (status: string) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -91,11 +94,14 @@ export const useZustand = create<ZustandState>((set, get) => ({
   }),
 
   selMenu: 'setting',
-  setSelMenu: (selMenu) => set((state) => ({...state, selMenu})),
+  setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
 
-  curEmail: 'temp',
+  curEmail: '',
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
   apiKeyArr: [],
   setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),
+
+  status: '',
+  setStatus: (status) => set((state) => ({...state, status})),
 }))

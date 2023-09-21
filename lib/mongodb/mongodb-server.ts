@@ -1,5 +1,5 @@
 import {MongoClient, ServerApiVersion} from 'mongodb'
-import {DB_NAME, MONGODB_URI} from './constants'
+import {DB_NAME, MONGODB_URI} from '../constants'
 
 
 let cachedClient: any = null

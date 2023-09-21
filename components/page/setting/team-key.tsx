@@ -5,7 +5,7 @@
 
 import React, {useState} from 'react'
 import {AiOutlineCloseCircle} from 'react-icons/ai'
-import {removeData, saveData} from '@/lib/mongo-db'
+import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
 
 
@@ -36,7 +36,14 @@ export default function TeamKey({apiKeyIndex, data}: any) {
 
   const onSave = async () => {
     setStatus('Saving...')
-    await saveData(data)
+    const res = await saveData(data)
+
+    if (res?.data?.insertedId) {
+      const newApiKeyArr = [...apiKeyArr]
+      newApiKeyArr[apiKeyIndex]._id = res.data.insertedId
+      setApiKeyArr(newApiKeyArr)
+    }
+
     setStatus('Success')
   }
 

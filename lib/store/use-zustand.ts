@@ -28,6 +28,9 @@ interface ZustandState {
 
   status: string
   setStatus: (status: string) => void
+
+  isUser: boolean
+  setIsUser: (isUser: boolean) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -96,7 +99,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
   curEmail: '',
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
-  selMenu: 'setting',
+  selMenu: '',
   setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
 
   apiKeyArr: [],
@@ -104,4 +107,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
 
   status: '',
   setStatus: (status) => set((state) => ({...state, status})),
+
+  isUser: false,
+  setIsUser: (isUser) => set((state) => ({...state, isUser})),
 }))

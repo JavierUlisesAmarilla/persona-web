@@ -21,7 +21,7 @@ import {MENUS, WITHOUT_SIGN} from '@/lib/constants'
 export default function NavBar({session}: { session: Session | null }) {
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)
-  const {selMenu, setSelMenu} = useZustand()
+  const {selMenu, setSelMenu, isUser} = useZustand()
 
   useEffect(() => {
     console.log('NavBar#useEffect: session: ', session)
@@ -48,7 +48,7 @@ export default function NavBar({session}: { session: Session | null }) {
               />
               <p>Precedent</p>
             </Link>
-            {(session || WITHOUT_SIGN) && Object.keys(MENUS).map((menuKey) =>
+            {((session && isUser) || WITHOUT_SIGN) && Object.keys(MENUS).map((menuKey) =>
               <div
                 key={menuKey}
                 className={classnames({
@@ -65,7 +65,7 @@ export default function NavBar({session}: { session: Session | null }) {
             )}
           </div>
           <div>
-            {session ? (
+            {session && isUser ? (
               <UserDropdown session={session}/>
             ) : (
               <button

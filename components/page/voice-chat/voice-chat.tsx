@@ -3,6 +3,7 @@
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable no-unused-vars */
 'use client'
+
 import React, {useEffect, useState} from 'react'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
@@ -211,7 +212,7 @@ export default function VoiceChat() {
       console.log('VoiceChat#useEffect: e: ', e)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [API_KEY])
+  }, [])
 
   return status ? (
     <div className='z-10 w-full p-4 text-xl text-center text-blue-500'>{status}</div>

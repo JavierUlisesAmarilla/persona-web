@@ -3,9 +3,8 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useZustand} from '@/lib/store/use-zustand'
-import {getAllData} from '@/lib/mongodb/mongodb-client'
 import TeamKey from './team-key'
 import {ADMIN_EMAIL} from '@/lib/constants'
 
@@ -14,7 +13,7 @@ import {ADMIN_EMAIL} from '@/lib/constants'
  *
  */
 export default function ApiKeyAssign() {
-  const {apiKeyArr, setApiKeyArr, status, setStatus, curEmail} = useZustand()
+  const {apiKeyArr, setApiKeyArr, status, curEmail} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
 
   const onAddTeam = () => {
@@ -27,20 +26,6 @@ export default function ApiKeyAssign() {
       },
     ])
   }
-
-  useEffect(() => {
-    (async () => {
-      if (status) {
-        return
-      }
-
-      setStatus('Loading...')
-      const newApiKeyArr = await getAllData()
-      setApiKeyArr(newApiKeyArr)
-      setStatus('')
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return (
     <div className="flex flex-col items-center w-full gap-2 p-4 border border-gray-900 rounded">

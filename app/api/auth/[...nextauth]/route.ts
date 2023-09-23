@@ -4,7 +4,7 @@ import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import prisma from '@/lib/prisma'
 import GoogleProvider from 'next-auth/providers/google'
 import Auth0Provider from 'next-auth/providers/auth0'
-import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
+import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
 
 
 export const authOptions: NextAuthOptions = {
@@ -17,6 +17,7 @@ export const authOptions: NextAuthOptions = {
     Auth0Provider({
       clientId: AUTH0_CLIENT_ID as string,
       clientSecret: AUTH0_CLIENT_SECRET as string,
+      issuer: AUTH0_ISSUER,
     }),
   ],
 }

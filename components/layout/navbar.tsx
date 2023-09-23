@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import useScroll from '@/lib/hooks/use-scroll'
 import {Session} from 'next-auth'
+import {signIn} from 'next-auth/react'
 import classnames from 'classnames'
 import {useSignInModal} from './sign-in-modal'
 import UserDropdown from './user-dropdown'
@@ -19,6 +20,7 @@ import {MENUS, WITHOUT_SIGN} from '@/lib/constants'
  *
  */
 export default function NavBar({session}: { session: Session | null }) {
+  // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)
   const {selMenu, setSelMenu, isUser} = useZustand()
@@ -70,7 +72,10 @@ export default function NavBar({session}: { session: Session | null }) {
             ) : (
               <button
                 className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-                onClick={() => setShowSignInModal(true)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  signIn()
+                }}
               >
                 Sign In
               </button>

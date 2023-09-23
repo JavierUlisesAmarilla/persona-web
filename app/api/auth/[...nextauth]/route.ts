@@ -3,7 +3,8 @@ import NextAuth, {NextAuthOptions} from 'next-auth'
 import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import prisma from '@/lib/prisma'
 import GoogleProvider from 'next-auth/providers/google'
-import {GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
+import Auth0Provider from 'next-auth/providers/auth0'
+import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
 
 
 export const authOptions: NextAuthOptions = {
@@ -12,6 +13,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID as string,
       clientSecret: GOOGLE_CLIENT_SECRET as string,
+    }),
+    Auth0Provider({
+      clientId: AUTH0_CLIENT_ID as string,
+      clientSecret: AUTH0_CLIENT_SECRET as string,
     }),
   ],
 }

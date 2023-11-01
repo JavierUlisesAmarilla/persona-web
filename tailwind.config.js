@@ -10,6 +10,11 @@ module.exports = {
   },
   theme: {
     extend: {
+      colors: {
+        'text-btn': '#FFFFFF',
+        'bg-btn': '#4464F3',
+        'text-notify': '#4464F3',
+      },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],
         default: ['var(--font-inter)', 'system-ui', 'sans-serif'],
@@ -61,15 +66,15 @@ module.exports = {
         },
       },
       fontSize: {
-        '14': '14px'
+        14: '14px',
       },
       fontWeight: {
-        '600': '600',
-        '500': '500',
+        600: '600',
+        500: '500',
       },
       width: {
-        '70': '19rem'
-      }
+        70: '19rem',
+      },
     },
   },
   plugins: [

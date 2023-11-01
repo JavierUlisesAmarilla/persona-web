@@ -3,10 +3,10 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React from 'react'
-import {useZustand} from '@/lib/store/use-zustand'
-import TeamKey from './team-key'
 import {ADMIN_EMAIL} from '@/lib/constants'
+import {useZustand} from '@/lib/store/use-zustand'
+import React from 'react'
+import TeamKey from './team-key'
 
 
 /**
@@ -32,9 +32,10 @@ export default function ApiKeyAssign() {
       <div className="flex items-center justify-center gap-4">
         <div className="text-xl">API Key Assignment</div>
         {status ?
-          <div className='text-xl text-blue-500'>{status}</div> : isAdmin &&
+          <div className='text-xl text-text-notify'>{status}</div> :
+          isAdmin &&
           <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+            className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
             onClick={onAddTeam}
           >
             Add Team

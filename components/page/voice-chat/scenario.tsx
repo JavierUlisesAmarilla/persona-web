@@ -3,8 +3,8 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React from 'react'
 import {useZustand} from '@/lib/store/use-zustand'
+import React from 'react'
 
 
 interface Props {
@@ -23,7 +23,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
       <div className='flex flex-col w-full gap-2'>
         <div>Context</div>
         <input
-          className='w-full rounded-full'
+          className='w-full px-3 py-1 rounded'
           type='text'
           defaultValue={scenario?.context}
           onChange={(e) => setScenarioContext(selPersonaIndex, scenarioIndex, e.target.value)}
@@ -33,7 +33,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
         <div className='flex items-center gap-4'>
           <div>When the persona says something like</div>
           <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
             onClick={() => {
               const newPersonaSayIndex = scenario?.personaSays?.length || 0
               setScenarioPersonaSay(selPersonaIndex, scenarioIndex, newPersonaSayIndex, '')
@@ -44,7 +44,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
         </div>
         {scenario?.personaSays?.map((personaSay: any, personaSayIndex: number) =>
           <input
-            className='w-full rounded-full'
+            className='w-full px-3 py-1 rounded'
             key={personaSayIndex}
             type='text'
             defaultValue={personaSay}
@@ -56,7 +56,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
         <div className='flex items-center gap-4'>
           <div>And the user responds with something like</div>
           <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+            className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
             onClick={() => {
               const newUserSayIndex = scenario?.userSays?.length || 0
               setScenarioUserSay(selPersonaIndex, scenarioIndex, newUserSayIndex, '')
@@ -67,7 +67,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
         </div>
         {scenario?.userSays?.map((userSay: any, userSayIndex: number) =>
           <input
-            className='w-full rounded-full'
+            className='w-full px-3 py-1 rounded'
             key={userSayIndex}
             type='text'
             defaultValue={userSay}
@@ -78,7 +78,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
       <div className='flex flex-col w-full gap-2'>
         <div>The persona should respond by</div>
         <input
-          className='w-full rounded-full'
+          className='w-full px-3 py-1 rounded'
           type='text'
           defaultValue={scenario?.responseGuidelines}
           onChange={(e) => setScenarioResponse(selPersonaIndex, scenarioIndex, e.target.value)}

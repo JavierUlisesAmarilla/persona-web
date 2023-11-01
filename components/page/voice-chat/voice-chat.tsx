@@ -4,10 +4,10 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
-import React, {useEffect, useState} from 'react'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
+import React, {useEffect, useState} from 'react'
 import Scenario from './scenario'
 
 
@@ -215,13 +215,13 @@ export default function VoiceChat() {
   }, [])
 
   return status ? (
-    <div className='z-10 w-full p-4 text-xl text-center text-blue-500'>{status}</div>
+    <div className='z-10 w-full p-4 text-xl text-center text-text-notify'>{status}</div>
   ) : (
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
           <select
-            className='w-full rounded-full cursor-pointer'
+            className='w-full px-3 py-1 rounded cursor-pointer'
             onChange={onPersona}
           >
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
@@ -234,14 +234,14 @@ export default function VoiceChat() {
           <div className='flex flex-col w-full gap-4'>
             <div className='flex items-center w-full gap-4'>
               <input
-                className='w-full rounded-full'
+                className='w-full px-3 py-1 rounded'
                 type='text'
                 value={userInput}
                 placeholder='Enter user text here'
                 onChange={(e) => setUserInput(e.target.value)}
               />
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                 onClick={onUser}
               >
                 Submit
@@ -250,14 +250,14 @@ export default function VoiceChat() {
             </div>
             <div className='flex items-center w-full gap-4'>
               <input
-                className='w-full rounded-full'
+                className='w-full px-3 py-1 rounded'
                 type='text'
                 value={assistantInput}
                 placeholder='Enter assistant text here'
                 onChange={(e) => setAssistantInput(e.target.value)}
               />
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                 onClick={onAssistant}
               >
                 Submit
@@ -266,14 +266,14 @@ export default function VoiceChat() {
             </div>
             <div className='flex items-center w-full gap-4'>
               <input
-                className='w-full rounded-full'
+                className='w-full px-3 py-1 rounded'
                 type='text'
                 value={personaArr[selPersonaIndex]?.initialMessage || ''}
                 placeholder='Enter initial message here'
                 onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
               />
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                 onClick={onInitialization}
               >
                 Submit
@@ -282,14 +282,14 @@ export default function VoiceChat() {
             </div>
             <div className='flex items-center w-full gap-4'>
               <input
-                className='w-full rounded-full'
+                className='w-full px-3 py-1 rounded'
                 type='text'
                 value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
                 placeholder='Enter rate limit message here'
                 onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
               />
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                 onClick={onRateLimit}
               >
                 Submit
@@ -320,6 +320,7 @@ export default function VoiceChat() {
             <div className='flex flex-col w-full gap-2'>
               <div className='text-lg'>Prompt</div>
               <textarea
+                className='rounded'
                 rows={20}
                 value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                 placeholder='Enter the prompt here'
@@ -333,7 +334,7 @@ export default function VoiceChat() {
               </div>
               <div className='flex items-center gap-4'>
                 <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
                   onClick={onPrompt}
                 >
                   Update prompt
@@ -341,7 +342,7 @@ export default function VoiceChat() {
                 <div>{promptState}</div>
               </div>
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
                 onClick={onNewChat}
               >
                 New chat (continuous)
@@ -350,6 +351,7 @@ export default function VoiceChat() {
             <div className='flex flex-col w-full gap-2'>
               <div className='text-lg'>Actions schema</div>
               <textarea
+                className='rounded'
                 rows={20}
                 value={schemaText}
                 placeholder='Enter the actions schema here'
@@ -357,9 +359,10 @@ export default function VoiceChat() {
               />
               <div className='flex items-center gap-4'>
                 <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit whitespace-nowrap'
+                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit whitespace-nowrap'
                   onClick={onSchema}
-                >Update actions schema
+                >
+                  Update actions schema
                 </div>
                 <div>{schemaState}</div>
               </div>
@@ -368,6 +371,7 @@ export default function VoiceChat() {
           <div className='flex flex-col w-full gap-2'>
             <div className='text-lg'>Current state</div>
             <textarea
+              className='rounded'
               rows={20}
               value={stateText}
               placeholder=''
@@ -375,7 +379,7 @@ export default function VoiceChat() {
             />
             <div className='flex items-center gap-4'>
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
                 onClick={onState}
               >
                 Update state
@@ -386,14 +390,14 @@ export default function VoiceChat() {
           <div className='flex flex-col w-full gap-2'>
             <div className='flex w-full gap-4'>
               <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                 onClick={onNewScenario}
               >
                 Add new scenario
               </div>
               <div className='flex items-center gap-4'>
                 <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
+                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
                   onClick={onSaveScenarios}
                 >
                   Save scenarios

@@ -67,6 +67,9 @@ module.exports = {
         '600': '600',
         '500': '500',
       },
+      width: {
+        '70': '19rem'
+      }
     },
   },
   plugins: [

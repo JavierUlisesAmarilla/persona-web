@@ -16,7 +16,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="flex h-screen -mt-16 w-60 flex-col p-3 dark:bg-gray-900 dark:text-gray-100">
+    <div className="flex h-screen -mt-16 w-70 flex-col p-3 dark:bg-gray-900 dark:text-gray-100">
       <div className="space-y-3 flex-grow">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -58,7 +58,7 @@ export default function Sidebar() {
             type="search"
             name="Search"
             placeholder="Search for anything"
-            className="w-full rounded-md py-2 pl-10 text-sm focus:outline-none dark:border-text-gray-500 text-gray-500 focus:dark:bg-gray-900"
+            className="w-full rounded-md py-2 pl-10 focus:outline-none text-gray-500 font-500 text-14::placeholder border-1 border-gray-200"
           />
         </div>
         <div className="flex-1">

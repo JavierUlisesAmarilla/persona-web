@@ -5,6 +5,7 @@ import React, {useEffect} from 'react'
 import {Session} from 'next-auth'
 import Setting from './setting/setting'
 import VoiceChat from './voice-chat/voice-chat'
+import Dashboard from './dashboard'
 import {getAllData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
 import {ADMIN_EMAIL} from '@/lib/constants'
@@ -47,6 +48,7 @@ export default function SignHome({session}: { session: Session | null }) {
     <>
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
+      {selMenu === 'dashboard' && <Dashboard/>}      
     </>
   ) : (
     <div className='z-10 w-full p-4 text-xl text-center text-blue-500'>{status}</div>

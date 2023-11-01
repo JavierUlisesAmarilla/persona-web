@@ -60,6 +60,13 @@ module.exports = {
           '100%': {opacity: 1, transform: 'translateY(0)'},
         },
       },
+      fontSize: {
+        '14': '14px'
+      },
+      fontWeight: {
+        '600': '600',
+        '500': '500',
+      },
     },
   },
   plugins: [

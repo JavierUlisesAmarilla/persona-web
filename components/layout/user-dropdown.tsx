@@ -7,7 +7,8 @@ import {LayoutDashboard, LogOut} from 'lucide-react'
 import Popover from '@/components/shared/popover'
 import Image from 'next/image'
 import {Session} from 'next-auth'
-
+import { useZustand } from "@/lib/store/use-zustand";
+import { MENUS } from "@/lib/constants";
 
 /**
  *
@@ -15,9 +16,14 @@ import {Session} from 'next-auth'
 export default function UserDropdown({session}: { session: Session }) {
   const {email, image} = session?.user || {}
   const [openPopover, setOpenPopover] = useState(false)
+  const { selMenu, setSelMenu } = useZustand();
 
   if (!email) {
     return null
+  }
+
+  const goToDashboard = () => {
+    setSelMenu("dashboard");
   }
 
   return (
@@ -33,7 +39,8 @@ export default function UserDropdown({session}: { session: Session }) {
               <p className="text-sm">Dashboard</p>
             </Link> */}
             <button
-              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md cursor-not-allowed hover:bg-gray-100"              
+            onClick={() => goToDashboard()}
+              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-gray-100"              
             >
               <LayoutDashboard className="w-4 h-4"/>
               <p className="text-sm">Dashboard</p>

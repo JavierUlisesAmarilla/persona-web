@@ -33,8 +33,7 @@ export default function UserDropdown({session}: { session: Session }) {
               <p className="text-sm">Dashboard</p>
             </Link> */}
             <button
-              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md cursor-not-allowed hover:bg-gray-100"
-              disabled
+              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md cursor-not-allowed hover:bg-gray-100"              
             >
               <LayoutDashboard className="w-4 h-4"/>
               <p className="text-sm">Dashboard</p>

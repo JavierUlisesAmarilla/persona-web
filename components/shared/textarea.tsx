@@ -16,7 +16,7 @@ export const Textarea = ({
 }) => {
   return (
     <textarea
-      className='border-gray-200 rounded'
+      className='border-gray-200 rounded text-xs'
       value={value || ''}
       rows={rows}
       placeholder={placeholder}

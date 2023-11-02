@@ -1,8 +1,9 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
+import {Button} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {useZustand} from '@/lib/store/use-zustand'
 import React from 'react'
@@ -20,7 +21,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
   const {selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse} = useZustand()
 
   return (
-    <div className='flex flex-col w-full gap-4 p-4 border border-gray-200'>
+    <div className='flex flex-col w-full gap-4 p-4 text-sm border border-gray-200'>
       <div className='flex flex-col w-full gap-2'>
         <div>Context</div>
         <InputText
@@ -31,15 +32,14 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
       <div className='flex flex-col w-full gap-2'>
         <div className='flex items-center gap-4'>
           <div>When the persona says something like</div>
-          <div
-            className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
+          <Button
             onClick={() => {
               const newPersonaSayIndex = scenario?.personaSays?.length || 0
               setScenarioPersonaSay(selPersonaIndex, scenarioIndex, newPersonaSayIndex, '')
             }}
           >
             Add new example
-          </div>
+          </Button>
         </div>
         {scenario?.personaSays?.map((personaSay: any, personaSayIndex: number) =>
           <InputText
@@ -52,15 +52,14 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
       <div className='flex flex-col w-full gap-2'>
         <div className='flex items-center gap-4'>
           <div>And the user responds with something like</div>
-          <div
-            className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
+          <Button
             onClick={() => {
               const newUserSayIndex = scenario?.userSays?.length || 0
               setScenarioUserSay(selPersonaIndex, scenarioIndex, newUserSayIndex, '')
             }}
           >
             Add new example
-          </div>
+          </Button>
         </div>
         {scenario?.userSays?.map((userSay: any, userSayIndex: number) =>
           <InputText

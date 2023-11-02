@@ -22,7 +22,7 @@ export const UserSelect = ({
 }) => {
   return (
     <select
-      className='px-3 py-1 border-gray-200 rounded cursor-pointer'
+      className='px-3 py-1 text-xs border-gray-200 rounded cursor-pointer'
       value={value}
       onChange={onChange}
     >

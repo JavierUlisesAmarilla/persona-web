@@ -1,11 +1,12 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable no-unused-vars */
 'use client'
 
 import React, {useEffect, useState} from 'react'
 
+import {Button} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
@@ -239,12 +240,7 @@ export default function VoiceChat() {
                 placeholder='Enter user text here'
                 onChange={(e) => setUserInput(e.target.value)}
               />
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                onClick={onUser}
-              >
-                Submit
-              </div>
+              <Button onClick={onUser}>Submit</Button>
               <div className='w-32'/>
             </div>
             <div className='flex items-center w-full gap-4'>
@@ -253,12 +249,7 @@ export default function VoiceChat() {
                 placeholder='Enter assistant text here'
                 onChange={(e) => setAssistantInput(e.target.value)}
               />
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                onClick={onAssistant}
-              >
-                Submit
-              </div>
+              <Button onClick={onAssistant}>Submit</Button>
               <div className='w-32'/>
             </div>
             <div className='flex items-center w-full gap-4'>
@@ -267,12 +258,7 @@ export default function VoiceChat() {
                 placeholder='Enter initial message here'
                 onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
               />
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                onClick={onInitialization}
-              >
-                Submit
-              </div>
+              <Button onClick={onInitialization}>Submit</Button>
               <div className='w-32'>{initialMsgState}</div>
             </div>
             <div className='flex items-center w-full gap-4'>
@@ -281,19 +267,14 @@ export default function VoiceChat() {
                 placeholder='Enter rate limit message here'
                 onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
               />
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                onClick={onRateLimit}
-              >
-                Submit
-              </div>
+              <Button onClick={onRateLimit}>Submit</Button>
               <div className='w-32'>{rateLimitMsgState}</div>
             </div>
           </div>
           <div className='flex flex-col w-full gap-2'>
-            <div className='text-lg '>For guidance on prompt engineering techniques for your Persona, see:</div>
+            <div className='text-sm'>For guidance on prompt engineering techniques for your Persona, see:</div>
             <a
-              className='text-blue-500 hover:text-blue-900 w-fit'
+              className='text-sm text-blue-500 hover:text-blue-900 w-fit'
               href="https://www.promptingguide.ai/introduction"
               target="_blank"
               rel="noreferrer"
@@ -301,7 +282,7 @@ export default function VoiceChat() {
               Prompt Engineering Guide 1
             </a>
             <a
-              className='text-blue-500 hover:text-blue-900 w-fit'
+              className='text-sm text-blue-500 hover:text-blue-900 w-fit'
               href="https://github.com/brexhq/prompt-engineering"
               target="_blank"
               rel="noreferrer"
@@ -311,37 +292,27 @@ export default function VoiceChat() {
           </div>
           <div className='flex w-full gap-4'>
             <div className='flex flex-col w-full gap-2'>
-              <div className='text-lg'>Prompt</div>
+              <div className='text-sm'>Prompt</div>
               <Textarea
                 rows={20}
                 value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                 placeholder='Enter the prompt here'
                 onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
               />
-              <div className='flex flex-col'>
+              <div className='flex flex-col text-sm'>
                 <div>Possible variables:</div>
                 <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
                 <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
                 <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call e.g. &quot;***DETAILS.firstName***&quot;</div>
               </div>
               <div className='flex items-center gap-4'>
-                <div
-                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
-                  onClick={onPrompt}
-                >
-                  Update prompt
-                </div>
+                <Button onClick={onPrompt}>Update prompt</Button>
                 <div>{promptState}</div>
               </div>
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
-                onClick={onNewChat}
-              >
-                New chat (continuous)
-              </div>
+              <Button onClick={onNewChat}>New chat (continuous)</Button>
             </div>
             <div className='flex flex-col w-full gap-2'>
-              <div className='text-lg'>Actions schema</div>
+              <div className='text-sm'>Actions schema</div>
               <Textarea
                 rows={20}
                 value={schemaText}
@@ -349,18 +320,13 @@ export default function VoiceChat() {
                 onChange={(e) => setSchemaText(e.target.value)}
               />
               <div className='flex items-center gap-4'>
-                <div
-                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit whitespace-nowrap'
-                  onClick={onSchema}
-                >
-                  Update actions schema
-                </div>
+                <Button onClick={onSchema}>Update actions schema</Button>
                 <div>{schemaState}</div>
               </div>
             </div>
           </div>
           <div className='flex flex-col w-full gap-2'>
-            <div className='text-lg'>Current state</div>
+            <div className='text-sm'>Current state</div>
             <Textarea
               rows={20}
               value={stateText}
@@ -368,30 +334,15 @@ export default function VoiceChat() {
               onChange={(e) => setStateText(e.target.value)}
             />
             <div className='flex items-center gap-4'>
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
-                onClick={onState}
-              >
-                Update state
-              </div>
+              <Button onClick={onState}>Update state</Button>
               <div>{stateState}</div>
             </div>
           </div>
           <div className='flex flex-col w-full gap-2'>
             <div className='flex w-full gap-4'>
-              <div
-                className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                onClick={onNewScenario}
-              >
-                Add new scenario
-              </div>
+              <Button onClick={onNewScenario}>Add new scenario</Button>
               <div className='flex items-center gap-4'>
-                <div
-                  className='px-3 py-1 rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black'
-                  onClick={onSaveScenarios}
-                >
-                  Save scenarios
-                </div>
+                <Button onClick={onSaveScenarios}>Save scenarios</Button>
                 <div>{saveScenarioState}</div>
               </div>
             </div>

@@ -1,11 +1,12 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
 import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
 import React, {useState} from 'react'
 
+import {Button} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {UserSelect} from '@/components/shared/user-select'
 import {ADMIN_EMAIL} from '@/lib/constants'
@@ -90,36 +91,21 @@ export default function TeamKey({apiKeyIndex, data}: any) {
     <div className="flex flex-col w-full gap-2 p-2 border border-gray-200">
       {isManager &&
         <div className="flex items-center w-full gap-4">
-          <div
-            className='px-3 py-1 text-white rounded cursor-pointer bg-bg-btn hover:text-black'
-            onClick={onAddEmail}
-          >
-            Add Email
-          </div>
-          <div
-            className='px-3 py-1 text-white rounded cursor-pointer bg-bg-btn hover:text-black'
-            onClick={onSave}
-          >
-            Save
-          </div>
-          <div
-            className='px-3 py-1 text-white rounded cursor-pointer bg-bg-btn hover:text-black'
-            onClick={onRemove}
-          >
-            Remove
-          </div>
+          <Button onClick={onAddEmail}>Add Email</Button>
+          <Button onClick={onSave}>Save</Button>
+          <Button onClick={onRemove}>Remove</Button>
           <div className='text-blue-500'>{status}</div>
         </div>
       }
       <div className="flex items-center w-full gap-4">
-        <div className='whitespace-nowrap'>Team Name:</div>
+        <div className='text-sm whitespace-nowrap'>Team Name:</div>
         <InputText
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
           disabled={!isAdmin && !isManager}
         />
-        <div className='whitespace-nowrap'>API Key:</div>
+        <div className='text-sm whitespace-nowrap'>API Key:</div>
         <InputText
           value={data?.apiKey}
           placeholder="API Key"
@@ -128,7 +114,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
         />
         {isAdmin &&
           <>
-            <div className='whitespace-nowrap'>Manager:</div>
+            <div className='text-sm whitespace-nowrap'>Manager:</div>
             <UserSelect
               value={data?.manager}
               onChange={onManagerChange}

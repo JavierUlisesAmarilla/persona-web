@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cx(inter.variable, sfPro.variable)}>
+      <body className={cx(inter.variable, sfPro.variable, 'text-gray-700')}>
         <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/>
         <Suspense fallback="...">
           {/* @ts-expect-error Server Component */}

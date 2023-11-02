@@ -9,7 +9,6 @@ import {MENUS} from '@/lib/constants'
 import useScroll from '@/lib/hooks/use-scroll'
 import {useZustand} from '@/lib/store/use-zustand'
 import classnames from 'classnames'
-import {Session} from 'next-auth'
 import {signIn} from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +19,7 @@ import UserDropdown from './user-dropdown'
 /**
  *
  */
-export default function NavBar({session}: {session: Session | null}) {
+export default function NavBar({session}: {session: any}) {
   // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)

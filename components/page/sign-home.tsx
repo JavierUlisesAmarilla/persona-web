@@ -34,7 +34,7 @@ export default function SignHome({session}: {session: any}) {
       if (isAdmin || isRealUser) {
         setIsUser(true)
         setStatus('')
-        setSelMenu('setting')
+        setSelMenu('voiceChat')
       } else {
         setIsUser(false)
         setStatus('Your email does not exist.')

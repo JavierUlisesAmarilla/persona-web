@@ -21,16 +21,16 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
   const {selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse} = useZustand()
 
   return (
-    <div className='flex flex-col w-full gap-4 p-4 text-sm border border-gray-200'>
-      <div className='flex flex-col w-full gap-2'>
+    <div className='flex flex-col w-full gap-3 p-6 text-sm border rounded-lg border-border-gray bg-bg-gray'>
+      <div className='flex flex-col w-full gap-3'>
         <div>Context</div>
         <InputText
           defaultValue={scenario?.context}
           onChange={(e) => setScenarioContext(selPersonaIndex, scenarioIndex, e.target.value)}
         />
       </div>
-      <div className='flex flex-col w-full gap-2'>
-        <div className='flex items-center gap-4'>
+      <div className='flex flex-col w-full gap-3'>
+        <div className='flex items-center gap-3'>
           <div>When the persona says something like</div>
           <Button
             onClick={() => {
@@ -49,8 +49,8 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
           />,
         )}
       </div>
-      <div className='flex flex-col w-full gap-2'>
-        <div className='flex items-center gap-4'>
+      <div className='flex flex-col w-full gap-3'>
+        <div className='flex items-center gap-3'>
           <div>And the user responds with something like</div>
           <Button
             onClick={() => {
@@ -69,7 +69,7 @@ export default function Scenario({scenario, scenarioIndex}: Props) {
           />,
         )}
       </div>
-      <div className='flex flex-col w-full gap-2'>
+      <div className='flex flex-col w-full gap-3'>
         <div>The persona should respond by</div>
         <InputText
           defaultValue={scenario?.responseGuidelines}

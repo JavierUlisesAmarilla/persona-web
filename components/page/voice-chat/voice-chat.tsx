@@ -1,17 +1,16 @@
-
-
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable no-unused-vars */
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 
-import { Button } from '@/components/shared/button'
-import { InputText } from '@/components/shared/input-text'
-import { Textarea } from '@/components/shared/textarea'
-import { UserSelect } from '@/components/shared/user-select'
-import { COMMON_API_KEY } from '@/lib/constants'
-import { useZustand } from '@/lib/store/use-zustand'
+import {Button} from '@/components/shared/button'
+import {InputText} from '@/components/shared/input-text'
+import {Textarea} from '@/components/shared/textarea'
+import {UserSelect} from '@/components/shared/user-select'
+import {COMMON_API_KEY} from '@/lib/constants'
+import {getPersonaArr} from '@/lib/persona'
+import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import Scenario from './scenario'
 
@@ -203,11 +202,10 @@ export default function VoiceChat() {
       });
 
       (async () => {
-        const personaArrRes = await axios.get(`https://api.sindarin.tech/api/personas?apikey=${API_KEY}`)
-        console.log('VoiceChat#useEffect: personaArrRes: ', personaArrRes)
+        const newPersonaArr = await getPersonaArr(API_KEY)
 
-        if (Array.isArray(personaArrRes.data)) {
-          setPersonaArr(personaArrRes.data)
+        if (Array.isArray(newPersonaArr)) {
+          setPersonaArr(newPersonaArr)
           setStatus('')
         } else {
           setStatus('API key seems to be incorrect.')
@@ -220,15 +218,16 @@ export default function VoiceChat() {
   }, [])
 
   return status ? (
-    <div className='z-10 w-full p-4 text-xl text-center text-text-gray'>{status}</div>
+    <div className='z-10 p-6 mx-4 text-center text-text-gray'>{status}</div>
   ) : (
-    <div className="z-10 flex flex-col w-full gap-8 px-8">
+    <div className="z-10 flex flex-col gap-3 p-6 mx-4 border rounded-lg bg-bg-light">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
           <UserSelect onChange={onPersona}>
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </UserSelect>
           <div className='w-32'/>
+          <Button onClick={onNewChat}>New chat (continuous)</Button>
         </div>
       </div>
       {personaArr[selPersonaIndex] &&
@@ -309,7 +308,6 @@ export default function VoiceChat() {
                 <Button onClick={onPrompt}>Update prompt</Button>
                 <div>{promptState}</div>
               </div>
-              <Button onClick={onNewChat}>New chat (continuous)</Button>
             </div>
             <div className='flex flex-col w-full gap-2'>
               <div className='text-sm'>Actions schema</div>

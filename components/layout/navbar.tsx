@@ -3,9 +3,9 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {MENUS} from '@/lib/constants'
 import React, {useEffect} from 'react'
 
+import {MENUS} from '@/lib/constants'
 import useScroll from '@/lib/hooks/use-scroll'
 import {useZustand} from '@/lib/store/use-zustand'
 import classnames from 'classnames'
@@ -39,7 +39,7 @@ export default function NavBar({session}: {session: Session | null}) {
           'bg-white/0'
         } z-30 transition-all`}
       >
-        <div className="flex items-center justify-between w-full h-16 mx-5">
+        <div className="flex items-center justify-between w-full h-16 mx-4">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center text-2xl font-display">
               <Image

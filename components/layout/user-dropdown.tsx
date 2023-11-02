@@ -1,13 +1,14 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
+import {LayoutDashboard, LogOut} from 'lucide-react'
+import React, {useState} from 'react'
+
 import Popover from '@/components/shared/popover'
 import {useZustand} from '@/lib/store/use-zustand'
-import {LayoutDashboard, LogOut} from 'lucide-react'
 import {Session} from 'next-auth'
 import {signOut} from 'next-auth/react'
 import Image from 'next/image'
-import React, {useState} from 'react'
 
 /**
  *
@@ -30,7 +31,7 @@ export default function UserDropdown({session}: {session: Session}) {
     <div className="relative inline-block text-left">
       <Popover
         content={
-          <div className="w-full p-2 bg-white rounded-md sm:w-56">
+          <div className="w-full p-2 rounded-md bg-bg-light sm:w-56">
             {/* <Link
               className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-gray-100"
               href="/dashboard"
@@ -40,13 +41,13 @@ export default function UserDropdown({session}: {session: Session}) {
             </Link> */}
             <button
               onClick={() => goToDashboard()}
-              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-gray-100"
+              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-bg-gray"
             >
               <LayoutDashboard className="w-4 h-4"/>
               <p className="text-sm">Dashboard</p>
             </button>
             <button
-              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-gray-100"
+              className="relative flex items-center justify-start w-full p-2 space-x-2 text-sm text-left transition-all duration-75 rounded-md hover:bg-bg-gray"
               onClick={() => signOut()}
             >
               <LogOut className="w-4 h-4"/>
@@ -60,7 +61,7 @@ export default function UserDropdown({session}: {session: Session}) {
       >
         <button
           onClick={() => setOpenPopover(!openPopover)}
-          className="flex items-center justify-center w-8 h-8 overflow-hidden transition-all duration-75 border border-gray-300 rounded-full focus:outline-none active:scale-95 sm:h-9 sm:w-9"
+          className="flex items-center justify-center w-8 h-8 overflow-hidden transition-all duration-75 border rounded-full border-border-gray focus:outline-none active:scale-95 sm:h-9 sm:w-9"
         >
           <Image
             alt={email}

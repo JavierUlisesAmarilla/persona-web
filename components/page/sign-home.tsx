@@ -1,20 +1,19 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
+import React, {useEffect} from 'react'
+
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {getAllData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
-import {Session} from 'next-auth'
-import React, {useEffect} from 'react'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
 import VoiceChat from './voice-chat/voice-chat'
 
-
 /**
  *
  */
-export default function SignHome({session}: {session: Session | null}) {
+export default function SignHome({session}: {session: any}) {
   const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu} = useZustand()
 
   useEffect(() => {
@@ -51,6 +50,6 @@ export default function SignHome({session}: {session: Session | null}) {
       {selMenu === 'dashboard' && <Dashboard/>}
     </>
   ) : (
-    <div className='z-10 w-full p-4 text-xl text-center text-blue-500'>{status}</div>
+    <div className='z-10 w-full p-6 text-center text-text-gray'>{status}</div>
   )
 }

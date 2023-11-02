@@ -4,14 +4,14 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
-import {Button} from '@/components/shared/button'
-import {InputText} from '@/components/shared/input-text'
-import {Textarea} from '@/components/shared/textarea'
-import {UserSelect} from '@/components/shared/user-select'
-import {COMMON_API_KEY} from '@/lib/constants'
-import {useZustand} from '@/lib/store/use-zustand'
+import { Button } from '@/components/shared/button'
+import { InputText } from '@/components/shared/input-text'
+import { Textarea } from '@/components/shared/textarea'
+import { UserSelect } from '@/components/shared/user-select'
+import { COMMON_API_KEY } from '@/lib/constants'
+import { useZustand } from '@/lib/store/use-zustand'
 import axios from 'axios'
 import Scenario from './scenario'
 
@@ -220,7 +220,7 @@ export default function VoiceChat() {
   }, [])
 
   return status ? (
-    <div className='z-10 w-full p-4 text-xl text-center text-text-notify'>{status}</div>
+    <div className='z-10 w-full p-4 text-xl text-center text-text-gray'>{status}</div>
   ) : (
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>

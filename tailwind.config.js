@@ -11,9 +11,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'text-btn': '#FFFFFF',
-        'bg-btn': '#4464F3',
-        'text-notify': '#4464F3',
+        'bg-light': '#FFFFFF',
+        'bg-gray': '#F9FAFB',
+        'text-light': '#FFFFFF',
+        'text-gray': '#98A2B3',
+        'text-dark': '#000000',
+        'bg-btn-light': '#FFFFFF',
+        'bg-btn-blue': '#4464F3',
+        'border-gray': '#EAECF0',
       },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],

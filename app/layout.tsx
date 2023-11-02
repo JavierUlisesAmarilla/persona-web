@@ -1,11 +1,13 @@
+import './globals.css'
+
+import React, {Suspense} from 'react'
+import {inter, sfPro} from './fonts'
+
+import {Analytics} from '@vercel/analytics/react'
 /* eslint-disable jsdoc/require-returns */
 import Footer from '@/components/layout/footer'
 import Nav from '@/components/layout/nav'
-import {Analytics} from '@vercel/analytics/react'
 import cx from 'classnames'
-import React, {Suspense} from 'react'
-import {inter, sfPro} from './fonts'
-import './globals.css'
 
 
 export const metadata = {
@@ -33,8 +35,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cx(inter.variable, sfPro.variable, 'text-gray-700')}>
-        <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/>
+      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-gray text-text-dark')}>
+        {/* <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/> */}
         <Suspense fallback="...">
           {/* @ts-expect-error Server Component */}
           <Nav/>

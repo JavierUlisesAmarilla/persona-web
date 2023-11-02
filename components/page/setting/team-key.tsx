@@ -88,7 +88,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2 p-2 border border-gray-200">
+    <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
       {isManager &&
         <div className="flex items-center w-full gap-4">
           <Button onClick={onAddEmail}>Add Email</Button>
@@ -98,14 +98,14 @@ export default function TeamKey({apiKeyIndex, data}: any) {
         </div>
       }
       <div className="flex items-center w-full gap-4">
-        <div className='text-sm whitespace-nowrap'>Team Name:</div>
+        <div className='text-xs whitespace-nowrap'>Team Name:</div>
         <InputText
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
           disabled={!isAdmin && !isManager}
         />
-        <div className='text-sm whitespace-nowrap'>API Key:</div>
+        <div className='text-xs whitespace-nowrap'>API Key:</div>
         <InputText
           value={data?.apiKey}
           placeholder="API Key"
@@ -114,7 +114,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
         />
         {isAdmin &&
           <>
-            <div className='text-sm whitespace-nowrap'>Manager:</div>
+            <div className='text-xs whitespace-nowrap'>Manager:</div>
             <UserSelect
               value={data?.manager}
               onChange={onManagerChange}
@@ -132,10 +132,9 @@ export default function TeamKey({apiKeyIndex, data}: any) {
           {data?.emailArr?.map((emailObj: any, index: number) =>
             <div
               key={index}
-              className="flex items-center gap-1 p-1 border border-gray-200 rounded"
+              className="flex items-center gap-1 p-1 border border-gray-200 rounded-md"
             >
               <InputText
-                // className="text-xs border-none outline-none rounded px-2 py-0.5"
                 value={emailObj.name}
                 placeholder="Email"
                 onChange={(event) => onEmailChange(index, event.target.value)}
@@ -143,7 +142,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
               />
               {(isAdmin || (isManager && curEmail !== emailObj.name)) &&
                 <AiOutlineCloseCircle
-                  className="text-xl text-gray-500 cursor-pointer hover:text-black"
+                  className="text-xl cursor-pointer text-text-gray hover:text-text-dark"
                   onClick={() => onEmailRemove(index)}
                 />
               }

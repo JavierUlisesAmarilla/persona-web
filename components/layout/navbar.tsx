@@ -3,23 +3,24 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
+import {MENUS} from '@/lib/constants'
 import React, {useEffect} from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+
 import useScroll from '@/lib/hooks/use-scroll'
+import {useZustand} from '@/lib/store/use-zustand'
+import classnames from 'classnames'
 import {Session} from 'next-auth'
 import {signIn} from 'next-auth/react'
-import classnames from 'classnames'
+import Image from 'next/image'
+import Link from 'next/link'
+import {Button} from '../shared/button'
 import {useSignInModal} from './sign-in-modal'
 import UserDropdown from './user-dropdown'
-import {useZustand} from '@/lib/store/use-zustand'
-import {MENUS, WITHOUT_SIGN} from '@/lib/constants'
-
 
 /**
  *
  */
-export default function NavBar({session}: { session: Session | null }) {
+export default function NavBar({session}: {session: Session | null}) {
   // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)
@@ -38,7 +39,7 @@ export default function NavBar({session}: { session: Session | null }) {
           'bg-white/0'
         } z-30 transition-all`}
       >
-        <div className="flex items-center justify-between w-full h-16 max-w-screen-xl mx-5">
+        <div className="flex items-center justify-between w-full h-16 mx-5">
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center text-2xl font-display">
               <Image
@@ -50,13 +51,13 @@ export default function NavBar({session}: { session: Session | null }) {
               />
               <p>Precedent</p>
             </Link>
-            {((session && isUser) || WITHOUT_SIGN) && Object.keys(MENUS).map((menuKey) =>
+            {session && isUser && Object.keys(MENUS).map((menuKey) =>
               <div
                 key={menuKey}
                 className={classnames({
                   'text-xl cursor-pointer hover:text-black': true,
-                  'text-black': selMenu === menuKey,
-                  'text-gray-500': selMenu !== menuKey,
+                  'text-text-dark': selMenu === menuKey,
+                  'text-text-gray': selMenu !== menuKey,
                 })}
                 onClick={() => {
                   setSelMenu(menuKey)
@@ -70,15 +71,14 @@ export default function NavBar({session}: { session: Session | null }) {
             {session && isUser ? (
               <UserDropdown session={session}/>
             ) : (
-              <button
-                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+              <Button
                 onClick={(e) => {
                   e.preventDefault()
                   signIn()
                 }}
               >
                 Sign In
-              </button>
+              </Button>
             )}
           </div>
         </div>

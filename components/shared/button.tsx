@@ -14,7 +14,7 @@ export const Button = ({
 }) => {
   return (
     <div
-      className='px-3 py-1 text-xs rounded cursor-pointer text-text-btn bg-bg-btn hover:text-black w-fit'
+      className='px-3 py-1 text-xs rounded cursor-pointer text-text-light bg-bg-btn-blue hover:text-text-gray w-fit'
       onClick={onClick}
     >
       {children}

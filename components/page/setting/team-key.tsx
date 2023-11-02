@@ -3,12 +3,14 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {ADMIN_EMAIL} from '@/lib/constants'
 import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
-import {useZustand} from '@/lib/store/use-zustand'
 import React, {useState} from 'react'
-import {AiOutlineCloseCircle} from 'react-icons/ai'
 
+import {InputText} from '@/components/shared/input-text'
+import {UserSelect} from '@/components/shared/user-select'
+import {ADMIN_EMAIL} from '@/lib/constants'
+import {useZustand} from '@/lib/store/use-zustand'
+import {AiOutlineCloseCircle} from 'react-icons/ai'
 
 /**
  *
@@ -85,7 +87,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2 p-2 border border-gray-500">
+    <div className="flex flex-col w-full gap-2 p-2 border border-gray-200">
       {isManager &&
         <div className="flex items-center w-full gap-4">
           <div
@@ -111,18 +113,14 @@ export default function TeamKey({apiKeyIndex, data}: any) {
       }
       <div className="flex items-center w-full gap-4">
         <div className='whitespace-nowrap'>Team Name:</div>
-        <input
-          className="px-3 py-1 rounded"
-          type="text"
+        <InputText
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
           disabled={!isAdmin && !isManager}
         />
         <div className='whitespace-nowrap'>API Key:</div>
-        <input
-          className="px-3 py-1 rounded"
-          type="text"
+        <InputText
           value={data?.apiKey}
           placeholder="API Key"
           onChange={onApiKeyChange}
@@ -131,8 +129,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
         {isAdmin &&
           <>
             <div className='whitespace-nowrap'>Manager:</div>
-            <select
-              className='w-full px-3 py-1 rounded cursor-pointer'
+            <UserSelect
               value={data?.manager}
               onChange={onManagerChange}
             >
@@ -140,7 +137,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
               {Array.isArray(data?.emailArr) && data.emailArr.map((emailObj: any, index: number) =>
                 emailObj.name && <option key={index} value={emailObj.name}>{emailObj.name}</option>,
               )}
-            </select>
+            </UserSelect>
           </>
         }
       </div>
@@ -149,11 +146,10 @@ export default function TeamKey({apiKeyIndex, data}: any) {
           {data?.emailArr?.map((emailObj: any, index: number) =>
             <div
               key={index}
-              className="flex items-center gap-1 p-1 border border-gray-500 rounded"
+              className="flex items-center gap-1 p-1 border border-gray-200 rounded"
             >
-              <input
-                className="text-xs border-none outline-none rounded px-2 py-0.5"
-                type="text"
+              <InputText
+                // className="text-xs border-none outline-none rounded px-2 py-0.5"
                 value={emailObj.name}
                 placeholder="Email"
                 onChange={(event) => onEmailChange(index, event.target.value)}

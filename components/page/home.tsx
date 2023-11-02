@@ -2,14 +2,14 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React from 'react'
 import Card from '@/components/home/card'
-import Balancer from 'react-wrap-balancer'
-import {DEPLOY_URL} from '@/lib/constants'
-import {Github, Twitter} from '@/components/shared/icons'
-import WebVitals from '@/components/home/web-vitals'
 import ComponentGrid from '@/components/home/component-grid'
+import WebVitals from '@/components/home/web-vitals'
+import {Github, Twitter} from '@/components/shared/icons'
+import {DEPLOY_URL} from '@/lib/constants'
 import Image from 'next/image'
+import React from 'react'
+import Balancer from 'react-wrap-balancer'
 
 
 /**
@@ -17,7 +17,7 @@ import Image from 'next/image'
  */
 export default function Home() {
   return (
-    <>
+    <div className=''>
       <div className="z-10 w-full max-w-xl px-5 xl:px-0">
         <a
           href="https://twitter.com/steventey/status/1613928948915920896"
@@ -102,7 +102,7 @@ export default function Home() {
           />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

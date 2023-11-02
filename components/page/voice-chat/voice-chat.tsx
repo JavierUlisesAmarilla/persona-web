@@ -4,10 +4,14 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
+import React, {useEffect, useState} from 'react'
+
+import {InputText} from '@/components/shared/input-text'
+import {Textarea} from '@/components/shared/textarea'
+import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
 import Scenario from './scenario'
 
 
@@ -220,12 +224,9 @@ export default function VoiceChat() {
     <div className="z-10 flex flex-col w-full gap-8 px-8">
       <div className='flex flex-col w-full gap-4'>
         <div className='flex items-center w-full gap-4'>
-          <select
-            className='w-full px-3 py-1 rounded cursor-pointer'
-            onChange={onPersona}
-          >
+          <UserSelect onChange={onPersona}>
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
-          </select>
+          </UserSelect>
           <div className='w-32'/>
         </div>
       </div>
@@ -233,9 +234,7 @@ export default function VoiceChat() {
         <>
           <div className='flex flex-col w-full gap-4'>
             <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full px-3 py-1 rounded'
-                type='text'
+              <InputText
                 value={userInput}
                 placeholder='Enter user text here'
                 onChange={(e) => setUserInput(e.target.value)}
@@ -249,9 +248,7 @@ export default function VoiceChat() {
               <div className='w-32'/>
             </div>
             <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full px-3 py-1 rounded'
-                type='text'
+              <InputText
                 value={assistantInput}
                 placeholder='Enter assistant text here'
                 onChange={(e) => setAssistantInput(e.target.value)}
@@ -265,9 +262,7 @@ export default function VoiceChat() {
               <div className='w-32'/>
             </div>
             <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full px-3 py-1 rounded'
-                type='text'
+              <InputText
                 value={personaArr[selPersonaIndex]?.initialMessage || ''}
                 placeholder='Enter initial message here'
                 onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
@@ -281,9 +276,7 @@ export default function VoiceChat() {
               <div className='w-32'>{initialMsgState}</div>
             </div>
             <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full px-3 py-1 rounded'
-                type='text'
+              <InputText
                 value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
                 placeholder='Enter rate limit message here'
                 onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
@@ -319,8 +312,7 @@ export default function VoiceChat() {
           <div className='flex w-full gap-4'>
             <div className='flex flex-col w-full gap-2'>
               <div className='text-lg'>Prompt</div>
-              <textarea
-                className='rounded'
+              <Textarea
                 rows={20}
                 value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                 placeholder='Enter the prompt here'
@@ -350,8 +342,7 @@ export default function VoiceChat() {
             </div>
             <div className='flex flex-col w-full gap-2'>
               <div className='text-lg'>Actions schema</div>
-              <textarea
-                className='rounded'
+              <Textarea
                 rows={20}
                 value={schemaText}
                 placeholder='Enter the actions schema here'
@@ -370,8 +361,7 @@ export default function VoiceChat() {
           </div>
           <div className='flex flex-col w-full gap-2'>
             <div className='text-lg'>Current state</div>
-            <textarea
-              className='rounded'
+            <Textarea
               rows={20}
               value={stateText}
               placeholder=''

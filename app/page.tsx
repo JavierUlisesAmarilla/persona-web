@@ -1,10 +1,9 @@
-import React from 'react'
+import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import Home from '@/components/page/home'
 import SignHome from '@/components/page/sign-home'
-import {getServerSession} from 'next-auth/next'
-import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import {WITHOUT_SIGN} from '@/lib/constants'
-
+import {getServerSession} from 'next-auth/next'
+import React from 'react'
 
 /**
  *

@@ -28,7 +28,7 @@ export default function ApiKeyAssign() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full gap-2 p-4 border border-gray-900 rounded">
+    <div className="flex flex-col items-center w-full gap-2 p-4 border border-gray-200 rounded">
       <div className="flex items-center justify-center gap-4">
         <div className="text-xl">API Key Assignment</div>
         {status ?

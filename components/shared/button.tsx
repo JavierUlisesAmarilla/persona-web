@@ -21,3 +21,20 @@ export const Button = ({
     </div>
   )
 }
+
+export const GreenButton = ({
+  onClick,
+  children,
+}: {
+  onClick?: MouseEventHandler<HTMLDivElement>
+  children: ReactNode
+}) => {
+  return (
+    <div
+      className='px-3 py-1 text-xs rounded cursor-pointer text-text-light bg-bg-btn-green hover:text-text-gray w-fit'
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  )
+}

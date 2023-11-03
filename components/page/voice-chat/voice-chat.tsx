@@ -4,7 +4,7 @@
 
 import React, {useEffect, useState} from 'react'
 
-import {Button} from '@/components/shared/button'
+import {Button, GreenButton} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
@@ -227,7 +227,7 @@ export default function VoiceChat() {
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </UserSelect>
           <div className='w-32'/>
-          <Button onClick={onNewChat}>New chat (continuous)</Button>
+          <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
         </div>
         {personaArr[selPersonaIndex] &&
           <>

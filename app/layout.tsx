@@ -11,12 +11,12 @@ import cx from 'classnames'
 
 
 export const metadata = {
-  title: 'Precedent - Building blocks for your Next.js project',
+  title: 'Persona - Conversational speech AI.',
   description:
-    'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
+    'Persona enables you to add conversational speech AI to your product in minutes.',
   twitter: {
     card: 'summary_large_image',
-    title: 'Precedent - Building blocks for your Next.js project',
+    title: 'Persona on Twitter',
     description:
       'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
     creator: '@steventey',

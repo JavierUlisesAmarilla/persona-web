@@ -232,7 +232,7 @@ export default function VoiceChat() {
         {personaArr[selPersonaIndex] &&
           <>
             <div className='flex gap-3 p-6 border rounded-lg bg-bg-gray'>
-              <div className='flex flex-col w-full gap-3'>
+              {/* <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center w-full gap-3'>
                   <InputText
                     value={userInput}
@@ -251,7 +251,7 @@ export default function VoiceChat() {
                   <Button onClick={onAssistant}>Submit</Button>
                   <div className='w-32'/>
                 </div>
-              </div>
+              </div> */}
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center w-full gap-3'>
                   <InputText

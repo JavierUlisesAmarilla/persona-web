@@ -1,16 +1,13 @@
-/* eslint-disable jsdoc/require-returns */
-"use client";
+'use client'
 
-import React from "react";
-import Sidebar from "./sidebar";
+import React from 'react'
+import {Sidebar} from './sidebar'
 
-/**
- *
- */
-export default function Dashboard() {
+
+export const Dashboard = () => {
   return (
-    <div className="z-10 flex w-full flex-col px-4">
-      <Sidebar />
+    <div className="z-10 flex flex-col w-full px-4">
+      <Sidebar/>
     </div>
-  );
+  )
 }

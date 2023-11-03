@@ -1,14 +1,17 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useState} from 'react'
-import {AiOutlineCloseCircle} from 'react-icons/ai'
 import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
-import {useZustand} from '@/lib/store/use-zustand'
-import {ADMIN_EMAIL} from '@/lib/constants'
+import React, {useState} from 'react'
 
+import {Button} from '@/components/shared/button'
+import {InputText} from '@/components/shared/input-text'
+import {UserSelect} from '@/components/shared/user-select'
+import {ADMIN_EMAIL} from '@/lib/constants'
+import {useZustand} from '@/lib/store/use-zustand'
+import {AiOutlineCloseCircle} from 'react-icons/ai'
 
 /**
  *
@@ -85,44 +88,25 @@ export default function TeamKey({apiKeyIndex, data}: any) {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2 p-2 border border-gray-500">
+    <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
       {isManager &&
         <div className="flex items-center w-full gap-4">
-          <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-            onClick={onAddEmail}
-          >
-            Add Email
-          </div>
-          <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-            onClick={onSave}
-          >
-            Save
-          </div>
-          <div
-            className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-            onClick={onRemove}
-          >
-            Remove
-          </div>
+          <Button onClick={onAddEmail}>Add Email</Button>
+          <Button onClick={onSave}>Save</Button>
+          <Button onClick={onRemove}>Remove</Button>
           <div className='text-blue-500'>{status}</div>
         </div>
       }
       <div className="flex items-center w-full gap-4">
-        <div className='whitespace-nowrap'>Team Name:</div>
-        <input
-          className="rounded-full"
-          type="text"
+        <div className='text-xs whitespace-nowrap'>Team Name:</div>
+        <InputText
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
           disabled={!isAdmin && !isManager}
         />
-        <div className='whitespace-nowrap'>API Key:</div>
-        <input
-          className="rounded-full"
-          type="text"
+        <div className='text-xs whitespace-nowrap'>API Key:</div>
+        <InputText
           value={data?.apiKey}
           placeholder="API Key"
           onChange={onApiKeyChange}
@@ -130,9 +114,8 @@ export default function TeamKey({apiKeyIndex, data}: any) {
         />
         {isAdmin &&
           <>
-            <div className='whitespace-nowrap'>Manager:</div>
-            <select
-              className='w-full rounded-full cursor-pointer'
+            <div className='text-xs whitespace-nowrap'>Manager:</div>
+            <UserSelect
               value={data?.manager}
               onChange={onManagerChange}
             >
@@ -140,20 +123,18 @@ export default function TeamKey({apiKeyIndex, data}: any) {
               {Array.isArray(data?.emailArr) && data.emailArr.map((emailObj: any, index: number) =>
                 emailObj.name && <option key={index} value={emailObj.name}>{emailObj.name}</option>,
               )}
-            </select>
+            </UserSelect>
           </>
         }
       </div>
-      {Array.isArray(data?.emailArr) && data.emailArr.length &&
+      {!!(Array.isArray(data?.emailArr) && data.emailArr.length) &&
         <div className="flex flex-wrap items-center w-full gap-2">
           {data?.emailArr?.map((emailObj: any, index: number) =>
             <div
               key={index}
-              className="flex items-center gap-1 p-1 border border-gray-500 rounded-full"
+              className="flex items-center gap-1 p-1 border border-gray-200 rounded-md"
             >
-              <input
-                className="text-xs border-none outline-none rounded-2xl"
-                type="text"
+              <InputText
                 value={emailObj.name}
                 placeholder="Email"
                 onChange={(event) => onEmailChange(index, event.target.value)}
@@ -161,7 +142,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
               />
               {(isAdmin || (isManager && curEmail !== emailObj.name)) &&
                 <AiOutlineCloseCircle
-                  className="text-xl cursor-pointer hover:text-gray-500"
+                  className="text-xl cursor-pointer text-text-gray hover:text-text-dark"
                   onClick={() => onEmailRemove(index)}
                 />
               }

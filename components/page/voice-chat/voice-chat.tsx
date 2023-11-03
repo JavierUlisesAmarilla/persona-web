@@ -1,11 +1,15 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable no-unused-vars */
 'use client'
 
 import React, {useEffect, useState} from 'react'
+
+import {Button} from '@/components/shared/button'
+import {InputText} from '@/components/shared/input-text'
+import {Textarea} from '@/components/shared/textarea'
+import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
+import {getPersonaArr} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import Scenario from './scenario'
@@ -198,11 +202,10 @@ export default function VoiceChat() {
       });
 
       (async () => {
-        const personaArrRes = await axios.get(`https://api.sindarin.tech/api/personas?apikey=${API_KEY}`)
-        console.log('VoiceChat#useEffect: personaArrRes: ', personaArrRes)
+        const newPersonaArr = await getPersonaArr(API_KEY)
 
-        if (Array.isArray(personaArrRes.data)) {
-          setPersonaArr(personaArrRes.data)
+        if (Array.isArray(newPersonaArr)) {
+          setPersonaArr(newPersonaArr)
           setStatus('')
         } else {
           setStatus('API key seems to be incorrect.')
@@ -215,204 +218,148 @@ export default function VoiceChat() {
   }, [])
 
   return status ? (
-    <div className='z-10 w-full p-4 text-xl text-center text-blue-500'>{status}</div>
+    <div className='z-10 p-6 mx-4 text-center text-text-gray'>{status}</div>
   ) : (
-    <div className="z-10 flex flex-col w-full gap-8 px-8">
-      <div className='flex flex-col w-full gap-4'>
-        <div className='flex items-center w-full gap-4'>
-          <select
-            className='w-full rounded-full cursor-pointer'
-            onChange={onPersona}
-          >
+    <div className='z-10 w-full px-4'>
+      <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
+        <div className='flex justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+          <UserSelect onChange={onPersona}>
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
-          </select>
+          </UserSelect>
           <div className='w-32'/>
+          <Button onClick={onNewChat}>New chat (continuous)</Button>
         </div>
-      </div>
-      {personaArr[selPersonaIndex] &&
-        <>
-          <div className='flex flex-col w-full gap-4'>
-            <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full rounded-full'
-                type='text'
-                value={userInput}
-                placeholder='Enter user text here'
-                onChange={(e) => setUserInput(e.target.value)}
-              />
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                onClick={onUser}
-              >
-                Submit
+        {personaArr[selPersonaIndex] &&
+          <>
+            <div className='flex gap-3 p-6 border rounded-lg bg-bg-gray'>
+              <div className='flex flex-col w-full gap-3'>
+                <div className='flex items-center w-full gap-3'>
+                  <InputText
+                    value={userInput}
+                    placeholder='Enter user text here'
+                    onChange={(e) => setUserInput(e.target.value)}
+                  />
+                  <Button onClick={onUser}>Submit</Button>
+                  <div className='w-32'/>
+                </div>
+                <div className='flex items-center w-full gap-3'>
+                  <InputText
+                    value={assistantInput}
+                    placeholder='Enter assistant text here'
+                    onChange={(e) => setAssistantInput(e.target.value)}
+                  />
+                  <Button onClick={onAssistant}>Submit</Button>
+                  <div className='w-32'/>
+                </div>
               </div>
-              <div className='w-32'/>
-            </div>
-            <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full rounded-full'
-                type='text'
-                value={assistantInput}
-                placeholder='Enter assistant text here'
-                onChange={(e) => setAssistantInput(e.target.value)}
-              />
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                onClick={onAssistant}
-              >
-                Submit
+              <div className='flex flex-col w-full gap-3'>
+                <div className='flex items-center w-full gap-3'>
+                  <InputText
+                    value={personaArr[selPersonaIndex]?.initialMessage || ''}
+                    placeholder='Enter initial message here'
+                    onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
+                  />
+                  <Button onClick={onInitialization}>Submit</Button>
+                  <div className='w-32'>{initialMsgState}</div>
+                </div>
+                <div className='flex items-center w-full gap-3'>
+                  <InputText
+                    value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
+                    placeholder='Enter rate limit message here'
+                    onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
+                  />
+                  <Button onClick={onRateLimit}>Submit</Button>
+                  <div className='w-32'>{rateLimitMsgState}</div>
+                </div>
               </div>
-              <div className='w-32'/>
             </div>
-            <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full rounded-full'
-                type='text'
-                value={personaArr[selPersonaIndex]?.initialMessage || ''}
-                placeholder='Enter initial message here'
-                onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
-              />
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                onClick={onInitialization}
+            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+              <div className='text-sm'>For guidance on prompt engineering techniques for your Persona, see:</div>
+              <a
+                className='text-sm text-blue-500 hover:text-blue-900 w-fit'
+                href="https://www.promptingguide.ai/introduction"
+                target="_blank"
+                rel="noreferrer"
               >
-                Submit
-              </div>
-              <div className='w-32'>{initialMsgState}</div>
-            </div>
-            <div className='flex items-center w-full gap-4'>
-              <input
-                className='w-full rounded-full'
-                type='text'
-                value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
-                placeholder='Enter rate limit message here'
-                onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
-              />
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                onClick={onRateLimit}
+                Prompt Engineering Guide 1
+              </a>
+              <a
+                className='text-sm text-blue-500 hover:text-blue-900 w-fit'
+                href="https://github.com/brexhq/prompt-engineering"
+                target="_blank"
+                rel="noreferrer"
               >
-                Submit
-              </div>
-              <div className='w-32'>{rateLimitMsgState}</div>
+                Prompt Engineering Guide 2
+              </a>
             </div>
-          </div>
-          <div className='flex flex-col w-full gap-2'>
-            <div className='text-lg '>For guidance on prompt engineering techniques for your Persona, see:</div>
-            <a
-              className='text-blue-500 hover:text-blue-900 w-fit'
-              href="https://www.promptingguide.ai/introduction"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Prompt Engineering Guide 1
-            </a>
-            <a
-              className='text-blue-500 hover:text-blue-900 w-fit'
-              href="https://github.com/brexhq/prompt-engineering"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Prompt Engineering Guide 2
-            </a>
-          </div>
-          <div className='flex w-full gap-4'>
-            <div className='flex flex-col w-full gap-2'>
-              <div className='text-lg'>Prompt</div>
-              <textarea
-                rows={20}
-                value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
-                placeholder='Enter the prompt here'
-                onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
-              />
-              <div className='flex flex-col'>
+            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+              <div className='flex flex-col w-full gap-3'>
+                <div className='text-sm'>Prompt</div>
+                <Textarea
+                  rows={20}
+                  value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
+                  placeholder='Enter the prompt here'
+                  onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
+                />
+                {/* <div className='flex flex-col text-xs'>
                 <div>Possible variables:</div>
                 <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
                 <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
                 <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call e.g. &quot;***DETAILS.firstName***&quot;</div>
-              </div>
-              <div className='flex items-center gap-4'>
-                <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
-                  onClick={onPrompt}
-                >
-                  Update prompt
+              </div> */}
+                <div className='flex items-center gap-3'>
+                  <Button onClick={onPrompt}>Update prompt</Button>
+                  <div>{promptState}</div>
                 </div>
-                <div>{promptState}</div>
               </div>
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
-                onClick={onNewChat}
-              >
-                New chat (continuous)
+              <div className='flex flex-col w-full gap-3'>
+                <div className='text-sm'>Actions schema</div>
+                <Textarea
+                  rows={20}
+                  value={schemaText}
+                  placeholder='Enter the actions schema here'
+                  onChange={(e) => setSchemaText(e.target.value)}
+                />
+                <div className='flex items-center gap-3'>
+                  <Button onClick={onSchema}>Update actions schema</Button>
+                  <div>{schemaState}</div>
+                </div>
               </div>
             </div>
-            <div className='flex flex-col w-full gap-2'>
-              <div className='text-lg'>Actions schema</div>
-              <textarea
+            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+              <div className='text-sm'>Current state</div>
+              <Textarea
                 rows={20}
-                value={schemaText}
-                placeholder='Enter the actions schema here'
-                onChange={(e) => setSchemaText(e.target.value)}
+                value={stateText}
+                placeholder=''
+                onChange={(e) => setStateText(e.target.value)}
               />
-              <div className='flex items-center gap-4'>
-                <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit whitespace-nowrap'
-                  onClick={onSchema}
-                >Update actions schema
+              <div className='flex items-center gap-3'>
+                <Button onClick={onState}>Update state</Button>
+                <div>{stateState}</div>
+              </div>
+            </div>
+            <div className='flex flex-col w-full gap-3'>
+              <div className='flex w-full gap-3'>
+                <Button onClick={onNewScenario}>Add new scenario</Button>
+                <div className='flex items-center gap-3'>
+                  <Button onClick={onSaveScenarios}>Save scenarios</Button>
+                  <div>{saveScenarioState}</div>
                 </div>
-                <div>{schemaState}</div>
+              </div>
+              <div className='flex flex-col w-full gap-3'>
+                {personaArr[selPersonaIndex]?.scenarios?.map((scenario: any, index: number) =>
+                  <Scenario
+                    key={index}
+                    scenarioIndex={index}
+                    scenario={scenario}
+                  />,
+                )}
               </div>
             </div>
-          </div>
-          <div className='flex flex-col w-full gap-2'>
-            <div className='text-lg'>Current state</div>
-            <textarea
-              rows={20}
-              value={stateText}
-              placeholder=''
-              onChange={(e) => setStateText(e.target.value)}
-            />
-            <div className='flex items-center gap-4'>
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black w-fit'
-                onClick={onState}
-              >
-                Update state
-              </div>
-              <div>{stateState}</div>
-            </div>
-          </div>
-          <div className='flex flex-col w-full gap-2'>
-            <div className='flex w-full gap-4'>
-              <div
-                className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                onClick={onNewScenario}
-              >
-                Add new scenario
-              </div>
-              <div className='flex items-center gap-4'>
-                <div
-                  className='px-4 py-2 text-white bg-green-500 rounded-full cursor-pointer hover:text-black'
-                  onClick={onSaveScenarios}
-                >
-                  Save scenarios
-                </div>
-                <div>{saveScenarioState}</div>
-              </div>
-            </div>
-            <div className='flex flex-col w-full gap-2'>
-              {personaArr[selPersonaIndex]?.scenarios?.map((scenario: any, index: number) =>
-                <Scenario
-                  key={index}
-                  scenarioIndex={index}
-                  scenario={scenario}
-                />,
-              )}
-            </div>
-          </div>
-        </>
-      }
-    </div >
+          </>
+        }
+      </div >
+    </div>
   )
 }

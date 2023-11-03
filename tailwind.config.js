@@ -10,6 +10,16 @@ module.exports = {
   },
   theme: {
     extend: {
+      colors: {
+        'bg-light': '#FFFFFF',
+        'bg-gray': '#F9FAFB',
+        'text-light': '#FFFFFF',
+        'text-gray': '#98A2B3',
+        'text-dark': '#000000',
+        'bg-btn-light': '#FFFFFF',
+        'bg-btn-blue': '#4464F3',
+        'border-gray': '#EAECF0',
+      },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],
         default: ['var(--font-inter)', 'system-ui', 'sans-serif'],
@@ -61,15 +71,15 @@ module.exports = {
         },
       },
       fontSize: {
-        '14': '14px'
+        14: '14px',
       },
       fontWeight: {
-        '600': '600',
-        '500': '500',
+        600: '600',
+        500: '500',
       },
       width: {
-        '70': '19rem'
-      }
+        70: '19rem',
+      },
     },
   },
   plugins: [

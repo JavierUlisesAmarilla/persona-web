@@ -1,5 +1,7 @@
+import {DEPLOY_URL, USE_SAMPLE_DATA} from '../constants'
+
 import axios from 'axios'
-import {DEPLOY_URL} from '../constants'
+import {SAMPLE_DB_DATA_ARR} from '../sample-data'
 
 
 export const saveData = async (data: any) => {
@@ -40,10 +42,14 @@ export const getData = async (id: string) => {
 
 export const getAllData = async () => {
   try {
-    // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get`)
-    const res = await axios.get(`${DEPLOY_URL}/api/mongodb`)
-    console.log('mongodb#getAllData: res: ', res)
-    return res?.data
+    if (USE_SAMPLE_DATA) {
+      return SAMPLE_DB_DATA_ARR
+    } else {
+      // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get`)
+      const res = await axios.get(`${DEPLOY_URL}/api/mongodb`)
+      console.log('mongodb#getAllData: res: ', res)
+      return res?.data
+    }
   } catch (e) {
     console.log('mongodb#getAllData: e: ', e)
   }

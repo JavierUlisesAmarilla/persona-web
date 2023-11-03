@@ -1,23 +1,23 @@
-/* eslint-disable jsdoc/require-returns */
-"use client";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable max-len */
+'use client'
 
-import React, { useState } from "react";
-import Image from "next/image";
+import Image from 'next/image'
+import React, {useState} from 'react'
 
-/**
- *
- */
 
-export default function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(true);
+export const Sidebar = () => {
+  const [isExpanded, setIsExpanded] = useState(true)
 
+  // eslint-disable-next-line no-unused-vars
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
-  };
+    setIsExpanded(!isExpanded)
+  }
 
   return (
-    <div className="flex h-screen -mt-16 w-70 flex-col p-3 dark:bg-gray-900 dark:text-gray-100">
-      <div className="space-y-3 flex-grow">
+    <div className="flex flex-col h-screen p-3 w-70 dark:bg-gray-900 dark:text-gray-100">
+      <div className="flex-grow space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Image
@@ -48,9 +48,9 @@ export default function Sidebar() {
               <svg
                 fill="currentColor"
                 viewBox="0 0 512 512"
-                className="h-5 w-5 dark:text-gray-400"
+                className="w-5 h-5 dark:text-gray-400"
               >
-                <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
+                <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"/>
               </svg>
             </button>
           </span>
@@ -58,20 +58,20 @@ export default function Sidebar() {
             type="search"
             name="Search"
             placeholder="Search for anything"
-            className="w-full rounded-md py-2 pl-10 focus:outline-none text-gray-500 font-500 text-14::placeholder border-1 border-gray-200"
+            className="w-full py-2 pl-10 text-gray-500 border-gray-200 rounded-md focus:outline-none font-500 text-14::placeholder border-1"
           />
         </div>
         <div className="flex-1">
-          <ul className="space-y-1 pb-4 pt-2 text-sm">
-            <label className="px-0 text-14 font-600 uppercase text-gray-500 dark:text-gray-400">
+          <ul className="pt-2 pb-4 space-y-1 text-sm">
+            <label className="px-0 text-gray-500 uppercase text-14 font-600 dark:text-gray-400">
               General
             </label>
-            <div className="border-t border-gray-300"></div>
+            <div className="border-t border-gray-300"/>
             <li className="rounded-sm">
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
               >
                 <Image
                   src="/assets/images/dashboard.svg"
@@ -87,7 +87,7 @@ export default function Sidebar() {
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
               >
                 <Image
                   src="/assets/images/persona.svg"
@@ -103,7 +103,7 @@ export default function Sidebar() {
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
               >
                 <Image
                   src="/assets/images/prevCalls1.svg"
@@ -119,7 +119,7 @@ export default function Sidebar() {
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
               >
                 <Image
                   src="/assets/images/template.svg"
@@ -135,7 +135,7 @@ export default function Sidebar() {
               <a
                 rel="noopener noreferrer"
                 href="#"
-                className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
               >
                 <Image
                   src="/assets/images/prevCalls2.svg"
@@ -150,19 +150,19 @@ export default function Sidebar() {
           </ul>
         </div>
       </div>
-      <div className="mt-auto items-center space-x-4 justify-self-end">
-        <ul className="space-y-1 pb-4 pt-2 text-sm">
-          <label className="px-0 text-14 font-600 uppercase text-gray-500 dark:text-gray-400">
+      <div className="items-center mt-auto space-x-4 justify-self-end">
+        <ul className="pt-2 pb-4 space-y-1 text-sm">
+          <label className="px-0 text-gray-500 uppercase text-14 font-600 dark:text-gray-400">
             Other
           </label>
-          <div className="border-t border-gray-300"></div>
+          <div className="border-t border-gray-300"/>
           <div className="space-y-3">
             <div className="flex-1">
               <li className="rounded-sm">
                 <a
                   rel="noopener noreferrer"
                   href="#"
-                  className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                  className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
                 >
                   <Image
                     src="/assets/images/setting.svg"
@@ -178,7 +178,7 @@ export default function Sidebar() {
                 <a
                   rel="noopener noreferrer"
                   href="#"
-                  className="flex items-center space-x-3 rounded-md p-2 hover:text-black text-gray-500 text-14 font-500"
+                  className="flex items-center p-2 space-x-3 text-gray-500 rounded-md hover:text-black text-14 font-500"
                 >
                   <Image
                     src="/assets/images/howToUse.svg"
@@ -195,5 +195,5 @@ export default function Sidebar() {
         </ul>
       </div>
     </div>
-  );
+  )
 }

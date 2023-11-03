@@ -18,6 +18,7 @@ module.exports = {
         'text-dark': '#000000',
         'bg-btn-light': '#FFFFFF',
         'bg-btn-blue': '#4464F3',
+        'bg-btn-green': '#00C48C',
         'border-gray': '#EAECF0',
       },
       fontFamily: {

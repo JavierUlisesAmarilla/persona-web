@@ -42,7 +42,7 @@ export default function NavBar({session}: {session: any}) {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center text-2xl font-display">
               <Image
-                src="/persona-logo-rounded.png"
+                src="/persona-logo-rounded-large.png"
                 alt="Persona logo"
                 width="30"
                 height="30"

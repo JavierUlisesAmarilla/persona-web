@@ -186,7 +186,7 @@ export default function VoiceChat() {
       console.log('VoiceChat#useEffect: API_KEY: ', API_KEY)
       setStatus('Loading...')
       const script = document.createElement('script')
-      script.src = `https://api.sindarin.tech/PersonaClient?apikey=${API_KEY}`
+      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${API_KEY}`
       document.head.appendChild(script)
 
       script.addEventListener('load', () => {

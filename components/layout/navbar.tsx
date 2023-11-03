@@ -42,13 +42,13 @@ export default function NavBar({session}: {session: any}) {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center text-2xl font-display">
               <Image
-                src="/logo.png"
-                alt="Precedent logo"
+                src="/persona-logo-rounded.png"
+                alt="Persona logo"
                 width="30"
                 height="30"
                 className="mr-2 rounded-sm"
               />
-              <p>Precedent</p>
+              <p>Persona</p>
             </Link>
             {session && isUser && Object.keys(MENUS).map((menuKey) =>
               <div

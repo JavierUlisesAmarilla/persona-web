@@ -6,12 +6,12 @@ import React, {useEffect, useState} from 'react'
 
 import {Button, GreenButton} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
-import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {getPersonaArr} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
+import {ChatModal} from './chat-modal'
 import Scenario from './scenario'
 
 
@@ -46,6 +46,8 @@ export default function VoiceChat() {
   const [assistantInput, setAssistantInput] = useState('')
   const [schemaText, setSchemaText] = useState(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
   const [stateText, setStateText] = useState('')
+
+  const [showChatModal, setShowChatModal] = useState(false)
 
   const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
 
@@ -119,20 +121,21 @@ export default function VoiceChat() {
     }
   }
 
-  const onNewChat = async () => {
-    const selPersonaId = personaArr[selPersonaIndex]?._id
+  const onNewChat = () => {
+    setShowChatModal(true)
+    // const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    if (!personaArr.length || !selPersonaId) {
-      return
-    }
+    // if (!personaArr.length || !selPersonaId) {
+    //   return
+    // }
 
-    const selPersonName = personaArr.find((persona) => persona._id === selPersonaId)?.name
+    // const selPersonName = personaArr.find((persona) => persona._id === selPersonaId)?.name
 
-    if (!personaClient || !selPersonName) {
-      return
-    }
+    // if (!personaClient || !selPersonName) {
+    //   return
+    // }
 
-    await personaClient.init('admin', selPersonName)
+    // await personaClient.init('admin', selPersonName)
   }
 
   const onSchema = async () => {
@@ -218,7 +221,7 @@ export default function VoiceChat() {
   }, [])
 
   return status ? (
-    <div className='z-10 p-6 mx-4 text-center text-text-gray'>{status}</div>
+    <div className='z-10 p-4 text-center text-text-gray'>{status}</div>
   ) : (
     <div className='z-10 w-full px-4'>
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
@@ -292,7 +295,7 @@ export default function VoiceChat() {
                 Prompt Engineering Guide 2
               </a>
             </div>
-            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+            {/* <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='text-sm'>Prompt</div>
                 <Textarea
@@ -301,12 +304,6 @@ export default function VoiceChat() {
                   placeholder='Enter the prompt here'
                   onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
                 />
-                {/* <div className='flex flex-col text-xs'>
-                <div>Possible variables:</div>
-                <div>- ***PERSONA_VOICE_SCHEMA***: required to make use of the Actions schema</div>
-                <div>- ***CURRENT_DATETIME***: required to enable access to the current date/time</div>
-                <div>- ***DETAILS.detail***: where &quot;detail&quot; is a variable passed into the &quot;details&quot; object in an API-driven call e.g. &quot;***DETAILS.firstName***&quot;</div>
-              </div> */}
                 <div className='flex items-center gap-3'>
                   <Button onClick={onPrompt}>Update prompt</Button>
                   <div>{promptState}</div>
@@ -325,8 +322,8 @@ export default function VoiceChat() {
                   <div>{schemaState}</div>
                 </div>
               </div>
-            </div>
-            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+            </div> */}
+            {/* <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='text-sm'>Current state</div>
               <Textarea
                 rows={20}
@@ -338,7 +335,7 @@ export default function VoiceChat() {
                 <Button onClick={onState}>Update state</Button>
                 <div>{stateState}</div>
               </div>
-            </div>
+            </div> */}
             <div className='flex flex-col w-full gap-3'>
               <div className='flex w-full gap-3'>
                 <Button onClick={onNewScenario}>Add new scenario</Button>
@@ -360,6 +357,18 @@ export default function VoiceChat() {
           </>
         }
       </div >
+      <ChatModal
+        schemaText={schemaText}
+        setSchemaText={setSchemaText}
+        onSchema={onSchema}
+        schemaState={schemaState}
+        stateText={stateText}
+        setStateText={setStateText}
+        onState={onState}
+        stateState={stateState}
+        show={showChatModal}
+        onClose={() => setShowChatModal(false)}
+      />
     </div>
   )
 }

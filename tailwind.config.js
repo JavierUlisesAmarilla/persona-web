@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         'bg-light': '#FFFFFF',
         'bg-gray': '#F9FAFB',
+        'bg-green': '#00C48C',
         'text-light': '#FFFFFF',
         'text-gray': '#98A2B3',
         'text-dark': '#000000',
@@ -20,6 +21,7 @@ module.exports = {
         'bg-btn-blue': '#4464F3',
         'bg-btn-green': '#00C48C',
         'border-gray': '#EAECF0',
+        'border-green': '#00C48C',
       },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],

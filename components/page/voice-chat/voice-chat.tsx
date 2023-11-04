@@ -12,6 +12,7 @@ import {getPersonaArr} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import {ChatModal} from './chat-modal'
+import {DeployModal} from './deploy-modal'
 import Scenario from './scenario'
 
 
@@ -48,6 +49,7 @@ export default function VoiceChat() {
   const [stateText, setStateText] = useState('')
 
   const [showChatModal, setShowChatModal] = useState(false)
+  const [showDeployModal, setShowDeployModal] = useState(false)
 
   const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
 
@@ -136,6 +138,10 @@ export default function VoiceChat() {
     // }
 
     // await personaClient.init('admin', selPersonName)
+  }
+
+  const onDeploy = () => {
+    setShowDeployModal(true)
   }
 
   const onSchema = async () => {
@@ -230,7 +236,10 @@ export default function VoiceChat() {
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </UserSelect>
           <div className='w-32'/>
-          <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
+          <div className='flex gap-3'>
+            <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
+            <Button onClick={onDeploy}>Deploy</Button>
+          </div>
         </div>
         {personaArr[selPersonaIndex] &&
           <>
@@ -368,6 +377,10 @@ export default function VoiceChat() {
         stateState={stateState}
         show={showChatModal}
         onClose={() => setShowChatModal(false)}
+      />
+      <DeployModal
+        show={showDeployModal}
+        onClose={() => setShowDeployModal(false)}
       />
     </div>
   )

@@ -227,30 +227,6 @@ export default function VoiceChat() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
- 
-        // <div className='flex justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
-          // <div className='flex gap-2'>
-          //   <UserSelect onChange={onPersona}>
-          //     {personaArr.map((persona, index) => (
-          //       <option key={index} value={index}>{persona.name}</option>
-          //     ))}
-          //   </UserSelect>
-          //   <div
-          //     className='bg-white rounded cursor-pointer flex items-center justify-between text-sm px-3 py-2 text-gray-500'
-          //     onClick={async () => {
-          //       await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id);
-          //       setCopyStatus('Copied.');
-          //       setTimeout(() => setCopyStatus(''), 2000);
-          //     }}
-          //   >
-          //     <span className='mr-2'>{personaArr[selPersonaIndex]?._id}</span>
-          //     <img src="/copy-to-clipboard.svg" alt="Copy to clipboard" className="h-4 w-4" />
-          //   </div>
-          //   <div className={`flex items-center fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
-          // </div>
-        //   <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
-
-
   return status ? (
     <div className='z-10 p-4 text-center text-text-gray'>{status}</div>
   ) : (

@@ -54,6 +54,7 @@ export default function VoiceChat() {
   const [stateText, setStateText] = useState('')
 
   const [showChatModal, setShowChatModal] = useState(false)
+  const [personaAction, setPersonaAction] = useState({} as any)
   const [showDeployModal, setShowDeployModal] = useState(false)
 
   const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
@@ -128,21 +129,22 @@ export default function VoiceChat() {
     }
   }
 
-  const onNewChat = () => {
+  const onNewChat = async () => {
     setShowChatModal(true)
-    // const selPersonaId = personaArr[selPersonaIndex]?._id
+    const selPersonaId = personaArr[selPersonaIndex]?._id
 
-    // if (!personaArr.length || !selPersonaId) {
-    //   return
-    // }
+    if (!personaArr.length || !selPersonaId) {
+      return
+    }
 
-    // const selPersonName = personaArr.find((persona) => persona._id === selPersonaId)?.name
+    const selPersonName = personaArr.find((persona) => persona._id === selPersonaId)?.name
 
-    // if (!personaClient || !selPersonName) {
-    //   return
-    // }
+    if (!personaClient || !selPersonName) {
+      return
+    }
 
-    // await personaClient.init('admin', selPersonName)
+    await personaClient.init('admin', selPersonName)
+    console.log('persona client here', personaClient)
   }
 
   const onDeploy = () => {
@@ -210,6 +212,13 @@ export default function VoiceChat() {
       script.addEventListener('load', () => {
         if (window.PersonaClient) {
           const newPersonaClient = new window.PersonaClient(API_KEY)
+          newPersonaClient.on('json', ({ detail }: any) => {
+            console.log('persona action is ', detail)
+            if (Object.keys(detail).length > 0 && !detail.transcription) {
+              setPersonaAction(detail);
+            }
+          })
+
           console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
           setPersonaClient(newPersonaClient)
         }
@@ -244,7 +253,7 @@ export default function VoiceChat() {
               ))}
             </UserSelect>
             <div
-              className='flex items-center justify-between px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
+              className='flex items-center justify-between px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer h-6'
               onClick={async () => {
                 await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
                 setCopyStatus('Copied.')
@@ -390,8 +399,8 @@ export default function VoiceChat() {
         }
       </div >
       <ChatModal
-        schemaText={schemaText}
-        setSchemaText={setSchemaText}
+        schemaText={JSON.stringify(personaAction, null, 2)}
+        // setSchemaText={setSchemaText}
         onSchema={onSchema}
         schemaState={schemaState}
         stateText={stateText}

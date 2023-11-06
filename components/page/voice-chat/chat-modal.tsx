@@ -8,6 +8,7 @@ import React from 'react'
 
 
 interface Props {
+  personaName: string
   schemaText: string
   setSchemaText: Function
   onSchema: React.MouseEventHandler<HTMLDivElement>
@@ -22,6 +23,7 @@ interface Props {
 
 
 export const ChatModal = ({
+  personaName = 'Fred',
   schemaText,
   setSchemaText,
   onSchema,
@@ -43,13 +45,17 @@ export const ChatModal = ({
           exit={{opacity: 0}}
         >
           <div className='w-[50rem] relative flex flex-col gap-3 p-6 overflow-auto border-2 rounded-lg border-border-gray shadow-2xl bg-bg-light items-end'>
-            <RedButton onClick={onClose}>End Chat</RedButton>
+            <div className='flex justify-between w-full'>
+              <h2 className='text-2xl'>Chat with {personaName}</h2>
+              <RedButton onClick={onClose}>End Chat</RedButton>
+            </div>
             <div className='flex flex-col justify-center w-full gap-3'>
               <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
                 <div className='text-sm'>Actions</div>
                 <Textarea
                   value={schemaText}
-                  placeholder='Enter the actions schema here'
+                  placeholder='Persona-driven actions will appear here.'
+                  className={'text-gray-500 h-60'}
                   onChange={(e) => {
                     // setSchemaText(e.target.value)
                   }}

@@ -34,7 +34,7 @@ export const RedButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-btn-red'
+      className='bg-bg-btn-red flex justify-center items-center'
       onClick={onClick}
     >
       {children}

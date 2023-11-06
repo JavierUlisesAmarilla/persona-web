@@ -10,6 +10,18 @@ module.exports = {
   },
   theme: {
     extend: {
+      transitionProperty: {
+        'opacity': 'opacity',
+        'transform': 'transform',
+      },
+      transitionDuration: {
+        '2000': '2000ms',
+      },
+      transitionTimingFunction: {
+        'in': 'cubic-bezier(0.4, 0, 1, 1)',
+        'out': 'cubic-bezier(0, 0, 0.2, 1)',
+        'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
       colors: {
         'bg-light': '#FFFFFF',
         'bg-gray': '#F9FAFB',
@@ -32,6 +44,9 @@ module.exports = {
         // Fade up and down
         'fade-up': 'fade-up 0.5s',
         'fade-down': 'fade-down 0.5s',
+        // Fade in and out
+        'fade-in': 'fade-in 0.5s',
+        'fade-out': 'fade-out 0.5s',
         // Tooltip
         'slide-up-fade': 'slide-up-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         'slide-down-fade': 'slide-down-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -49,6 +64,23 @@ module.exports = {
           '100%': {
             opacity: 1,
             transform: 'translateY(0px)',
+          },
+        },
+        // Fade in and out
+        'fade-in': {
+          '0%': {
+            opacity: 0,
+          },
+          '100%': {
+            opacity: 1,
+          },
+        },
+        'fade-out': {
+          '0%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0,
           },
         },
         'fade-down': {

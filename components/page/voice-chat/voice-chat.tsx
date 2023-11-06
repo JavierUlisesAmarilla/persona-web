@@ -236,8 +236,8 @@ export default function VoiceChat() {
   ) : (
     <div className='z-10 w-full px-4'>
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
-        <div className='flex justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
-          <div className='flex gap-2'>
+        <div className='flex items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+          <div className='flex items-center gap-2'>
             <UserSelect onChange={onPersona}>
               {personaArr.map((persona, index) => (
                 <option key={index} value={index}>{persona.name}</option>
@@ -260,7 +260,7 @@ export default function VoiceChat() {
             </div>
             <div className={`flex items-center fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
           </div>
-          <div className='flex gap-3'>
+          <div className='flex flex-col gap-3'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
             <BlueButton onClick={onDeploy}>Deploy</BlueButton>
           </div>

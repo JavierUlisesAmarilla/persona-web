@@ -44,20 +44,21 @@ export const ChatModal = ({
         >
           <div className='w-[50rem] relative flex flex-col gap-3 p-6 overflow-auto border-2 rounded-lg border-border-gray shadow-2xl bg-bg-light items-end'>
             <RedButton onClick={onClose}>End Chat</RedButton>
-            <div className='flex justify-center w-full gap-3'>
+            <div className='flex flex-col justify-center w-full gap-3'>
               <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
                 <div className='text-sm'>Actions</div>
                 <Textarea
-                  className='h-80'
                   value={schemaText}
                   placeholder='Enter the actions schema here'
-                  // onChange={(e) => setSchemaText(e.target.value)}
+                  onChange={(e) => {
+                    // setSchemaText(e.target.value)
+                  }}
                 />
               </div>
               <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
                 <div className='text-sm'>Current state</div>
                 <Textarea
-                  className='h-80'
+                  className='h-60'
                   value={stateText}
                   placeholder=''
                   onChange={(e) => setStateText(e.target.value)}

@@ -270,9 +270,11 @@ export default function VoiceChat() {
             </div>
             <div className={`flex items-center fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
           </div>
-          <div className='flex flex-col gap-3'>
+          <div className='flex flex-col gap-3 justify-between'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
-            <LightBlueButton onClick={onDeploy}>Deploy</LightBlueButton>
+            <div className='ml-auto'>
+              <LightBlueButton onClick={onDeploy}>Deploy</LightBlueButton>
+            </div>
           </div>
         </div>
         {personaArr[selPersonaIndex] &&
@@ -306,7 +308,7 @@ export default function VoiceChat() {
                     onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
                   />
                   <BlueButton onClick={onInitialization}>Submit</BlueButton>
-                  <div className='w-32'>{initialMsgState}</div>
+                  {/* <div className='w-32'>{initialMsgState}</div> */}
                 </div>
                 <div className='flex items-center w-full gap-3'>
                   <InputText
@@ -315,7 +317,7 @@ export default function VoiceChat() {
                     onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
                   />
                   <BlueButton onClick={onRateLimit}>Submit</BlueButton>
-                  <div className='w-32'>{rateLimitMsgState}</div>
+                  {/* <div className='w-32'>{rateLimitMsgState}</div> */}
                 </div>
               </div>
             </div>
@@ -401,6 +403,7 @@ export default function VoiceChat() {
         }
       </div >
       <ChatModal
+        personaName={personaArr[selPersonaIndex]?.name}
         schemaText={JSON.stringify(personaAction, null, 2)}
         // setSchemaText={setSchemaText}
         onSchema={onSchema}

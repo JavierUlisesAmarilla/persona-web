@@ -7,7 +7,8 @@ import {BlueButton} from '@/components/shared/button'
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import React from 'react'
-import TeamKey from './team-key'
+import TeamSection from './team-section'
+import CredentialSection from './credential-section'
 
 /**
  *
@@ -37,7 +38,21 @@ export default function ApiKeyAssign() {
         }
       </div>
       {!status && apiKeyArr?.map((apiKeyObj, index) =>
-        <TeamKey
+        <TeamSection
+          key={index}
+          apiKeyIndex={index}
+          data={apiKeyObj}
+        />,
+      )}
+      <h2 className='text-2xl'>Credentials</h2>
+      <div className="flex items-center justify-start gap-3">
+        {status ?
+          <div className='text-text-gray'>{status}</div> : isAdmin &&
+          <BlueButton onClick={onAddTeam}>Add Credential</BlueButton>
+        }
+      </div>
+      {!status && apiKeyArr?.map((apiKeyObj, index) =>
+        <CredentialSection
           key={index}
           apiKeyIndex={index}
           data={apiKeyObj}

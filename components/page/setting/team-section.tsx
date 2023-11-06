@@ -105,20 +105,7 @@ export default function TeamKey({apiKeyIndex, data}: any) {
           onChange={onNameChange}
           disabled={!isAdmin && !isManager}
         />
-        <div className='text-xs whitespace-nowrap'>Private API Key:</div>
-        <InputText
-          value={data?.apiKey}
-          placeholder="API Key"
-          onChange={onApiKeyChange}
-          disabled={!isAdmin && !isManager}
-        />
-        <div className='text-xs whitespace-nowrap'>Public API Key:</div>
-        <InputText
-          value={data?.apiKey}
-          placeholder="API Key"
-          onChange={onApiKeyChange}
-          disabled={!isAdmin && !isManager}
-        />
+
         {isAdmin &&
           <>
             <div className='text-xs whitespace-nowrap'>Manager:</div>

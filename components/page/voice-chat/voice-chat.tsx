@@ -5,7 +5,7 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
-import {BlueButton, GreenButton} from '@/components/shared/button'
+import {BlueButton, GreenButton, LightBlueButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
@@ -245,6 +245,7 @@ export default function VoiceChat() {
   ) : (
     <div className='z-10 w-full px-4'>
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
+        <h2 className='text-2xl'>Configuration</h2>
         <div className='flex items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
           <div className='flex items-center gap-2'>
             <UserSelect onChange={onPersona}>
@@ -271,7 +272,7 @@ export default function VoiceChat() {
           </div>
           <div className='flex flex-col gap-3'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
-            <BlueButton onClick={onDeploy}>Deploy</BlueButton>
+            <LightBlueButton onClick={onDeploy}>Deploy</LightBlueButton>
           </div>
         </div>
         {personaArr[selPersonaIndex] &&
@@ -378,6 +379,7 @@ export default function VoiceChat() {
               </div>
             </div> */}
             <div className='flex flex-col w-full gap-3'>
+              <h2 className='text-2xl'>Scenarios</h2>
               <div className='flex w-full gap-3'>
                 <BlueButton onClick={onNewScenario}>Add new scenario</BlueButton>
                 <div className='flex items-center gap-3'>

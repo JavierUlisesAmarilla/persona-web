@@ -28,9 +28,9 @@ export default function ApiKeyAssign() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full gap-3 p-6 border rounded-lg border-border-gray bg-bg-light">
-      <div className="flex items-center justify-center gap-3">
-        <div className="text-lg font-semibold">API Key Assignment</div>
+    <div className="flex flex-col items-start w-full gap-3 p-6 border rounded-lg border-border-gray bg-bg-light">
+      <div className="flex items-center justify-start gap-3">
+      <h2 className='text-2xl'>Team</h2>
         {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
           <BlueButton onClick={onAddTeam}>Add Team</BlueButton>

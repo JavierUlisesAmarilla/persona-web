@@ -33,6 +33,7 @@ module.exports = {
         'bg-btn-red': '#CC0000',
         'bg-btn-green': '#00C48C',
         'bg-btn-blue': '#4464F3',
+        'bg-btn-light-blue': '#00bfff',
         'border-gray': '#EAECF0',
         'border-green': '#00C48C',
       },

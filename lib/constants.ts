@@ -21,7 +21,7 @@ export const DB_NAME = process.env.NEXT_PUBLIC_DB_NAME
 
 export const COMMON_API_KEY = 'abc'
 export const MENUS: any = {
-  setting: 'Team',
+  setting: 'Settings',
   voiceChat: 'Playground',
   docs: 'API Docs',
   // dashboard: 'Dashboard',

@@ -12,7 +12,7 @@ import classnames from 'classnames'
 import {signIn} from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {Button} from '../shared/button'
+import {BlueButton} from '../shared/button'
 import {useSignInModal} from './sign-in-modal'
 import UserDropdown from './user-dropdown'
 
@@ -70,14 +70,14 @@ export default function NavBar({session}: {session: any}) {
             {session && isUser ? (
               <UserDropdown session={session}/>
             ) : (
-              <Button
+              <BlueButton
                 onClick={(e) => {
                   e.preventDefault()
                   signIn()
                 }}
               >
                 Sign In
-              </Button>
+              </BlueButton>
             )}
           </div>
         </div>

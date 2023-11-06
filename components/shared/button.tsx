@@ -6,6 +6,26 @@ import React, {MouseEventHandler, ReactNode} from 'react'
 
 
 export const Button = ({
+  className,
+  onClick,
+  children,
+}: {
+  className?: string
+  onClick?: MouseEventHandler<HTMLDivElement>
+  children: ReactNode
+}) => {
+  return (
+    <div
+      className={`px-3 py-1 text-xs rounded cursor-pointer text-text-light hover:text-text-gray w-fit ${className}`}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  )
+}
+
+
+export const RedButton = ({
   onClick,
   children,
 }: {
@@ -13,12 +33,12 @@ export const Button = ({
   children: ReactNode
 }) => {
   return (
-    <div
-      className='px-3 py-1 text-xs rounded cursor-pointer text-text-light bg-bg-btn-blue hover:text-text-gray w-fit'
+    <Button
+      className='bg-bg-btn-red'
       onClick={onClick}
     >
       {children}
-    </div>
+    </Button>
   )
 }
 
@@ -31,11 +51,29 @@ export const GreenButton = ({
   children: ReactNode
 }) => {
   return (
-    <div
-      className='px-3 py-1 text-xs rounded cursor-pointer text-text-light bg-bg-btn-green hover:text-text-gray w-fit'
+    <Button
+      className='bg-bg-btn-green'
       onClick={onClick}
     >
       {children}
-    </div>
+    </Button>
+  )
+}
+
+
+export const BlueButton = ({
+  onClick,
+  children,
+}: {
+  onClick?: MouseEventHandler<HTMLDivElement>
+  children: ReactNode
+}) => {
+  return (
+    <Button
+      className='bg-bg-btn-blue'
+      onClick={onClick}
+    >
+      {children}
+    </Button>
   )
 }

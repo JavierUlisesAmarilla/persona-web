@@ -3,7 +3,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {Button} from '@/components/shared/button'
+import {BlueButton} from '@/components/shared/button'
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import React from 'react'
@@ -33,7 +33,7 @@ export default function ApiKeyAssign() {
         <div className="text-lg font-semibold">API Key Assignment</div>
         {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
-          <Button onClick={onAddTeam}>Add Team</Button>
+          <BlueButton onClick={onAddTeam}>Add Team</BlueButton>
         }
       </div>
       {!status && apiKeyArr?.map((apiKeyObj, index) =>

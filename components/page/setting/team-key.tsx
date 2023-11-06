@@ -6,7 +6,7 @@
 import {removeData, saveData} from '@/lib/mongodb/mongodb-client'
 import React, {useState} from 'react'
 
-import {Button} from '@/components/shared/button'
+import {BlueButton} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {UserSelect} from '@/components/shared/user-select'
 import {ADMIN_EMAIL} from '@/lib/constants'
@@ -91,9 +91,9 @@ export default function TeamKey({apiKeyIndex, data}: any) {
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
       {isManager &&
         <div className="flex items-center w-full gap-4">
-          <Button onClick={onAddEmail}>Add Email</Button>
-          <Button onClick={onSave}>Save</Button>
-          <Button onClick={onRemove}>Remove</Button>
+          <BlueButton onClick={onAddEmail}>Add Email</BlueButton>
+          <BlueButton onClick={onSave}>Save</BlueButton>
+          <BlueButton onClick={onRemove}>Remove</BlueButton>
           <div className='text-blue-500'>{status}</div>
         </div>
       }

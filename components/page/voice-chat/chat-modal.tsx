@@ -1,7 +1,9 @@
 'use client'
-import {Button, GreenButton} from '@/components/shared/button'
-import {Textarea} from '@/components/shared/textarea'
+
+import {BlueButton, RedButton} from '@/components/shared/button'
 import {AnimatePresence, motion} from 'framer-motion'
+
+import {Textarea} from '@/components/shared/textarea'
 import React from 'react'
 
 
@@ -40,30 +42,30 @@ export const ChatModal = ({
           animate={{opacity: 1}}
           exit={{opacity: 0}}
         >
-          <div className='w-[50rem] h-[30rem] relative flex flex-col gap-3 p-6 overflow-auto border-2 rounded-lg border-border-green bg-bg-light items-end'>
-            <GreenButton onClick={onClose}>End Chat</GreenButton>
-            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-              <div className='text-sm'>Actions schema</div>
-              <Textarea
-                value={schemaText}
-                placeholder='Enter the actions schema here'
-                onChange={(e) => setSchemaText(e.target.value)}
-              />
-              <div className='flex items-center gap-3'>
-                <Button onClick={onSchema}>Update actions schema</Button>
-                <div>{schemaState}</div>
+          <div className='w-[50rem] relative flex flex-col gap-3 p-6 overflow-auto border-2 rounded-lg border-border-gray shadow-2xl bg-bg-light items-end'>
+            <RedButton onClick={onClose}>End Chat</RedButton>
+            <div className='flex justify-center w-full gap-3'>
+              <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+                <div className='text-sm'>Actions</div>
+                <Textarea
+                  className='h-80'
+                  value={schemaText}
+                  placeholder='Enter the actions schema here'
+                  // onChange={(e) => setSchemaText(e.target.value)}
+                />
               </div>
-            </div>
-            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-              <div className='text-sm'>Current state</div>
-              <Textarea
-                value={stateText}
-                placeholder=''
-                onChange={(e) => setStateText(e.target.value)}
-              />
-              <div className='flex items-center gap-3'>
-                <Button onClick={onState}>Update state</Button>
-                <div>{stateState}</div>
+              <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+                <div className='text-sm'>Current state</div>
+                <Textarea
+                  className='h-80'
+                  value={stateText}
+                  placeholder=''
+                  onChange={(e) => setStateText(e.target.value)}
+                />
+                <div className='flex items-center gap-3'>
+                  <BlueButton onClick={onState}>Update state</BlueButton>
+                  <div>{stateState}</div>
+                </div>
               </div>
             </div>
           </div>

@@ -4,11 +4,13 @@ import React, {ChangeEventHandler} from 'react'
 
 
 export const Textarea = ({
+  className,
   value,
   rows = 5,
   placeholder,
   onChange,
 }: {
+  className?: string
   value?: string
   rows?: number
   placeholder?: string
@@ -16,7 +18,7 @@ export const Textarea = ({
 }) => {
   return (
     <textarea
-      className='h-[550px] text-xs border-gray-200 rounded'
+      className={`text-xs border-gray-200 rounded ${className}`}
       value={value || ''}
       rows={rows}
       placeholder={placeholder}

@@ -2,10 +2,11 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
+import {BlueButton, GreenButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
 
-import {Button, GreenButton} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
+import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {getPersonaArr} from '@/lib/persona'
@@ -236,9 +237,9 @@ export default function VoiceChat() {
             {personaArr.map((persona, index) => <option key={index} value={index}>{persona.name}</option>)}
           </UserSelect>
           <div className='w-32'/>
-          <div className='flex gap-3'>
+          <div className='flex flex-col gap-3'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
-            <Button onClick={onDeploy}>Deploy</Button>
+            <BlueButton onClick={onDeploy}>Deploy</BlueButton>
           </div>
         </div>
         {personaArr[selPersonaIndex] &&
@@ -251,7 +252,7 @@ export default function VoiceChat() {
                     placeholder='Enter user text here'
                     onChange={(e) => setUserInput(e.target.value)}
                   />
-                  <Button onClick={onUser}>Submit</Button>
+                  <BlueButton onClick={onUser}>Submit</BlueButton>
                   <div className='w-32'/>
                 </div>
                 <div className='flex items-center w-full gap-3'>
@@ -260,7 +261,7 @@ export default function VoiceChat() {
                     placeholder='Enter assistant text here'
                     onChange={(e) => setAssistantInput(e.target.value)}
                   />
-                  <Button onClick={onAssistant}>Submit</Button>
+                  <BlueButton onClick={onAssistant}>Submit</BlueButton>
                   <div className='w-32'/>
                 </div>
               </div> */}
@@ -271,7 +272,7 @@ export default function VoiceChat() {
                     placeholder='Enter initial message here'
                     onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
                   />
-                  <Button onClick={onInitialization}>Submit</Button>
+                  <BlueButton onClick={onInitialization}>Submit</BlueButton>
                   <div className='w-32'>{initialMsgState}</div>
                 </div>
                 <div className='flex items-center w-full gap-3'>
@@ -280,7 +281,7 @@ export default function VoiceChat() {
                     placeholder='Enter rate limit message here'
                     onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
                   />
-                  <Button onClick={onRateLimit}>Submit</Button>
+                  <BlueButton onClick={onRateLimit}>Submit</BlueButton>
                   <div className='w-32'>{rateLimitMsgState}</div>
                 </div>
               </div>
@@ -304,52 +305,51 @@ export default function VoiceChat() {
                 Prompt Engineering Guide 2
               </a>
             </div>
-            {/* <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='text-sm'>Prompt</div>
                 <Textarea
-                  rows={20}
+                  className='h-[550px]'
                   value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                   placeholder='Enter the prompt here'
                   onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
                 />
                 <div className='flex items-center gap-3'>
-                  <Button onClick={onPrompt}>Update prompt</Button>
+                  <BlueButton onClick={onPrompt}>Update prompt</BlueButton>
                   <div>{promptState}</div>
                 </div>
               </div>
               <div className='flex flex-col w-full gap-3'>
                 <div className='text-sm'>Actions schema</div>
                 <Textarea
-                  rows={20}
+                  className='h-[550px]'
                   value={schemaText}
                   placeholder='Enter the actions schema here'
                   onChange={(e) => setSchemaText(e.target.value)}
                 />
                 <div className='flex items-center gap-3'>
-                  <Button onClick={onSchema}>Update actions schema</Button>
+                  <BlueButton onClick={onSchema}>Update actions schema</BlueButton>
                   <div>{schemaState}</div>
                 </div>
               </div>
-            </div> */}
+            </div>
             {/* <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='text-sm'>Current state</div>
               <Textarea
-                rows={20}
                 value={stateText}
                 placeholder=''
                 onChange={(e) => setStateText(e.target.value)}
               />
               <div className='flex items-center gap-3'>
-                <Button onClick={onState}>Update state</Button>
+                <BlueButton onClick={onState}>Update state</BlueButton>
                 <div>{stateState}</div>
               </div>
             </div> */}
             <div className='flex flex-col w-full gap-3'>
               <div className='flex w-full gap-3'>
-                <Button onClick={onNewScenario}>Add new scenario</Button>
+                <BlueButton onClick={onNewScenario}>Add new scenario</BlueButton>
                 <div className='flex items-center gap-3'>
-                  <Button onClick={onSaveScenarios}>Save scenarios</Button>
+                  <BlueButton onClick={onSaveScenarios}>Save scenarios</BlueButton>
                   <div>{saveScenarioState}</div>
                 </div>
               </div>

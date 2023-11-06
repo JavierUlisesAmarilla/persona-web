@@ -14,7 +14,7 @@ export const UserSelect = ({
 }) => {
   return (
     <select
-      className='py-1 pl-3 pr-6 text-xs border-gray-200 rounded cursor-pointer'
+      className='py-1 pl-3 pr-6 text-xs border-gray-200 rounded cursor-pointer h-fit'
       value={value}
       onChange={onChange}
     >

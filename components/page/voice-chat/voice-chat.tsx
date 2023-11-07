@@ -12,7 +12,7 @@ import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
-import {getPersonaArr} from '@/lib/persona'
+import {getPersonaArr, getLLMSArr} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import {ChatModal} from './chat-modal'
@@ -38,6 +38,8 @@ export default function VoiceChat() {
     setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
     apiKeyArr, curEmail,
     status, setStatus,
+    LLMSArray, setLLMSArray,
+    setPersonaLLM
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -61,8 +63,18 @@ export default function VoiceChat() {
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
-    setSelPersonaIndex(newPersonaIndex)
+    setSelPersonaIndex(newPersonaIndex);
     setSchemaText(JSON.stringify(personaArr[newPersonaIndex].currentVoiceSchema, null, 2))
+  }
+
+  const onLLMChange = async (e: any) => {
+    const newLLMSIndex = parseInt(e.target.value);
+    const selPersonaId = personaArr[selPersonaIndex]?._id;
+    // PUT /api/personas/:personaId/llm with body {llm: llm}
+    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${API_KEY}`, {llm: LLMSArray[newLLMSIndex]})
+    console.log('LLM change res', res)
+    console.log('LLM now selected:', LLMSArray[newLLMSIndex])
+    setPersonaLLM(selPersonaIndex, LLMSArray[newLLMSIndex]);
   }
 
   const onUser = () => {
@@ -226,12 +238,18 @@ export default function VoiceChat() {
 
       (async () => {
         const newPersonaArr = await getPersonaArr(API_KEY)
+        const llmsArr = await getLLMSArr(API_KEY);
 
         if (Array.isArray(newPersonaArr)) {
           setPersonaArr(newPersonaArr)
           setStatus('')
         } else {
           setStatus('API key seems to be incorrect.')
+        }
+
+        if (Array.isArray(llmsArr)) {
+          console.log('GOT LLMS', llmsArr)
+          setLLMSArray(llmsArr)
         }
       })()
     } catch (e) {
@@ -251,6 +269,12 @@ export default function VoiceChat() {
             <UserSelect onChange={onPersona}>
               {personaArr.map((persona, index) => (
                 <option key={index} value={index}>{persona.name}</option>
+              ))}
+            </UserSelect>
+            <UserSelect value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'} onChange={onLLMChange}>
+            {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
+              {LLMSArray.map((llm, index) => (
+                <option key={index} value={index}>{llm}</option>
               ))}
             </UserSelect>
             <div

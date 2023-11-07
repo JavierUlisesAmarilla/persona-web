@@ -14,3 +14,16 @@ export const getPersonaArr = async (apiKey: string) => {
     console.log('mongodb#saveData: e: ', e)
   }
 }
+
+export const getLLMSArr = async (apiKey: string) => {
+  try {
+    const llmsArr = (await axios.get(`https://api.sindarin.tech/api/llms?apikey=${apiKey}`))?.data
+    console.log('persona#getLLMSArr: llmsArr: ', llmsArr)
+    return llmsArr
+  } catch (e) {
+    console.log('mongodb#saveData: e: ', e)
+  }
+}
+
+
+  

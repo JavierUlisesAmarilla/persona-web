@@ -6,6 +6,10 @@ interface ZustandState {
   setPersonaClient: (personaClient: any) => void
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
+  LLMSArray: Array<string>
+  setLLMSArray: (LLMSArray: Array<any>) => void
+  personaLLMSelected: string
+  setPersonaLLM: (personaIndex: number, llmSelected: string) => void
   selPersonaIndex: number
   setSelPersonaIndex: (selPersonaIndex: number) => void
   setScenarioInitMsg: (personaIndex: number, text: string) => void
@@ -38,6 +42,15 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
+  LLMSArray: [],
+  setLLMSArray: (LLMSArray) => set((state) => ({...state, LLMSArray})),
+  personaLLMSelected: '',
+  setPersonaLLM: (personaIndex, llmSelected) => set((state) => {
+    const personaArr = get().personaArr
+    console.log('setting persona', personaArr[personaIndex], 'to llm', llmSelected)
+    personaArr[personaIndex].llm = llmSelected
+    return {...state, personaArr}
+  }),
   selPersonaIndex: 0,
   setSelPersonaIndex: (selPersonaIndex) => set((state) => ({...state, selPersonaIndex})),
   setScenarioInitMsg: (personaIndex, text) => set((state) => {

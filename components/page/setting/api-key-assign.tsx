@@ -9,6 +9,7 @@ import {useZustand} from '@/lib/store/use-zustand'
 import React from 'react'
 import TeamSection from './team-section'
 import CredentialSection from './credential-section'
+import PlanSection from './plan-section'
 
 /**
  *
@@ -53,6 +54,20 @@ export default function ApiKeyAssign() {
       </div>
       {!status && apiKeyArr?.map((apiKeyObj, index) =>
         <CredentialSection
+          key={index}
+          apiKeyIndex={index}
+          data={apiKeyObj}
+        />,
+      )}
+      <h2 className='text-2xl'>Plan</h2>
+      <div className="flex items-center justify-start gap-3">
+        {status ?
+          <div className='text-text-gray'>{status}</div> : isAdmin &&
+          <BlueButton onClick={onAddTeam}>Update Plan</BlueButton>
+        }
+      </div>
+      {!status && apiKeyArr?.map((apiKeyObj, index) =>
+        <PlanSection
           key={index}
           apiKeyIndex={index}
           data={apiKeyObj}

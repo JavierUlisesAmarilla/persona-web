@@ -23,6 +23,7 @@ export const COMMON_API_KEY = 'abc'
 export const MENUS: any = {
   setting: 'Settings',
   voiceChat: 'Playground',
-  docs: 'API Docs',
+  transcripts: 'Transcripts',
+  docs: 'API Docs'
   // dashboard: 'Dashboard',
 }

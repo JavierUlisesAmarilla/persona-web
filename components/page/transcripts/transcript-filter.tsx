@@ -21,14 +21,14 @@ export const TranscriptFilter = () => {
   useEffect(() => {
     const selectedPersonaIdArr = selectedPersonaIdOptionArr.map((val: any) => val.name)
     const selectedUserIdArr = selectedUserIdOptionArr.map((val: any) => val.name)
-    console.log('TranscriptFilter#useEffect: ', selectedPersonaIdArr, selectedUserIdArr, dateArr)
     const newFilteredTranscriptArr = transcriptArr.filter((transcript) =>
       (!selectedPersonaIdArr.length || selectedPersonaIdArr.indexOf(transcript.personaId) > -1) &&
       (!selectedUserIdArr.length || selectedUserIdArr.indexOf(transcript.userId) > -1),
     )
+    console.log('TranscriptFilter#useEffect: ', selectedPersonaIdArr, selectedUserIdArr, dateArr, newFilteredTranscriptArr)
     setFilteredTranscriptArr(newFilteredTranscriptArr)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateArr, selectedPersonaIdOptionArr, selectedUserIdOptionArr])
+  }, [dateArr, selectedPersonaIdOptionArr, selectedUserIdOptionArr, transcriptArr])
 
   return (
     <div className='flex items-center gap-3 p-6 border rounded-lg bg-bg-light'>

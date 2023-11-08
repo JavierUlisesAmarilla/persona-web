@@ -12,6 +12,8 @@ interface ZustandState {
   setLLMSArray: (LLMSArray: Array<any>) => void
   transcriptArr: Array<any>
   setTranscriptArr: (transcriptArr: Array<any>) => void
+  filteredTranscriptArr: Array<any>
+  setFilteredTranscriptArr: (filteredTranscriptArr: Array<any>) => void
   personaLLMSelected: string
   setPersonaLLM: (personaIndex: number, llmSelected: string) => void
   selPersonaIndex: number
@@ -52,6 +54,8 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setLLMSArray: (LLMSArray) => set((state) => ({...state, LLMSArray})),
   transcriptArr: [],
   setTranscriptArr: (transcriptArr) => set((state) => ({...state, transcriptArr})),
+  filteredTranscriptArr: [],
+  setFilteredTranscriptArr: (filteredTranscriptArr) => set((state) => ({...state, filteredTranscriptArr})),
   personaLLMSelected: '',
   setPersonaLLM: (personaIndex, llmSelected) => set((state) => {
     const personaArr = get().personaArr

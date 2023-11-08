@@ -7,13 +7,13 @@ import {TranscriptFilter} from './transcript-filter'
 
 
 export const Transcripts = () => {
-  const {transcriptArr} = useZustand()
+  const {filteredTranscriptArr} = useZustand()
 
   return (
     <div className='flex flex-col w-full gap-3 px-4 Transcripts'>
       <TranscriptFilter/>
       <div className="flex flex-wrap w-full p-3 border rounded-lg bg-bg-light">
-        {transcriptArr.slice(0, 10).map((transcript, index) =>
+        {filteredTranscriptArr.map((transcript, index) =>
           <Transcript
             key={index}
             data={transcript}

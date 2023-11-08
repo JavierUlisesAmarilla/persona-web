@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsdoc/require-returns */
-/* eslint-disable no-unused-vars */
 'use client'
 
 import {BlueButton, GreenButton, LightBlueButton} from '@/components/shared/button'
@@ -31,15 +31,13 @@ declare global {
  */
 export default function VoiceChat() {
   const {
-    personaClient, setPersonaClient,
-    personaArr, setPersonaArr,
+    personaClient,
+    personaArr,
     selPersonaIndex, setSelPersonaIndex,
     setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
-    apiKeyArr, curEmail,
-    status, setStatus,
-    LLMSArray, setLLMSArray,
+    LLMSArray,
     setPersonaLLM,
-    personaAction, setPersonaAction,
+    personaAction,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -208,9 +206,7 @@ export default function VoiceChat() {
     }
   }
 
-  return status ? (
-    <div className='z-10 p-4 text-center text-text-gray'>{status}</div>
-  ) : (
+  return (
     <div className='z-10 w-full px-4'>
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
         <h2 className='text-2xl'>Configuration</h2>

@@ -8,16 +8,17 @@ import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {getAllData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
+import {getTranscriptArr} from '../../lib/persona'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
-import Transcripts from './transcripts/transcripts'
+import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
 /**
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function SignHome({session}: {session: any}) {
 
       if (isAdmin || isRealUser) {
         setIsUser(true)
-        setSelMenu('voiceChat')
+        setSelMenu('transcripts')
 
         console.log('SignHome#useEffect: apiKey: ', apiKey)
         const script = document.createElement('script')
@@ -65,6 +66,19 @@ export default function SignHome({session}: {session: any}) {
 
         if (Array.isArray(newPersonaArr)) {
           setPersonaArr(newPersonaArr)
+          const newTranscriptArr = []
+
+          // eslint-disable-next-line guard-for-in
+          for (const i in newPersonaArr) {
+            const personaId = newPersonaArr[i]._id
+
+            if (personaId) {
+              const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId})))
+            }
+          }
+
+          setTranscriptArr(newTranscriptArr)
           setStatus('')
         } else {
           setStatus('API key seems to be incorrect.')

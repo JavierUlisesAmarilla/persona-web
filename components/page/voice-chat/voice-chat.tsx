@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react'
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
-import {COMMON_API_KEY} from '@/lib/constants'
+import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import {ChatModal} from './chat-modal'
@@ -59,7 +59,7 @@ export default function VoiceChat() {
   const [personaAction, setPersonaAction] = useState({} as any)
   const [showDeployModal, setShowDeployModal] = useState(false)
 
-  const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
+  const apiKey = useApiKey()
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
@@ -71,7 +71,7 @@ export default function VoiceChat() {
     const newLLMSIndex = parseInt(e.target.value)
     const selPersonaId = personaArr[selPersonaIndex]?._id
     // PUT /api/personas/:personaId/llm with body {llm: llm}
-    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${API_KEY}`, {llm: LLMSArray[newLLMSIndex]})
+    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${apiKey}`, {llm: LLMSArray[newLLMSIndex]})
     console.log('LLM change res', res)
     console.log('LLM now selected:', LLMSArray[newLLMSIndex])
     setPersonaLLM(selPersonaIndex, LLMSArray[newLLMSIndex])
@@ -102,7 +102,7 @@ export default function VoiceChat() {
       }
 
       setInitialMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, {initialMessage: personaArr[selPersonaIndex].initialMessage})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${apiKey}`, {initialMessage: personaArr[selPersonaIndex].initialMessage})
       setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
@@ -118,7 +118,7 @@ export default function VoiceChat() {
       }
 
       setRateLimitMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, {rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${apiKey}`, {rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage})
       setRateLimitMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onRateLimit: error: ', error)
@@ -134,7 +134,7 @@ export default function VoiceChat() {
       }
 
       setPromptState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${apiKey}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
       setPromptState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onPrompt: error: ', error)
@@ -172,7 +172,7 @@ export default function VoiceChat() {
       }
 
       setSchemaState('Loading (this can take a few seconds)...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(schemaText))
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${apiKey}`, JSON.parse(schemaText))
       setSchemaState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onSchema: error: ', error)
@@ -202,7 +202,7 @@ export default function VoiceChat() {
       }
 
       setSaveScenarioState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, {scenarios: personaArr[selPersonaIndex].scenarios})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${apiKey}`, {scenarios: personaArr[selPersonaIndex].scenarios})
       setSaveScenarioState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onSaveScenarios: error: ', error)
@@ -215,15 +215,15 @@ export default function VoiceChat() {
         return
       }
 
-      console.log('VoiceChat#useEffect: API_KEY: ', API_KEY)
+      console.log('VoiceChat#useEffect: apiKey: ', apiKey)
       setStatus('Loading...')
       const script = document.createElement('script')
-      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${API_KEY}`
+      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${apiKey}`
       document.head.appendChild(script)
 
       script.addEventListener('load', () => {
         if (window.PersonaClient) {
-          const newPersonaClient = new window.PersonaClient(API_KEY)
+          const newPersonaClient = new window.PersonaClient(apiKey)
           newPersonaClient.on('json', ({detail}: any) => {
             console.log('persona action is ', detail)
             if (Object.keys(detail).length > 0 && !detail.transcription) {
@@ -237,8 +237,8 @@ export default function VoiceChat() {
       });
 
       (async () => {
-        const newPersonaArr = await getPersonaArr(API_KEY)
-        const llmsArr = await getLLMSArr(API_KEY)
+        const newPersonaArr = await getPersonaArr(apiKey)
+        const llmsArr = await getLLMSArr(apiKey)
 
         if (Array.isArray(newPersonaArr)) {
           setPersonaArr(newPersonaArr)

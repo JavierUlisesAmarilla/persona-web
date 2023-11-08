@@ -1,0 +1,43 @@
+'use client'
+
+import React from 'react'
+
+
+export const Transcript = ({data}: {data: any}) => {
+  return (
+    <div className='w-1/2 p-3 lg:w-1/4'>
+      <div className="flex flex-col gap-3 p-6 text-xs border rounded-lg bg-bg-gray">
+        <div className='flex items-center gap-3'>
+          <div>Persona ID: </div>
+          <div className='px-2 py-1 border bg-bg-light border-border-gray'>{data?.personaId}</div>
+        </div>
+        <div className='flex items-center gap-3'>
+          <div>User ID: </div>
+          <div className='px-2 py-1 border bg-bg-light border-border-gray'>{data?.userId}</div>
+        </div>
+        <div className='flex items-center gap-3'>
+          <div>Date: </div>
+          <div className='px-2 py-1 border bg-bg-light border-border-gray'>{data?.createdAt}</div>
+        </div>
+        {data?.messages?.length &&
+          <div className='flex flex-col gap-3'>
+            <div>Messages: </div>
+            <div className='p-3 border rounded-lg bg-bg-light border-border-gray'>
+              {data.messages.map((message: any, index: number) =>
+                <div
+                  key={index}
+                  className={`flex items-center ${message.role === 'assistant' ? 'justify-start' : 'justify-end'}`}
+                >
+                  <div className='flex flex-col'>
+                    <div className='px-2 py-1 border rounded bg-bg-gray w-fit border-border-gray'>{message.role}</div>
+                    <div>{message.content}</div>
+                  </div>
+                </div>,
+              )}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  )
+}

@@ -14,6 +14,10 @@ import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
+
+let isFirst = true
+
+
 /**
  *
  */
@@ -25,10 +29,11 @@ export default function SignHome({session}: {session: any}) {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status) {
+      if (!newCurEmail || status || !isFirst) {
         return
       }
 
+      isFirst = false
       setStatus('Loading...')
       setCurEmail(newCurEmail)
       const newApiKeyArr = await getAllData()
@@ -66,7 +71,7 @@ export default function SignHome({session}: {session: any}) {
 
         if (Array.isArray(newPersonaArr)) {
           setPersonaArr(newPersonaArr)
-          const newTranscriptArr = []
+          const newTranscriptArr: Array<any> = []
 
           // eslint-disable-next-line guard-for-in
           for (const i in newPersonaArr) {

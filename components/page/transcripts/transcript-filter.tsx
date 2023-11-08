@@ -1,11 +1,11 @@
 'use client'
 
 import React, {useEffect, useState} from 'react'
+import {getCustomDateFromDate, getNextCustomDateFromDate, getUniqueArr} from '../../../lib/common'
 
 import {Calendar} from 'primereact/calendar'
 import {MultiSelect} from 'primereact/multiselect'
 import {Nullable} from 'primereact/ts-helpers'
-import {getUniqueArr} from '../../../lib/common'
 import {useZustand} from '../../../lib/store/use-zustand'
 
 
@@ -21,11 +21,26 @@ export const TranscriptFilter = () => {
   useEffect(() => {
     const selectedPersonaIdArr = selectedPersonaIdOptionArr.map((val: any) => val.name)
     const selectedUserIdArr = selectedUserIdOptionArr.map((val: any) => val.name)
-    const newFilteredTranscriptArr = transcriptArr.filter((transcript) =>
-      (!selectedPersonaIdArr.length || selectedPersonaIdArr.indexOf(transcript.personaId) > -1) &&
-      (!selectedUserIdArr.length || selectedUserIdArr.indexOf(transcript.userId) > -1),
-    )
-    console.log('TranscriptFilter#useEffect: ', selectedPersonaIdArr, selectedUserIdArr, dateArr, newFilteredTranscriptArr)
+    const newFilteredTranscriptArr = transcriptArr.filter((transcript) => {
+      const personaId = !selectedPersonaIdArr.length || selectedPersonaIdArr.indexOf(transcript.personaId) > -1
+      const userId = !selectedUserIdArr.length || selectedUserIdArr.indexOf(transcript.userId) > -1
+      const date = !dateArr || !Array.isArray(dateArr) || (
+        (!dateArr[0] || transcript.createdAt >= getCustomDateFromDate(dateArr[0])) &&
+        (!dateArr[1] || transcript.createdAt < getNextCustomDateFromDate(dateArr[1]))
+      )
+
+      // if (dateArr && Array.isArray(dateArr)) {
+      //   if (dateArr[0]) {
+      //     console.log('TranscriptFilter#useEffect: dateArr[0]: ', getCustomDateFromDate(dateArr[0]), ',', transcript.createdAt, getCustomDateFromDate(dateArr[0]) <= transcript.createdAt)
+      //   }
+
+      //   if (dateArr[1]) {
+      //     console.log('TranscriptFilter#useEffect: dateArr[1]: ', transcript.createdAt, ',', getNextCustomDateFromDate(dateArr[1]), transcript.createdAt < getNextCustomDateFromDate(dateArr[1]))
+      //   }
+      // }
+
+      return personaId && userId && date
+    })
     setFilteredTranscriptArr(newFilteredTranscriptArr)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateArr, selectedPersonaIdOptionArr, selectedUserIdOptionArr, transcriptArr])

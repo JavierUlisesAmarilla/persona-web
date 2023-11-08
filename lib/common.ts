@@ -1,6 +1,7 @@
+import {WITHOUT_SIGN} from './constants'
+/* eslint-disable max-len */
 import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import {getServerSession} from 'next-auth/next'
-import {WITHOUT_SIGN} from './constants'
 
 
 export const getServerSessionMiddle = async () => {
@@ -20,4 +21,32 @@ export const getServerSessionMiddle = async () => {
 export const getUniqueArr = (arr: Array<any>) => {
   const uniqueArr = arr.filter((value: any, index: number, array: Array<any>) => array.indexOf(value) === index)
   return uniqueArr
+}
+
+
+export const getCustomDateFromStr = (strDate: string) => {
+  const date = new Date(strDate.split('.')[0])
+  return getCustomDateFromDate(date)
+}
+
+
+export const getCustomDateFromDate = (date: Date) => {
+  const customDate = `${date.getFullYear()}.${getDateNum(date.getMonth() + 1)}.${getDateNum(date.getDate())} ${getDateNum(date.getHours())}:${getDateNum(date.getMinutes())}:${getDateNum(date.getSeconds())}`
+  return customDate
+}
+
+
+export const getNextCustomDateFromDate = (date: Date) => {
+  const nextDate = new Date(date)
+  nextDate.setDate(date.getDate() + 1)
+  return getCustomDateFromDate(nextDate)
+}
+
+
+export const getDateNum = (num: number) => {
+  const dateNum = num.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  })
+  return dateNum
 }

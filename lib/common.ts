@@ -15,3 +15,9 @@ export const getServerSessionMiddle = async () => {
     await getServerSession(authOptions)
   return session
 }
+
+
+export const getUniqueArr = (arr: Array<any>) => {
+  const uniqueArr = arr.filter((value: any, index: number, array: Array<any>) => array.indexOf(value) === index)
+  return uniqueArr
+}

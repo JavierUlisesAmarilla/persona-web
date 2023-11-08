@@ -1,3 +1,5 @@
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+
 import SignHome from '@/components/page/sign-home'
 import {getServerSessionMiddle} from '@/lib/common'
 import React from 'react'

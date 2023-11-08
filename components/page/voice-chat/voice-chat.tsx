@@ -6,8 +6,7 @@
 'use client'
 
 import {BlueButton, GreenButton, LightBlueButton} from '@/components/shared/button'
-import {getLLMSArr, getPersonaArr} from '@/lib/persona'
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
@@ -40,6 +39,7 @@ export default function VoiceChat() {
     status, setStatus,
     LLMSArray, setLLMSArray,
     setPersonaLLM,
+    personaAction, setPersonaAction,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -56,7 +56,6 @@ export default function VoiceChat() {
   const [stateText, setStateText] = useState('')
 
   const [showChatModal, setShowChatModal] = useState(false)
-  const [personaAction, setPersonaAction] = useState({} as any)
   const [showDeployModal, setShowDeployModal] = useState(false)
 
   const apiKey = useApiKey()
@@ -208,55 +207,6 @@ export default function VoiceChat() {
       console.log('VoiceChat#onSaveScenarios: error: ', error)
     }
   }
-
-  useEffect(() => {
-    try {
-      if (status) {
-        return
-      }
-
-      console.log('VoiceChat#useEffect: apiKey: ', apiKey)
-      setStatus('Loading...')
-      const script = document.createElement('script')
-      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${apiKey}`
-      document.head.appendChild(script)
-
-      script.addEventListener('load', () => {
-        if (window.PersonaClient) {
-          const newPersonaClient = new window.PersonaClient(apiKey)
-          newPersonaClient.on('json', ({detail}: any) => {
-            console.log('persona action is ', detail)
-            if (Object.keys(detail).length > 0 && !detail.transcription) {
-              setPersonaAction(detail)
-            }
-          })
-
-          console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
-          setPersonaClient(newPersonaClient)
-        }
-      });
-
-      (async () => {
-        const newPersonaArr = await getPersonaArr(apiKey)
-        const llmsArr = await getLLMSArr(apiKey)
-
-        if (Array.isArray(newPersonaArr)) {
-          setPersonaArr(newPersonaArr)
-          setStatus('')
-        } else {
-          setStatus('API key seems to be incorrect.')
-        }
-
-        if (Array.isArray(llmsArr)) {
-          console.log('GOT LLMS', llmsArr)
-          setLLMSArray(llmsArr)
-        }
-      })()
-    } catch (e) {
-      console.log('VoiceChat#useEffect: e: ', e)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return status ? (
     <div className='z-10 p-4 text-center text-text-gray'>{status}</div>

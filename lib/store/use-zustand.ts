@@ -4,6 +4,8 @@ import {create} from 'zustand'
 interface ZustandState {
   personaClient: any
   setPersonaClient: (personaClient: any) => void
+  personaAction: any
+  setPersonaAction: (personaAction: any) => void
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
   LLMSArray: Array<string>
@@ -40,6 +42,8 @@ interface ZustandState {
 export const useZustand = create<ZustandState>((set, get) => ({
   personaClient: null,
   setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
+  personaAction: {},
+  setPersonaAction: (personaAction) => set((state) => ({...state, personaAction})),
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
   LLMSArray: [],

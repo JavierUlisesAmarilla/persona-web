@@ -8,6 +8,7 @@ import {getAllData} from '@/lib/mongodb/mongodb-client'
 import {useZustand} from '@/lib/store/use-zustand'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
+import Transcripts from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
 /**
@@ -47,6 +48,7 @@ export default function SignHome({session}: {session: any}) {
     <>
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
+      {selMenu === 'transcripts' && <Transcripts/>}
       {selMenu === 'dashboard' && <Dashboard/>}
     </>
   ) : (

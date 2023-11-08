@@ -15,9 +15,9 @@ import {UserSelect} from '@/components/shared/user-select'
 import {COMMON_API_KEY} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
-import {ChatModal} from './chat-modal'
-import {DeployModal} from './deploy-modal'
-import Scenario from './scenario'
+import {ChatModal} from '../voice-chat/chat-modal'
+import {DeployModal} from '../voice-chat/deploy-modal'
+import Scenario from '../voice-chat/scenario'
 
 
 declare global {
@@ -30,7 +30,7 @@ declare global {
 /**
  *
  */
-export default function VoiceChat() {
+export default function Transcripts() {
   const {
     personaClient, setPersonaClient,
     personaArr, setPersonaArr,

@@ -94,3 +94,20 @@ export const LightBlueButton = ({
     </Button>
   )
 }
+
+export const BorderGreenButton = ({
+  onClick,
+  children,
+}: {
+  onClick?: MouseEventHandler<HTMLDivElement>
+  children: ReactNode
+}) => {
+  return (
+    <Button
+      className='border-2 border-bg-btn-green bg-white text-bg-btn-green'
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  )
+}

@@ -17,7 +17,7 @@ import {AiOutlineCloseCircle} from 'react-icons/ai'
  *
  */
 export default function CredentialSection({apiKeyIndex, data}: any) {
-  const {apiKeyArr, setApiKeyArr, curEmail} = useZustand()
+  const {apiKeyArr, setApiKeyArr, curEmail, team} = useZustand()
   const [status, setStatus] = useState('')
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || curEmail === apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.manager
@@ -30,19 +30,11 @@ export default function CredentialSection({apiKeyIndex, data}: any) {
 
   return (
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
-      <div className='text-xs whitespace-nowrap'>Private API Key:</div>
+      <div className='text-xs whitespace-nowrap'>Tier:</div>
       <InputText
         classNames='w-1/3'
-        value={data?.apiKey}
-        placeholder="API Key"
-        onChange={onApiKeyChange}
-        disabled={!isAdmin && !isManager}
-      />
-      <div className='text-xs whitespace-nowrap'>Public API Key:</div>
-      <InputText
-        classNames='w-1/3'
-        value={data?.apiKey}
-        placeholder="API Key"
+        value={team?.tier}
+        placeholder="Tier"
         onChange={onApiKeyChange}
         disabled={!isAdmin && !isManager}
       />

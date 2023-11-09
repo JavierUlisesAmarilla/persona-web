@@ -3,6 +3,8 @@ import {create} from 'zustand'
 
 interface ZustandState {
   personaClient: any
+  team: any,
+  setTeam: (team: any) => void
   setPersonaClient: (personaClient: any) => void
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
@@ -39,6 +41,8 @@ interface ZustandState {
 
 export const useZustand = create<ZustandState>((set, get) => ({
   personaClient: null,
+  team: null,
+  setTeam: (team) => set((state) => ({...state, team})),
   setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),

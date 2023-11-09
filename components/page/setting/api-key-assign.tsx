@@ -6,17 +6,20 @@
 import {BlueButton} from '@/components/shared/button'
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import TeamSection from './team-section'
 import CredentialSection from './credential-section'
 import PlanSection from './plan-section'
+import axios from 'axios'
 
 /**
  *
  */
 export default function ApiKeyAssign() {
-  const {apiKeyArr, setApiKeyArr, status, curEmail} = useZustand()
+  const {apiKeyArr, setApiKeyArr, status, curEmail, team, setTeam} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
+
+  const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey
 
   const onAddTeam = () => {
     setApiKeyArr([
@@ -28,6 +31,20 @@ export default function ApiKeyAssign() {
       },
     ])
   }
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const res = await axios.get(`https://api.sindarin.tech/api/team?apikey=${API_KEY}`);
+        console.log('res.data', res.data)
+        setTeam(res.data)
+      } catch (error) {
+        console.error('Error fetching team:', error)
+      }
+    }
+    fetchTeam()
+  }, [])
+
 
   return (
     <div className="flex flex-col items-start w-full gap-3 p-6 border rounded-lg border-border-gray bg-bg-light">

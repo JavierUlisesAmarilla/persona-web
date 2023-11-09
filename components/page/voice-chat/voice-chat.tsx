@@ -5,7 +5,7 @@
 /* eslint-disable no-unused-vars */
 'use client'
 
-import {BlueButton, GreenButton, LightBlueButton} from '@/components/shared/button'
+import {BlueButton, GreenButton, LightBlueButton, BorderGreenButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
@@ -265,12 +265,16 @@ export default function VoiceChat() {
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
         <h2 className='text-2xl'>Configuration</h2>
         <div className='flex items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
-          <div className='flex items-center gap-2'>
-            <UserSelect onChange={onPersona}>
-              {personaArr.map((persona, index) => (
-                <option key={index} value={index}>{persona.name}</option>
-              ))}
-            </UserSelect>
+          {/* <div className='flex items-center gap-2'> */}
+          <div className='flex gap-2'>
+            <div className='flex flex-col items-start gap-2'>
+              <UserSelect onChange={onPersona}>
+                {personaArr.map((persona, index) => (
+                  <option key={index} value={index}>{persona.name}</option>
+                ))}
+              </UserSelect>
+              <BorderGreenButton onClick={() => {}}>+ Add New Persona</BorderGreenButton>
+            </div>
             <UserSelect value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'} onChange={onLLMChange}>
             {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
               {LLMSArray.map((llm, index) => (
@@ -292,7 +296,7 @@ export default function VoiceChat() {
                 alt="Copy to clipboard"
               />
             </div>
-            <div className={`flex items-center fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
+            <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
           </div>
           <div className='flex flex-col gap-3 justify-between'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>

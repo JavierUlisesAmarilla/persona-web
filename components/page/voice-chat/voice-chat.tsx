@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsdoc/require-returns */
-/* eslint-disable no-unused-vars */
 'use client'
 
 import {BlueButton, GreenButton, LightBlueButton, BorderGreenButton} from '@/components/shared/button'
@@ -11,8 +11,7 @@ import React, {useEffect, useState} from 'react'
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
-import {COMMON_API_KEY} from '@/lib/constants'
-import {getPersonaArr, getLLMSArr} from '@/lib/persona'
+import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import {ChatModal} from './chat-modal'
@@ -32,14 +31,13 @@ declare global {
  */
 export default function VoiceChat() {
   const {
-    personaClient, setPersonaClient,
-    personaArr, setPersonaArr,
+    personaClient,
+    personaArr,
     selPersonaIndex, setSelPersonaIndex,
     setScenarioInitMsg, setScenarioRateLimit, setScenarioPrompt, addNewScenario,
-    apiKeyArr, curEmail,
-    status, setStatus,
-    LLMSArray, setLLMSArray,
-    setPersonaLLM
+    LLMSArray,
+    setPersonaLLM,
+    personaAction,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -56,25 +54,24 @@ export default function VoiceChat() {
   const [stateText, setStateText] = useState('')
 
   const [showChatModal, setShowChatModal] = useState(false)
-  const [personaAction, setPersonaAction] = useState({} as any)
   const [showDeployModal, setShowDeployModal] = useState(false)
 
-  const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey || COMMON_API_KEY
+  const apiKey = useApiKey()
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
-    setSelPersonaIndex(newPersonaIndex);
+    setSelPersonaIndex(newPersonaIndex)
     setSchemaText(JSON.stringify(personaArr[newPersonaIndex].currentVoiceSchema, null, 2))
   }
 
   const onLLMChange = async (e: any) => {
-    const newLLMSIndex = parseInt(e.target.value);
-    const selPersonaId = personaArr[selPersonaIndex]?._id;
+    const newLLMSIndex = parseInt(e.target.value)
+    const selPersonaId = personaArr[selPersonaIndex]?._id
     // PUT /api/personas/:personaId/llm with body {llm: llm}
-    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${API_KEY}`, {llm: LLMSArray[newLLMSIndex]})
+    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${apiKey}`, {llm: LLMSArray[newLLMSIndex]})
     console.log('LLM change res', res)
     console.log('LLM now selected:', LLMSArray[newLLMSIndex])
-    setPersonaLLM(selPersonaIndex, LLMSArray[newLLMSIndex]);
+    setPersonaLLM(selPersonaIndex, LLMSArray[newLLMSIndex])
   }
 
   const onUser = () => {
@@ -102,7 +99,7 @@ export default function VoiceChat() {
       }
 
       setInitialMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${API_KEY}`, {initialMessage: personaArr[selPersonaIndex].initialMessage})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/initialMessage?apikey=${apiKey}`, {initialMessage: personaArr[selPersonaIndex].initialMessage})
       setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
@@ -118,7 +115,7 @@ export default function VoiceChat() {
       }
 
       setRateLimitMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${API_KEY}`, {rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/rateLimitMessage?apikey=${apiKey}`, {rateLimitMessage: personaArr[selPersonaIndex].rateLimitMessage})
       setRateLimitMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onRateLimit: error: ', error)
@@ -134,7 +131,7 @@ export default function VoiceChat() {
       }
 
       setPromptState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${API_KEY}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/prompt?apikey=${apiKey}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
       setPromptState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onPrompt: error: ', error)
@@ -172,7 +169,7 @@ export default function VoiceChat() {
       }
 
       setSchemaState('Loading (this can take a few seconds)...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${API_KEY}`, JSON.parse(schemaText))
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/schema?apikey=${apiKey}`, JSON.parse(schemaText))
       setSchemaState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onSchema: error: ', error)
@@ -202,65 +199,14 @@ export default function VoiceChat() {
       }
 
       setSaveScenarioState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${API_KEY}`, {scenarios: personaArr[selPersonaIndex].scenarios})
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/scenarios?apikey=${apiKey}`, {scenarios: personaArr[selPersonaIndex].scenarios})
       setSaveScenarioState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onSaveScenarios: error: ', error)
     }
   }
 
-  useEffect(() => {
-    try {
-      if (status) {
-        return
-      }
-
-      console.log('VoiceChat#useEffect: API_KEY: ', API_KEY)
-      setStatus('Loading...')
-      const script = document.createElement('script')
-      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${API_KEY}`
-      document.head.appendChild(script)
-
-      script.addEventListener('load', () => {
-        if (window.PersonaClient) {
-          const newPersonaClient = new window.PersonaClient(API_KEY)
-          newPersonaClient.on('json', ({ detail }: any) => {
-            console.log('persona action is ', detail)
-            if (Object.keys(detail).length > 0 && !detail.transcription) {
-              setPersonaAction(detail);
-            }
-          })
-
-          console.log('VoiceChat#useEffect#script#load: newPersonaClient: ', newPersonaClient)
-          setPersonaClient(newPersonaClient)
-        }
-      });
-
-      (async () => {
-        const newPersonaArr = await getPersonaArr(API_KEY)
-        const llmsArr = await getLLMSArr(API_KEY);
-
-        if (Array.isArray(newPersonaArr)) {
-          setPersonaArr(newPersonaArr)
-          setStatus('')
-        } else {
-          setStatus('API key seems to be incorrect.')
-        }
-
-        if (Array.isArray(llmsArr)) {
-          console.log('GOT LLMS', llmsArr)
-          setLLMSArray(llmsArr)
-        }
-      })()
-    } catch (e) {
-      console.log('VoiceChat#useEffect: e: ', e)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return status ? (
-    <div className='z-10 p-4 text-center text-text-gray'>{status}</div>
-  ) : (
+  return (
     <div className='z-10 w-full px-4'>
       <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
         <h2 className='text-2xl'>Configuration</h2>
@@ -276,13 +222,13 @@ export default function VoiceChat() {
               <BorderGreenButton onClick={() => {}}>+ Add New Persona</BorderGreenButton>
             </div>
             <UserSelect value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'} onChange={onLLMChange}>
-            {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
+              {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
               {LLMSArray.map((llm, index) => (
                 <option key={index} value={index}>{llm}</option>
               ))}
             </UserSelect>
             <div
-              className='flex items-center justify-between px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer h-6'
+              className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
               onClick={async () => {
                 await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
                 setCopyStatus('Copied.')
@@ -298,7 +244,7 @@ export default function VoiceChat() {
             </div>
             <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
           </div>
-          <div className='flex flex-col gap-3 justify-between'>
+          <div className='flex flex-col justify-between gap-3'>
             <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
             <div className='ml-auto'>
               <LightBlueButton onClick={onDeploy}>Deploy</LightBlueButton>
@@ -433,7 +379,7 @@ export default function VoiceChat() {
       <ChatModal
         personaName={personaArr[selPersonaIndex]?.name}
         schemaText={JSON.stringify(personaAction, null, 2)}
-        // setSchemaText={setSchemaText}
+        setSchemaText={setSchemaText}
         onSchema={onSchema}
         schemaState={schemaState}
         stateText={stateText}

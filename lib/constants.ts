@@ -1,6 +1,6 @@
 // Environment
 
-export const IS_DEV_MODE = false
+export const IS_DEV_MODE = true
 export const WITHOUT_SIGN = IS_DEV_MODE
 export const USE_SAMPLE_DATA = IS_DEV_MODE
 
@@ -24,6 +24,6 @@ export const MENUS: any = {
   setting: 'Settings',
   voiceChat: 'Playground',
   transcripts: 'Transcripts',
-  docs: 'API Docs'
+  docs: 'API Docs',
   // dashboard: 'Dashboard',
 }

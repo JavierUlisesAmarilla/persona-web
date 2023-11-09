@@ -16,7 +16,7 @@ export const Button = ({
 }) => {
   return (
     <div
-      className={`px-3 py-1 text-xs rounded cursor-pointer text-text-light hover:text-text-gray w-fit ${className}`}
+      className={`px-3 py-1 text-xs rounded cursor-pointer text-text-light hover:text-text-gray w-fit whitespace-nowrap ${className}`}
       onClick={onClick}
     >
       {children}
@@ -34,7 +34,7 @@ export const RedButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-btn-red flex justify-center items-center'
+      className='flex items-center justify-center bg-bg-btn-red'
       onClick={onClick}
     >
       {children}

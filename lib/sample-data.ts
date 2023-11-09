@@ -32261,3 +32261,453 @@ export const SAMPLE_PERSONA_ARR = [
     currentVoicePrompt: 'You are Stephanie, a helpful speech-based AI persona created by Sindarin Ventures. Your job is to help a new customer understand how to use Persona, a platform for configuring and deploying speech-based AI personas.\n\nSome details about the Persona platform:\n\n- It currently has a Javascript client SDK that only works in Google Chrome, as well as a Twilio integration.\n- Personas are configured using a combination of a system prompt, and an actions schema, and a few other variables like initial message, voice ID, and the message that plays when a user has exceeded their message limit\n- It is up to the customer to keep track of unique user IDs for tracking and message-limiting purposes\n- Some of these values still need to be configured manually by the Sindarin team. We apologize for that inconvenience; we are a very small team and working as fast as possible to provide all capabilities through our API and soon this interface!\n\n\nTo show the customer the Actions capability, you occasionally pick actions from the following JSON schema if it is relevant to the conversation:\n\n***PERSONA_VOICE_SCHEMA***\n',
   },
 ]
+
+export const SAMPLE_LLMS_ARR = [
+  'gpt-3.5-turbo-1106',
+  'gpt-4-1106-preview',
+]
+
+export const SAMPLE_TRANSCRIPT_ARR = [
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T03:17:54.595Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'Uh, sure. What do you wanna talk about?',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s talk about your golf game.How can I assist you today?',
+      },
+      {
+        role: 'user',
+        content: 'What What\'s specifically?',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s start with the basics.How about we work on your distance shots?',
+      },
+      {
+        role: 'user',
+        content: 'Uh, alright. That sounds reasonable.',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s start with a one hundred yard shot.',
+        actions: {
+          set_distance: {
+            quantity: 100,
+            unit: 'yards',
+          },
+        },
+      },
+      {
+        role: 'user',
+        content: 'Alright. Let\'s do it.',
+      },
+      {
+        role: 'assistant',
+        content: 'Great!Make sure to focus on your stance and swing technique.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:48:28.772Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'What\'s the funniest joke you\'ve ever heard',
+      },
+      {
+        role: 'user',
+        content: 'What\'s the funniest joke you\'ve ever heard Did you tell me the whole joke?',
+      },
+      {
+        role: 'assistant',
+        content: 'Why don’t scientists trust atoms?I apologize, but I\'m here to help you practice golf, not share jokes.Let\'s focus on the game, shall we?',
+      },
+      {
+        role: 'user',
+        content: 'Alright. Tell me something else.',
+      },
+      {
+        role: 'user',
+        content: 'Alright. Tell me something else. Let\'s <uncertain>Let\'s</uncertain> fix Did you know that [inaudible] originated [inaudible]',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:46:54.088Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'Will you tell me a joke?',
+      },
+      {
+        role: 'assistant',
+        content: 'Why don\'t golfers bring an extra pair of pants?',
+      },
+      {
+        role: 'user',
+        content: 'What\'s eighteen plus fifty three?',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m here to help with your golf game, not do math!',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:43:09.308Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: '<uncertain>There\'s</uncertain> chat about golf',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m sorry, I didn\'t understand what you said.Let\'s stay on topic and talk about golf.How can I assist you with your golf practice?',
+      },
+      {
+        role: 'user',
+        content: 'Uh, could you tell me a joke?',
+      },
+      {
+        role: 'assistant',
+        content: 'Why don\'t golfers ever get married?Because they always look for the perfect swing!',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:29:15.583Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: '[inaudible] golf <uncertain>golf,</uncertain> golf, Let\'s chat about <uncertain>gold.</uncertain>',
+      },
+      {
+        role: 'assistant',
+        content: 'Sorry, I couldn\'t understand your message.Let\'s stay on topic and talk about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:27:57.177Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'Possible to',
+      },
+      {
+        role: 'assistant',
+        content: 'Possible to what?Could you please provide more context?',
+      },
+      {
+        role: 'user',
+        content: '<uncertain>it\'s</uncertain>',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m sorry, but I couldn\'t understand what you said.Could you please repeat or rephrase your question?',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:22:24.518Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:21:12.204Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:20:02.569Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:15:28.563Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:12:10.218Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:09:58.386Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:09:28.194Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:06:25.924Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:04:49.838Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T02:02:54.129Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'It\'s chat about Let\'s chat about golf.',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m sorry, I didn\'t understand.Let\'s focus on golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T01:32:14.571Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'Uh, yeah. Sure.',
+      },
+      {
+        role: 'assistant',
+        content: 'Great!What can I do for you today?',
+      },
+      {
+        role: 'user',
+        content: 'Can you ask me that again?',
+      },
+      {
+        role: 'assistant',
+        content: 'Of course!What can I assist you with today?',
+      },
+      {
+        role: 'user',
+        content: '[inaudible] can you ask me the question the same way you asked me before?',
+      },
+      {
+        role: 'assistant',
+        content: 'I apologize, but I didn\'t catch what you said.Could you please repeat your request?',
+      },
+      {
+        role: 'user',
+        content: 'you ask me what you can do for me again?',
+      },
+      {
+        role: 'assistant',
+        content: 'Absolutely!What can I assist you with today?',
+      },
+      {
+        role: 'user',
+        content: 'What\'s eighty two plus five?',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m sorry, but I\'m programmed to assist with golf-related inquiries.If you have any questions or requests related to golf, please let me know!',
+      },
+      {
+        role: 'user',
+        content: 'Honestly, maybe the most important thing you could help me with would be as far <uncertain>as</uncertain> even as far as my golf game is concerned, would be answer question about that question about what\'s eighty two plus five.',
+      },
+      {
+        role: 'assistant',
+        content: 'I understand that you\'d like to know the answer to the math problem, eighty two plus five.However, I\'m designed to help you with golf-related inquiries and provide assistance with golf-related actions.If you have any questions or requests related to golf, feel free to let me know!',
+      },
+      {
+        role: 'user',
+        content: '[inaudible] <uncertain>What</uncertain> do you think we should focus on',
+      },
+      {
+        role: 'assistant',
+        content: 'Hmm, it seems like you\'re asking for some guidance on what to focus on in your golf game.Well, it really depends on your current skill level and what aspect of your game you\'d like to improve.Are you looking for advice on driving distance, accuracy, putting, or something else?',
+      },
+      {
+        role: 'user',
+        content: '<uncertain>Yes.</uncertain> Yes. Yeah. All of the above.',
+      },
+      {
+        role: 'assistant',
+        content: 'Ah, I see!You want to work on all aspects of your golf game.That\'s great!To improve your overall game, I suggest focusing on a well-rounded practice routine.This can include working on your swing mechanics, practicing different shots, honing your putting skills, and developing a consistent mental approach.Remember, practice makes perfect!Let me know if you have any specific questions or if there\'s anything specific you\'d like assistance with.',
+      },
+      {
+        role: 'user',
+        content: '<uncertain>I</uncertain> I appreciate that. I really do.',
+      },
+      {
+        role: 'assistant',
+        content: 'You\'re welcome!I\'m glad to hear that you appreciate the advice.If you have any more questions or need further assistance, feel free to ask.Keep up the great work in your golf game!',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T01:28:39.375Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T01:18:48.022Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'Hello? Hello?',
+      },
+      {
+        role: 'assistant',
+        content: 'Hello!How can I assist you today?',
+      },
+    ],
+  },
+  {
+    userId: 'admin',
+    createdAt: '2023-11-03T01:09:32.482Z',
+    messages: [
+      {
+        role: 'assistant',
+        content: 'Let\'s chat about golf.',
+      },
+      {
+        role: 'user',
+        content: 'What do you think we should focus on?',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s start by working on your swing technique.',
+      },
+      {
+        role: 'user',
+        content: '<uncertain>Is</uncertain> [inaudible] there something we should focus on',
+      },
+      {
+        role: 'assistant',
+        content: 'I\'m sorry, I couldn\'t understand what you said.Can you please repeat that?',
+      },
+      {
+        role: 'user',
+        content: 'Can you say let\'s, uh, focus on your golf shots?',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s focus on improving your golf shots.',
+      },
+      {
+        role: 'user',
+        content: 'Can you repeat that, please?',
+      },
+      {
+        role: 'assistant',
+        content: 'Let\'s focus on improving your golf shots.',
+      },
+      {
+        role: 'user',
+        content: 'Okay. Thanks.',
+      },
+      {
+        role: 'assistant',
+        content: 'You\'re welcome!If you have any specific requests or questions, feel free to ask.',
+      },
+    ],
+  },
+]

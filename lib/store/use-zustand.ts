@@ -6,10 +6,16 @@ interface ZustandState {
   team: any,
   setTeam: (team: any) => void
   setPersonaClient: (personaClient: any) => void
+  personaAction: any
+  setPersonaAction: (personaAction: any) => void
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
   LLMSArray: Array<string>
   setLLMSArray: (LLMSArray: Array<any>) => void
+  transcriptArr: Array<any>
+  setTranscriptArr: (transcriptArr: Array<any>) => void
+  filteredTranscriptArr: Array<any>
+  setFilteredTranscriptArr: (filteredTranscriptArr: Array<any>) => void
   personaLLMSelected: string
   setPersonaLLM: (personaIndex: number, llmSelected: string) => void
   selPersonaIndex: number
@@ -44,10 +50,16 @@ export const useZustand = create<ZustandState>((set, get) => ({
   team: null,
   setTeam: (team) => set((state) => ({...state, team})),
   setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
+  personaAction: {},
+  setPersonaAction: (personaAction) => set((state) => ({...state, personaAction})),
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
   LLMSArray: [],
   setLLMSArray: (LLMSArray) => set((state) => ({...state, LLMSArray})),
+  transcriptArr: [],
+  setTranscriptArr: (transcriptArr) => set((state) => ({...state, transcriptArr})),
+  filteredTranscriptArr: [],
+  setFilteredTranscriptArr: (filteredTranscriptArr) => set((state) => ({...state, filteredTranscriptArr})),
   personaLLMSelected: '',
   setPersonaLLM: (personaIndex, llmSelected) => set((state) => {
     const personaArr = get().personaArr

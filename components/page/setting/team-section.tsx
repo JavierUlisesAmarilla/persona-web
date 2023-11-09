@@ -28,12 +28,6 @@ export default function TeamKey({apiKeyIndex, data}: any) {
     setApiKeyArr(newApiKeyArr)
   }
 
-  const onApiKeyChange = (event: any) => {
-    const newApiKeyArr = [...apiKeyArr]
-    newApiKeyArr[apiKeyIndex].apiKey = event.target.value
-    setApiKeyArr(newApiKeyArr)
-  }
-
   const onManagerChange = (event: any) => {
     const newApiKeyArr = [...apiKeyArr]
     newApiKeyArr[apiKeyIndex].manager = event.target.value

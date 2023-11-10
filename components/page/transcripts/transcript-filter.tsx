@@ -11,18 +11,18 @@ import {useZustand} from '../../../lib/store/use-zustand'
 
 export const TranscriptFilter = () => {
   const {transcriptArr, setFilteredTranscriptArr} = useZustand()
-  const [selectedPersonaIdOptionArr, setSelectedPersonaIdOptionArr] = useState([])
+  const [selectedPersonaNameOptionArr, setSelectedPersonaNameOptionArr] = useState([])
   const [selectedUserIdOptionArr, setSelectedUserIdOptionArr] = useState([])
   const [dateArr, setDateArr] = useState<Nullable<(Date | null)[]>>([])
 
-  const personaIdOptionArr = getUniqueArr(transcriptArr.map(((transcript) => transcript.personaId))).map((personaId) => ({name: personaId}))
+  const personaNameOptionArr = getUniqueArr(transcriptArr.map(((transcript) => transcript.personaName))).map((personaName) => ({name: personaName}))
   const userIdOptionArr = getUniqueArr(transcriptArr.map(((transcript) => transcript.userId))).map((userId) => ({name: userId}))
 
   useEffect(() => {
-    const selectedPersonaIdArr = selectedPersonaIdOptionArr.map((val: any) => val.name)
+    const selectedPersonaNameArr = selectedPersonaNameOptionArr.map((val: any) => val.name)
     const selectedUserIdArr = selectedUserIdOptionArr.map((val: any) => val.name)
     const newFilteredTranscriptArr = transcriptArr.filter((transcript) => {
-      const personaId = !selectedPersonaIdArr.length || selectedPersonaIdArr.indexOf(transcript.personaId) > -1
+      const personaName = !selectedPersonaNameArr.length || selectedPersonaNameArr.indexOf(transcript.personaName) > -1
       const userId = !selectedUserIdArr.length || selectedUserIdArr.indexOf(transcript.userId) > -1
       const date = !dateArr || !Array.isArray(dateArr) || (
         (!dateArr[0] || transcript.createdAt >= getCustomDateFromDate(dateArr[0])) &&
@@ -39,22 +39,22 @@ export const TranscriptFilter = () => {
       //   }
       // }
 
-      return personaId && userId && date
+      return personaName && userId && date
     })
     setFilteredTranscriptArr(newFilteredTranscriptArr)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateArr, selectedPersonaIdOptionArr, selectedUserIdOptionArr, transcriptArr])
+  }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, transcriptArr])
 
   return (
     <div className='flex items-center gap-3 p-6 border rounded-lg bg-bg-light'>
       <MultiSelect
         className='text-xs border w-fit border-border-gray h-fit'
-        value={selectedPersonaIdOptionArr}
-        onChange={(e) => setSelectedPersonaIdOptionArr(e.value)}
-        options={personaIdOptionArr}
+        value={selectedPersonaNameOptionArr}
+        onChange={(e) => setSelectedPersonaNameOptionArr(e.value)}
+        options={personaNameOptionArr}
         optionLabel='name'
         filter
-        placeholder='Select Persona Ids'
+        placeholder='Select Persona Names'
         maxSelectedLabels={1}
       />
       <MultiSelect

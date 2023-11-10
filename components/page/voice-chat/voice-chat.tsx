@@ -5,8 +5,8 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {BlueButton, GreenButton, LightBlueButton, BorderGreenButton} from '@/components/shared/button'
-import React, {useEffect, useState} from 'react'
+import {BlueButton, BorderGreenButton, GreenButton, LightBlueButton} from '@/components/shared/button'
+import React, {useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
@@ -219,7 +219,12 @@ export default function VoiceChat() {
                   <option key={index} value={index}>{persona.name}</option>
                 ))}
               </UserSelect>
-              <BorderGreenButton onClick={() => {}}>+ Add New Persona</BorderGreenButton>
+              <BorderGreenButton onClick={() => {
+                //
+              }}
+              >
+                + Add New Persona
+              </BorderGreenButton>
             </div>
             <UserSelect value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'} onChange={onLLMChange}>
               {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}

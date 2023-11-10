@@ -76,10 +76,11 @@ export default function SignHome({session}: {session: any}) {
           // eslint-disable-next-line guard-for-in
           for (const i in newPersonaArr) {
             const personaId = newPersonaArr[i]._id
+            const personaName = newPersonaArr[i].name
 
-            if (personaId) {
+            if (personaId && personaName) {
               const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId})))
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
             }
           }
 

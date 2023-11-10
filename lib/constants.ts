@@ -4,7 +4,7 @@ export const IS_DEV_MODE = true
 export const WITHOUT_SIGN = IS_DEV_MODE
 export const USE_SAMPLE_DATA = IS_DEV_MODE
 
-export const NODE_ENV = process.env.NODE_ENV
+export const NODE_ENV = process.env.NODE_ENV || 'development'
 export const DEPLOY_URL = process.env.NEXT_PUBLIC_DEPLOY_URL
 
 export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID

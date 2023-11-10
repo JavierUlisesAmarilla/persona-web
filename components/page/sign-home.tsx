@@ -34,9 +34,11 @@ export default function SignHome({session}: {session: any}) {
       }
 
       isFirst = false
+      console.log('SignHome#useEffect')
       setStatus('Loading...')
       setCurEmail(newCurEmail)
       const newApiKeyArr = await getAllData()
+      console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
       setApiKeyArr(newApiKeyArr)
       const isAdmin = newCurEmail === ADMIN_EMAIL
       const isRealUser = !!newApiKeyArr.find((apiKeyObj: any) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === newCurEmail))
@@ -67,7 +69,9 @@ export default function SignHome({session}: {session: any}) {
         })
 
         const newPersonaArr = await getPersonaArr(apiKey)
+        console.log('SignHome#useEffect: newPersonaArr: ', newPersonaArr)
         const llmsArr = await getLLMSArr(apiKey)
+        console.log('SignHome#useEffect: llmsArr: ', llmsArr)
 
         if (Array.isArray(newPersonaArr)) {
           setPersonaArr(newPersonaArr)
@@ -80,6 +84,7 @@ export default function SignHome({session}: {session: any}) {
 
             if (personaId && personaName) {
               const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+              console.log('SignHome#useEffect: additionalTranscriptArr: ', additionalTranscriptArr)
               newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
             }
           }

@@ -22,13 +22,13 @@ export const Transcript = ({data}: {data: any}) => {
         {data?.messages?.length &&
           <div className='flex flex-col gap-3'>
             <div>Messages: </div>
-            <div className='p-3 border rounded-lg bg-bg-light border-border-gray'>
+            <div className='p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-60'>
               {data.messages.map((message: any, index: number) =>
                 <div
                   key={index}
                   className={`flex items-center ${message.role === 'assistant' ? 'justify-start' : 'justify-end'}`}
                 >
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col w-3/4'>
                     <div className='px-2 py-1 border rounded bg-bg-gray w-fit border-border-gray'>{message.role}</div>
                     <div>{message.content}</div>
                   </div>

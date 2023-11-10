@@ -2,7 +2,7 @@
 'use client'
 
 import {getLLMSArr, getPersonaArr} from '@/lib/persona'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -23,6 +23,7 @@ let isFirst = true
  */
 export default function SignHome({session}: {session: any}) {
   const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const [allIsLoaded, setAllIsLoaded] = useState(false)
   const apiKey = useApiKey()
 
   useEffect(() => {
@@ -34,8 +35,8 @@ export default function SignHome({session}: {session: any}) {
       }
 
       isFirst = false
-      console.log('SignHome#useEffect')
       setStatus('Loading...')
+      console.log('SignHome#useEffect')
       setCurEmail(newCurEmail)
       const newApiKeyArr = await getAllData()
       console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
@@ -103,11 +104,15 @@ export default function SignHome({session}: {session: any}) {
         setIsUser(false)
         setStatus('Your email does not exist.')
       }
+
+      setAllIsLoaded(true)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
-  return isUser && !status ? (
+  console.log('SignHome: status: ', status)
+
+  return isUser && allIsLoaded ? (
     <>
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
@@ -115,6 +120,6 @@ export default function SignHome({session}: {session: any}) {
       {selMenu === 'dashboard' && <Dashboard/>}
     </>
   ) : (
-    <div className='z-10 w-full p-6 text-center text-text-gray'>{status}</div>
+    <div className='z-10 w-full p-6 text-center text-text-gray'>{status || 'Loading...'}</div>
   )
 }

@@ -1,6 +1,6 @@
 // Environment
 
-export const WITHOUT_SIGN = true
+export const WITHOUT_SIGN = false
 export const USE_SAMPLE_DATA = false
 
 export const NODE_ENV = process.env.NODE_ENV || 'development'

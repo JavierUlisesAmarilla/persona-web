@@ -16,7 +16,7 @@ import {AiOutlineCloseCircle} from 'react-icons/ai'
 /**
  *
  */
-export default function TeamKey({apiKeyIndex, data}: any) {
+export default function TeamSection({apiKeyIndex, data}: any) {
   const {apiKeyArr, setApiKeyArr, curEmail} = useZustand()
   const [status, setStatus] = useState('')
   const isAdmin = curEmail === ADMIN_EMAIL

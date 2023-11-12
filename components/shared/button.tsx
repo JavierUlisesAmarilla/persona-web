@@ -16,7 +16,7 @@ export const Button = ({
 }) => {
   return (
     <div
-      className={`px-3 py-1 text-xs rounded cursor-pointer text-text-light hover:text-text-gray w-fit whitespace-nowrap ${className}`}
+      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit whitespace-nowrap ${className}`}
       onClick={onClick}
     >
       {children}
@@ -34,7 +34,7 @@ export const RedButton = ({
 }) => {
   return (
     <Button
-      className='flex items-center justify-center bg-bg-btn-red'
+      className='flex items-center justify-center bg-bg-btn-red text-text-light'
       onClick={onClick}
     >
       {children}
@@ -52,7 +52,7 @@ export const GreenButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-btn-green'
+      className='bg-bg-btn-green text-text-light'
       onClick={onClick}
     >
       {children}
@@ -70,7 +70,7 @@ export const BlueButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-btn-blue'
+      className='bg-bg-btn-blue text-text-light'
       onClick={onClick}
     >
       {children}
@@ -87,7 +87,7 @@ export const LightBlueButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-btn-light-blue'
+      className='bg-bg-btn-light-blue text-text-light'
       onClick={onClick}
     >
       {children}

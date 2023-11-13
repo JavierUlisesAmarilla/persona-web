@@ -1,0 +1,55 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable max-len */
+/* eslint-disable react/no-unescaped-entities */
+'use client'
+
+import {CommonModal} from '@/components/shared/common-modal'
+import {InputText} from '@/components/shared/input-text'
+import React from 'react'
+
+
+interface Props {
+  show?: boolean
+  onClose?: React.MouseEventHandler<SVGElement>
+}
+
+
+export const DeployJsModal = ({
+  show,
+  onClose,
+}: Props) => {
+  return (
+    <CommonModal
+      show={show}
+      onClose={onClose}
+    >
+      <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
+        <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+          <div className='text-sm'>INBOUND ONLY:</div>
+          <div className='flex flex-col gap-1'>
+            <div>
+              1.&nbsp;
+              <a className='text-blue-500' href='https://www.twilio.com/try-twilio' target='_blank' rel="noreferrer">Create a Twilio account</a>
+              &nbsp;if you don't have one, and&nbsp;
+              <a className='text-blue-500' href='https://www.twilio.com/docs/phone-numbers' target='_blank' rel="noreferrer">buy a voice phone number</a>
+              .
+            </div>
+            <div className='flex flex-col gap-1'>
+              <div>
+                2. Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
+                <a className='text-blue-500' href='https://twilio.sindarin.tech/twiml' target='_blank' rel="noreferrer">https://twilio.sindarin.tech/twiml</a>
+                &nbsp;and “HTTP” is set to HTTP GET.644621315
+              </div>
+              <img src='assets/images/twilio-modal/image1.png' alt=''/>
+            </div>
+            <div className='flex flex-col gap-1'>
+              <div>3. Enter the phone number here (Including the “+” at the beginning):</div>
+              <InputText/>
+            </div>
+          </div>
+          <div>That's it for inbound calls! Feel free to try calling your Persona.</div>
+        </div>
+      </div>
+    </CommonModal>
+  )
+}

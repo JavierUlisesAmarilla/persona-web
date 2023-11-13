@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 
 import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
+import {DeployJsModal} from './deploy-js-modal'
 import {DeployTwilioModal} from './deploy-twilio-modal'
 
 
@@ -18,6 +19,7 @@ export const DeployModal = ({
   onClose,
 }: Props) => {
   const [showTwilioModal, setShowTwilioModal] = useState(false)
+  const [showJsModal, setShowJsModal] = useState(false)
 
   return (
     <>
@@ -28,7 +30,7 @@ export const DeployModal = ({
         <div className='flex flex-col items-center justify-center gap-3 p-6'>
           <div className='text-sm'>Deploy to:</div>
           <BlueButton onClick={() => setShowTwilioModal(true)}>Phone (Twilio)</BlueButton>
-          <BlueButton>Browser (JS)</BlueButton>
+          <BlueButton onClick={() => setShowJsModal(true)}>Browser (JS)</BlueButton>
           <BlueButton>Unity</BlueButton>
           <BlueButton>Other</BlueButton>
         </div>
@@ -36,6 +38,10 @@ export const DeployModal = ({
       <DeployTwilioModal
         show={showTwilioModal}
         onClose={() => setShowTwilioModal(false)}
+      />
+      <DeployJsModal
+        show={showJsModal}
+        onClose={() => setShowJsModal(false)}
       />
     </>
   )

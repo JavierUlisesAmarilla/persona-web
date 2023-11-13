@@ -1,7 +1,7 @@
 // Environment
 
-export const WITHOUT_SIGN = false
-export const USE_SAMPLE_DATA = false
+export const WITHOUT_SIGN = true
+export const USE_SAMPLE_DATA = true
 
 export const NODE_ENV = process.env.NODE_ENV
 export const DEPLOY_URL = process.env.NEXT_PUBLIC_DEPLOY_URL

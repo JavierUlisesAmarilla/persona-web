@@ -18,6 +18,8 @@ export default function ApiKeyAssign() {
   const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
 
+  console.log('apiKeyArr', apiKeyArr)
+
   const API_KEY = apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.apiKey
 
   const onAddTeam = () => {

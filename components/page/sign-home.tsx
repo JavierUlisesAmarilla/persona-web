@@ -99,14 +99,15 @@ export default function SignHome({session}: {session: any}) {
         const newTranscriptArr: Array<any> = []
 
         // eslint-disable-next-line guard-for-in
-        for (const i in newPersonaArr) {
+        for (let i = 0; i < newPersonaArr.length; i++) {
           const personaId = newPersonaArr[i]._id
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            console.log('SignHome#useEffect: additionalTranscriptArr: ', additionalTranscriptArr)
-            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+              console.log('SignHome#useEffect: additionalTranscriptArr: ', additionalTranscriptArr)
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            })
           }
         }
 

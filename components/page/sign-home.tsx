@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
@@ -5,6 +6,7 @@ import {getAllData, saveData} from '@/lib/mongodb/mongodb-client'
 import {getLLMSArr, getPersonaArr} from '@/lib/persona'
 import React, {useEffect} from 'react'
 
+import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {getTranscriptArr} from '../../lib/persona'
@@ -21,8 +23,9 @@ let isFirst = true
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, curEmail, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
+  const isAdmin = curEmail === ADMIN_EMAIL
 
   useEffect(() => {
     (async () => {
@@ -36,10 +39,16 @@ export default function SignHome({session}: {session: any}) {
       setStatus('Loading...')
       console.log('SignHome#useEffect')
       setCurEmail(newCurEmail)
-      const newApiKeyArr = await getAllData()
-      const isRealUser = !!newApiKeyArr.find((apiKeyObj: any) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === newCurEmail))
+      const allApiKeyArr = await getAllData()
+      let newApiKeyArr
 
-      if (!isRealUser) {
+      if (isAdmin) {
+        newApiKeyArr = allApiKeyArr
+      } else {
+        newApiKeyArr = allApiKeyArr.filter((apiKeyObj: any) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === newCurEmail))
+      }
+
+      if (!newApiKeyArr?.length) {
         const newTeam = {
           name: newCurEmail,
           emailArr: [{

@@ -98,7 +98,6 @@ export default function SignHome({session}: {session: any}) {
         setPersonaArr(newPersonaArr)
         const newTranscriptArr: Array<any> = []
 
-        // eslint-disable-next-line guard-for-in
         for (let i = 0; i < newPersonaArr.length; i++) {
           const personaId = newPersonaArr[i]._id
           const personaName = newPersonaArr[i].name

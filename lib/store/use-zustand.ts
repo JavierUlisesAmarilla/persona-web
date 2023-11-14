@@ -134,7 +134,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
   curEmail: '',
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
-  selMenu: '',
+  selMenu: 'transcripts',
   setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
 
   apiKeyArr: [],

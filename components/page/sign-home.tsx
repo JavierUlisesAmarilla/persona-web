@@ -23,7 +23,7 @@ let prevApiKey: string
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
 
   useEffect(() => {
@@ -67,7 +67,6 @@ export default function SignHome({session}: {session: any}) {
 
       console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
       setApiKeyArr(newApiKeyArr)
-      setSelMenu('transcripts')
 
       console.log('SignHome#useEffect: apiKey: ', apiKey)
       const script = document.createElement('script')

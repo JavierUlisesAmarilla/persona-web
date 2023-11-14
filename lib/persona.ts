@@ -42,3 +42,14 @@ export const getTranscriptArr = async (apiKey: string, personaId: string) => {
     console.log('persona#getTranscriptArr: e: ', e)
   }
 }
+
+
+export const getTeam = async (apiKey: string) => {
+  try {
+    const team = (await axios.get(`https://api.sindarin.tech/api/team?apikey=${apiKey}`))?.data
+    console.log('persona#getTeam: team: ', team)
+    return team
+  } catch (e) {
+    console.log('persona#getTeam: e: ', e)
+  }
+}

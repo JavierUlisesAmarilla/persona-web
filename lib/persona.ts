@@ -1,8 +1,8 @@
+import {MASTER_API_KEY, USE_SAMPLE_DATA} from './constants'
 import {SAMPLE_LLMS_ARR, SAMPLE_PERSONA_ARR, SAMPLE_TRANSCRIPT_ARR} from './sample-data'
 
 import axios from 'axios'
 import {getCustomDateFromStr} from './common'
-import {USE_SAMPLE_DATA} from './constants'
 
 
 export const getPersonaArr = async (apiKey: string) => {
@@ -62,5 +62,19 @@ export const changeLLM = async (personaId: string, apiKey: string, llm: any) => 
     return res
   } catch (e) {
     console.log('persona#changeLLM: e: ', e)
+  }
+}
+
+
+export const addTeam = async (name: string) => {
+  try {
+    const res = await axios.post(`https://api.sindarin.tech/api/teams/new?apikey=${MASTER_API_KEY}`, {name})
+    console.log('persona#addTeam: res: ', res)
+
+    if (res.status === 200 && res.data) {
+      return res.data.substring(36)
+    }
+  } catch (e) {
+    console.log('persona#addTeam: e: ', e)
   }
 }

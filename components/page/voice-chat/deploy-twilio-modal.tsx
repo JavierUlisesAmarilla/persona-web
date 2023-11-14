@@ -30,6 +30,17 @@ export const DeployTwilioModal = ({
   const {setAlertMsg, personaArr, selPersonaIndex} = useZustand()
   const selPersonaId = personaArr[selPersonaIndex]?._id
 
+  const clearFormRef = () => {
+    if (!formRef?.current) {
+      return
+    }
+
+    formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
+    formRef.current.phoneNumber.value = ''
+    formRef.current.accountSid.value = ''
+    formRef.current.authToken.value = ''
+  }
+
   return (
     <CommonModal
       show={show}
@@ -68,7 +79,7 @@ export const DeployTwilioModal = ({
                   }
 
                   window.open('', 'TheWindow')
-                  formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
+                  clearFormRef()
                   formRef.current.phoneNumber.value = phoneNumber
                   formRef.current.submit()
                 }}
@@ -98,7 +109,7 @@ export const DeployTwilioModal = ({
                   }
 
                   window.open('', 'TheWindow')
-                  formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
+                  clearFormRef()
                   formRef.current.accountSid.value = accountSid
                   formRef.current.submit()
                 }}
@@ -121,7 +132,7 @@ export const DeployTwilioModal = ({
                   }
 
                   window.open('', 'TheWindow')
-                  formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
+                  clearFormRef()
                   formRef.current.authToken.value = authToken
                   formRef.current.submit()
                 }}

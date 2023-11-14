@@ -96,7 +96,7 @@ export default function ApiKeyAssign() {
       <div className="flex items-center justify-start gap-3">
         {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
-          <BlueButton onClick={onAddTeam}>Update Plan</BlueButton>
+          <BlueButton>Update Plan</BlueButton>
         }
       </div>
       {!status && apiKeyArr[selApiKeyIndex] &&

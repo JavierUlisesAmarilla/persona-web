@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
@@ -9,7 +10,7 @@ import React from 'react'
 /**
  *
  */
-export default function CredentialSection({apiKeyIndex, data}: any) {
+export default function PlanSection({apiKeyIndex, data}: any) {
   const {apiKeyArr, setApiKeyArr, curEmail, team} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || curEmail === apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.manager
@@ -25,9 +26,9 @@ export default function CredentialSection({apiKeyIndex, data}: any) {
       <div className='text-xs whitespace-nowrap'>Tier:</div>
       <InputText
         classNames='w-1/3'
-        value={team?.tier}
+        defaultValue={team?.tier}
         placeholder="Tier"
-        onChange={onApiKeyChange}
+        // onChange={onApiKeyChange}
         disabled={!isAdmin && !isManager}
       />
     </div>

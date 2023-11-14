@@ -15,6 +15,10 @@ import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
+
+let prevApiKey: string
+
+
 /**
  *
  */
@@ -26,10 +30,11 @@ export default function SignHome({session}: {session: any}) {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status) {
+      if (!newCurEmail || status || prevApiKey === apiKey) {
         return
       }
 
+      prevApiKey = apiKey
       setStatus('Loading...')
       const isAdmin = newCurEmail === ADMIN_EMAIL
       console.log('SignHome#useEffect: isAdmin: ', isAdmin)

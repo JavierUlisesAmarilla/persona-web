@@ -159,9 +159,9 @@ export const DeployTwilioModal = ({
         </div>
       </div>
       <form ref={formRef} method="post" action="" target="TheWindow">
-        <input type="hidden" name="phoneNumber" value=""/>
-        <input type="hidden" name="accountSid" value=""/>
-        <input type="hidden" name="authToken" value=""/>
+        <input type="hidden" name="phoneNumber" value="" readOnly/>
+        <input type="hidden" name="accountSid" value="" readOnly/>
+        <input type="hidden" name="authToken" value="" readOnly/>
       </form>
     </CommonModal>
   )

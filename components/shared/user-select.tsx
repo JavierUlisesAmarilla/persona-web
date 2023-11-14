@@ -8,7 +8,7 @@ export const UserSelect = ({
   onChange,
   children,
 }: {
-  value?: string
+  value?: any
   onChange?: ChangeEventHandler<HTMLSelectElement>
   children: ReactNode
 }) => {

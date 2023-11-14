@@ -33,8 +33,7 @@ export const DeployJsModal = ({
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
-            value={
-              `const script = document.createElement("script");
+            value={`const script = document.createElement("script");
 script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-key>";`
             }
           />
@@ -45,8 +44,7 @@ script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-k
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
-            value={
-              `script.addEventListener("load", async () => {
+            value={`script.addEventListener("load", async () => {
   console.log("persona client loaded");
   const apiKey = "<api-key>";
   const personaClient = new window.PersonaClient(apiKey);`
@@ -59,8 +57,7 @@ script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-k
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
-            value={
-              `  personaClient.init(userId, personaName)`
+            value={`  personaClient.init(userId, personaName)`
             }
           />
           <div>
@@ -70,8 +67,7 @@ script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-k
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
-            value={
-              `import { useEffect, useState } from "react";
+            value={`import { useEffect, useState } from "react";
 
 const pageDescriptions = {
   '1': // description of page 1 contents,
@@ -166,6 +162,7 @@ const PersonaClient = (props) => {
   
   return null; // or return UI elements if needed
 };
+
 export default PersonaClient`}
           />
         </div>

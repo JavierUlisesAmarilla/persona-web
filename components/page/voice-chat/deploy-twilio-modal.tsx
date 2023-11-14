@@ -5,6 +5,8 @@
 
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
+import {javascript} from '@codemirror/lang-javascript'
+import CodeMirror from '@uiw/react-codemirror'
 import React from 'react'
 
 
@@ -63,8 +65,18 @@ export const DeployTwilioModal = ({
             </div>
           </div>
           <div className='flex flex-col gap-1'>
-            <div>Congrats! You can now make outbound calls using the API by calling the endpoint:</div>
-            {/* <div>Todo</div> */}
+            <div>Congrats! You can now make outbound calls using the API by calling the endpoint: https://api.sindarin.tech/api/personas/:persona-id/makecall?apikey=[api-key] with the JSON request body</div>
+            <CodeMirror
+              theme='dark'
+              editable={false}
+              extensions={[javascript({jsx: true})]}
+              value={`{
+  "phoneNumber": "[number-to-call]",
+  "details": {
+      "[detail1]": "detail1"
+  }
+}`}
+            />
           </div>
         </div>
       </div>

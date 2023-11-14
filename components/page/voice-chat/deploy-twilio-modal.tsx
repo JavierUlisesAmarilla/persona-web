@@ -3,11 +3,14 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
+import React, {useRef, useState} from 'react'
+
+import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
+import {useZustand} from '@/lib/store/use-zustand'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
-import React from 'react'
 
 
 interface Props {
@@ -20,6 +23,24 @@ export const DeployTwilioModal = ({
   show,
   onClose,
 }: Props) => {
+  const formRef = useRef<HTMLFormElement>(null)
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [accountSid, setAccountSid] = useState('')
+  const [authToken, setAuthToken] = useState('')
+  const {setAlertMsg, personaArr, selPersonaIndex} = useZustand()
+  const selPersonaId = personaArr[selPersonaIndex]?._id
+
+  const clearFormRef = () => {
+    if (!formRef?.current) {
+      return
+    }
+
+    formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
+    formRef.current.phoneNumber.value = ''
+    formRef.current.accountSid.value = ''
+    formRef.current.authToken.value = ''
+  }
+
   return (
     <CommonModal
       show={show}
@@ -46,7 +67,26 @@ export const DeployTwilioModal = ({
             </div>
             <div className='flex flex-col gap-1'>
               <div>3. Enter the phone number here (Including the “+” at the beginning):</div>
-              <InputText/>
+              <div className='flex gap-3'>
+                <InputText
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+                <BlueButton onClick={() => {
+                  if (!formRef?.current || !phoneNumber) {
+                    setAlertMsg('Input phone number.')
+                    return
+                  }
+
+                  window.open('', 'TheWindow')
+                  clearFormRef()
+                  formRef.current.phoneNumber.value = phoneNumber
+                  formRef.current.submit()
+                }}
+                >
+                  Submit
+                </BlueButton>
+              </div>
             </div>
           </div>
           <div>That's it for inbound calls! Feel free to try calling your Persona.</div>
@@ -57,11 +97,49 @@ export const DeployTwilioModal = ({
           <div className='flex flex-col gap-1'>
             <div className='flex flex-col'>
               <div>4. Under Account &gt; API keys & tokens &gt; Auth Tokens, find your Account SID and paste it here:</div>
-              <InputText/>
+              <div className='flex gap-3'>
+                <InputText
+                  value={accountSid}
+                  onChange={(e) => setAccountSid(e.target.value)}
+                />
+                <BlueButton onClick={() => {
+                  if (!formRef?.current || !accountSid) {
+                    setAlertMsg('Input account sid.')
+                    return
+                  }
+
+                  window.open('', 'TheWindow')
+                  clearFormRef()
+                  formRef.current.accountSid.value = accountSid
+                  formRef.current.submit()
+                }}
+                >
+                  Submit
+                </BlueButton>
+              </div>
             </div>
             <div className='flex flex-col gap-1'>
               <div>5. Below that, find your Auth token and paste it here:</div>
-              <InputText/>
+              <div className='flex gap-3'>
+                <InputText
+                  value={authToken}
+                  onChange={(e) => setAuthToken(e.target.value)}
+                />
+                <BlueButton onClick={() => {
+                  if (!formRef?.current || !authToken) {
+                    setAlertMsg('Input auth token.')
+                    return
+                  }
+
+                  window.open('', 'TheWindow')
+                  clearFormRef()
+                  formRef.current.authToken.value = authToken
+                  formRef.current.submit()
+                }}
+                >
+                  Submit
+                </BlueButton>
+              </div>
             </div>
           </div>
           <div className='flex flex-col gap-1'>
@@ -80,6 +158,11 @@ export const DeployTwilioModal = ({
           </div>
         </div>
       </div>
+      <form ref={formRef} method="post" action="" target="TheWindow">
+        <input type="hidden" name="phoneNumber" value=""/>
+        <input type="hidden" name="accountSid" value=""/>
+        <input type="hidden" name="authToken" value=""/>
+      </form>
     </CommonModal>
   )
 }

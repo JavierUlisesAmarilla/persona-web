@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
@@ -10,36 +9,33 @@ import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {getTranscriptArr} from '../../lib/persona'
+import {Alert} from '../shared/alert'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
-
-let isFirst = true
-
-
 /**
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, curEmail, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
-  const isAdmin = curEmail === ADMIN_EMAIL
 
   useEffect(() => {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status || !isFirst) {
+      if (!newCurEmail || status) {
         return
       }
 
-      isFirst = false
       setStatus('Loading...')
-      console.log('SignHome#useEffect')
+      const isAdmin = newCurEmail === ADMIN_EMAIL
+      console.log('SignHome#useEffect: isAdmin: ', isAdmin)
       setCurEmail(newCurEmail)
       const allApiKeyArr = await getAllData()
+      console.log('SignHome#useEffect: allApiKeyArr: ', allApiKeyArr)
       let newApiKeyArr
 
       if (isAdmin) {
@@ -124,7 +120,7 @@ export default function SignHome({session}: {session: any}) {
       setIsUser(true)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session])
+  }, [apiKey, session])
 
   console.log('SignHome: status: ', status)
 
@@ -134,6 +130,7 @@ export default function SignHome({session}: {session: any}) {
       {selMenu === 'voiceChat' && <VoiceChat/>}
       {selMenu === 'transcripts' && <Transcripts/>}
       {selMenu === 'dashboard' && <Dashboard/>}
+      <Alert/>
     </>
   ) : (
     <div className='z-10 w-full p-6 text-center text-text-gray'>{status || 'Loading...'}</div>

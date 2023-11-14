@@ -12,7 +12,7 @@ export const Button = ({
 }: {
   className?: string
   onClick?: MouseEventHandler<HTMLDivElement>
-  children: ReactNode
+  children?: ReactNode
 }) => {
   return (
     <div
@@ -48,7 +48,7 @@ export const GreenButton = ({
   children,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
-  children: ReactNode
+  children?: ReactNode
 }) => {
   return (
     <Button
@@ -66,7 +66,7 @@ export const BlueButton = ({
   children,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
-  children: ReactNode
+  children?: ReactNode
 }) => {
   return (
     <Button
@@ -83,7 +83,7 @@ export const LightBlueButton = ({
   children,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
-  children: ReactNode
+  children?: ReactNode
 }) => {
   return (
     <Button
@@ -100,11 +100,11 @@ export const BorderGreenButton = ({
   children,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
-  children: ReactNode
+  children?: ReactNode
 }) => {
   return (
     <Button
-      className='border-2 border-bg-btn-green bg-white text-bg-btn-green'
+      className='bg-white border-2 border-bg-btn-green text-bg-btn-green'
       onClick={onClick}
     >
       {children}

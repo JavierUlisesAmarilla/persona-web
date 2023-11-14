@@ -38,11 +38,17 @@ interface ZustandState {
   apiKeyArr: Array<any>
   setApiKeyArr: (apiKeyArr: Array<any>) => void
 
+  selApiKeyIndex: number
+  setSelApiKeyIndex: (selApiKeyIndex: number) => void
+
   status: string
   setStatus: (status: string) => void
 
   isUser: boolean
   setIsUser: (isUser: boolean) => void
+
+  alertMsg: string
+  setAlertMsg: (alertMsg: string) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -134,9 +140,15 @@ export const useZustand = create<ZustandState>((set, get) => ({
   apiKeyArr: [],
   setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),
 
+  selApiKeyIndex: 0,
+  setSelApiKeyIndex: (selApiKeyIndex) => set((state) => ({...state, selApiKeyIndex})),
+
   status: '',
   setStatus: (status) => set((state) => ({...state, status})),
 
   isUser: false,
   setIsUser: (isUser) => set((state) => ({...state, isUser})),
+
+  alertMsg: '',
+  setAlertMsg: (alertMsg) => set((state) => ({...state, alertMsg})),
 }))

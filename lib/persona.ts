@@ -53,3 +53,14 @@ export const getTeam = async (apiKey: string) => {
     console.log('persona#getTeam: e: ', e)
   }
 }
+
+
+export const changeLLM = async (personaId: string, apiKey: string, llm: any) => {
+  try {
+    const res = await axios.put(`https://api.sindarin.tech/api/personas/${personaId}/llm?apikey=${apiKey}`, {llm})
+    console.log('persona#changeLLM: res: ', res)
+    return res
+  } catch (e) {
+    console.log('persona#changeLLM: e: ', e)
+  }
+}

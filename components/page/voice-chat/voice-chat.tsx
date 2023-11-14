@@ -12,6 +12,7 @@ import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {useApiKey} from '@/lib/hooks/use-api-key'
+import {changeLLM} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
 import {ChatModal} from './chat-modal'
@@ -68,9 +69,7 @@ export default function VoiceChat() {
     const newLLMSIndex = parseInt(e.target.value)
     const selPersonaId = personaArr[selPersonaIndex]?._id
     // PUT /api/personas/:personaId/llm with body {llm: llm}
-    const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/llm?apikey=${apiKey}`, {llm: LLMSArray[newLLMSIndex]})
-    console.log('LLM change res', res)
-    console.log('LLM now selected:', LLMSArray[newLLMSIndex])
+    await changeLLM(selPersonaId, apiKey, LLMSArray[newLLMSIndex])
     setPersonaLLM(selPersonaIndex, LLMSArray[newLLMSIndex])
   }
 

@@ -6,8 +6,8 @@ import React, {useEffect} from 'react'
 import {BlueButton} from '@/components/shared/button'
 import {UserSelect} from '@/components/shared/user-select'
 import {ADMIN_EMAIL} from '@/lib/constants'
+import {getTeam} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
-import axios from 'axios'
 import CredentialSection from './credential-section'
 import PlanSection from './plan-section'
 import TeamSection from './team-section'
@@ -41,9 +41,8 @@ export default function ApiKeyAssign() {
         const apiKey = apiKeyArr[selApiKeyIndex]?.apiKey
 
         if (apiKey) {
-          const res = await axios.get(`https://api.sindarin.tech/api/team?apikey=${apiKey}`)
-          console.log('res.data', res.data)
-          setTeam(res.data)
+          const team = await getTeam(apiKey)
+          setTeam(team)
         }
       } catch (error) {
         console.error('Error fetching team:', error)
@@ -96,7 +95,7 @@ export default function ApiKeyAssign() {
       <div className="flex items-center justify-start gap-3">
         {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
-          <BlueButton onClick={onAddTeam}>Update Plan</BlueButton>
+          <BlueButton>Update Plan</BlueButton>
         }
       </div>
       {!status && apiKeyArr[selApiKeyIndex] &&

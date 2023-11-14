@@ -17,6 +17,8 @@ export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL
 export const MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI
 export const DB_NAME = process.env.NEXT_PUBLIC_DB_NAME
 
+export const MASTER_API_KEY = process.env.NEXT_PUBLIC_MASTER_API_KEY
+
 console.log('constants: NODE_ENV: ', NODE_ENV)
 console.log('constants: DEPLOY_URL: ', DEPLOY_URL)
 console.log('constants: GOOGLE_CLIENT_ID: ', GOOGLE_CLIENT_ID)

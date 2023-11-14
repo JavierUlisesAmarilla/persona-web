@@ -4,32 +4,37 @@
 import {getAllData, saveData} from '@/lib/mongodb/mongodb-client'
 import {getLLMSArr, getPersonaArr} from '@/lib/persona'
 import React, {useEffect} from 'react'
+import {addTeam, getTranscriptArr} from '../../lib/persona'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
-import {getTranscriptArr} from '../../lib/persona'
 import {Alert} from '../shared/alert'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
+
+let prevApiKey: string
+
+
 /**
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
 
   useEffect(() => {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status) {
+      if (!newCurEmail || status || prevApiKey === apiKey) {
         return
       }
 
+      prevApiKey = apiKey
       setStatus('Loading...')
       const isAdmin = newCurEmail === ADMIN_EMAIL
       console.log('SignHome#useEffect: isAdmin: ', isAdmin)
@@ -45,12 +50,16 @@ export default function SignHome({session}: {session: any}) {
       }
 
       if (!newApiKeyArr?.length) {
+        const token = await addTeam(newCurEmail)
+        console.log('SignHome#useEffect: token: ', token)
+
         const newTeam = {
           name: newCurEmail,
           emailArr: [{
             name: newCurEmail,
           }],
           manager: newCurEmail,
+          apiKey: token,
         }
 
         const res = await saveData(newTeam)
@@ -62,7 +71,6 @@ export default function SignHome({session}: {session: any}) {
 
       console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
       setApiKeyArr(newApiKeyArr)
-      setSelMenu('transcripts')
 
       console.log('SignHome#useEffect: apiKey: ', apiKey)
       const script = document.createElement('script')

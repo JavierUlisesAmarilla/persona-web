@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 
 import {BlueButton} from '@/components/shared/button'
 import {UserSelect} from '@/components/shared/user-select'
@@ -16,8 +16,7 @@ import TeamSection from './team-section'
  *
  */
 export default function ApiKeyAssign() {
-  const [selApiKeyIndex, setSelApiKeyIndex] = useState<number>(0)
-  const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam} = useZustand()
+  const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
 
   const onTeamChange = (e: any) => {

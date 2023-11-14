@@ -15,10 +15,6 @@ import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
 
-
-let isFirst = true
-
-
 /**
  *
  */
@@ -30,11 +26,10 @@ export default function SignHome({session}: {session: any}) {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status || !isFirst) {
+      if (!newCurEmail || status) {
         return
       }
 
-      isFirst = false
       setStatus('Loading...')
       const isAdmin = newCurEmail === ADMIN_EMAIL
       console.log('SignHome#useEffect: isAdmin: ', isAdmin)
@@ -125,7 +120,7 @@ export default function SignHome({session}: {session: any}) {
       setIsUser(true)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session])
+  }, [apiKey, session])
 
   console.log('SignHome: status: ', status)
 

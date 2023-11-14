@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable max-len */
-/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import {CommonModal} from '@/components/shared/common-modal'
-import {InputText} from '@/components/shared/input-text'
+import {javascript} from '@codemirror/lang-javascript'
+import CodeMirror from '@uiw/react-codemirror'
 import React from 'react'
 
 
@@ -25,29 +23,151 @@ export const DeployJsModal = ({
     >
       <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='text-sm'>INBOUND ONLY:</div>
-          <div className='flex flex-col gap-1'>
-            <div>
-              1.&nbsp;
-              <a className='text-blue-500' href='https://www.twilio.com/try-twilio' target='_blank' rel="noreferrer">Create a Twilio account</a>
-              &nbsp;if you don't have one, and&nbsp;
-              <a className='text-blue-500' href='https://www.twilio.com/docs/phone-numbers' target='_blank' rel="noreferrer">buy a voice phone number</a>
-              .
-            </div>
-            <div className='flex flex-col gap-1'>
-              <div>
-                2. Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
-                <a className='text-blue-500' href='https://twilio.sindarin.tech/twiml' target='_blank' rel="noreferrer">https://twilio.sindarin.tech/twiml</a>
-                &nbsp;and “HTTP” is set to HTTP GET.644621315
-              </div>
-              <img src='assets/images/twilio-modal/image1.png' alt=''/>
-            </div>
-            <div className='flex flex-col gap-1'>
-              <div>3. Enter the phone number here (Including the “+” at the beginning):</div>
-              <InputText/>
-            </div>
+          <div>
+            1. To deploy your Persona to a webapp, you’ll need your page to download our Persona web client from our server at&nbsp;
+            <span className='text-blue-500'>
+              https://api.sindarin.tech/PersonaClientPublic?apikey=[public-api-key]
+            </span>
           </div>
-          <div>That's it for inbound calls! Feel free to try calling your Persona.</div>
+          <CodeMirror
+            theme='dark'
+            editable={false}
+            extensions={[javascript({jsx: true})]}
+            value={
+              `const script = document.createElement("script");
+script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-key>";`
+            }
+          />
+          <div>
+            2. Once the script loads, you must initialize the Persona Client using your public api key
+          </div>
+          <CodeMirror
+            theme='dark'
+            editable={false}
+            extensions={[javascript({jsx: true})]}
+            value={
+              `script.addEventListener("load", async () => {
+  console.log("persona client loaded");
+  const apiKey = "<api-key>";
+  const personaClient = new window.PersonaClient(apiKey);`
+            }
+          />
+          <div>
+            3. The Persona Client manages all audio streaming internally, so all you need to do is initialize it to begin speaking by calling
+          </div>
+          <CodeMirror
+            theme='dark'
+            editable={false}
+            extensions={[javascript({jsx: true})]}
+            value={
+              `  personaClient.init(userId, personaName)`
+            }
+          />
+          <div>
+            4. Below is an example illustrating how the persona in our public AI pitch deck - a React app - is configured
+          </div>
+          <CodeMirror
+            theme='dark'
+            editable={false}
+            extensions={[javascript({jsx: true})]}
+            value={
+              `import { useEffect, useState } from "react";
+
+const pageDescriptions = {
+  '1': // description of page 1 contents,
+  '2': // description of page 2 contents,
+  '3': // description of page 3 contents,
+}
+
+const PersonaClient = (props) => {
+  const [personaClient, setPersonaClient] = useState(null);
+  const [isReady, setIsReady] = useState(false);
+  const [didSetListeners, setDidSetListeners] = useState(false);
+  const [didStartPersona, setDidStartPersona] = useState(false);
+
+  useEffect(() => {
+    console.log("loading persona client");
+    const script = document.createElement("script");
+    script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<api-key>";
+
+    script.addEventListener("load", async () => {
+      console.log("persona client loaded");
+      const apiKey = "<api-key>";
+      const personaClient = new window.PersonaClient(apiKey);
+      setPersonaClient(personaClient);
+    });
+    document.head.appendChild(script);
+  }, []);
+
+  useEffect(() => {
+    if (personaClient && isReady && !didSetListeners) {
+
+      personaClient.on("connect_error", (error) => {});
+      personaClient.on("disconnected", () => {});
+      personaClient.on("json", ({ detail }) => {
+        if (detail.gotoPage) {
+          props.setCurPage([Number(detail.gotoPage)]);
+          personaClient.updateState({
+            pageDescription: pageDescriptions[detail.gotoPage] || '',
+            currentPage: detail.gotoPage
+          });
+        }
+        
+        if (Object.keys(detail).includes("showEmail")) {
+          if (detail.showEmail == 'true') {
+            props.onShowEmail();
+          } else {
+            props.onHideEmail();
+          }
+        }
+
+        if (detail.message_limit_reached) {
+          props.onLimitReached();
+        }
+      });
+
+      setDidSetListeners(true);
+    }
+  }, [personaClient, props.onLimitReached, isReady, didSetListeners]);
+
+  // startPersona function
+  useEffect(() => {
+    const getUserID = async () => {
+      // create a unique user id, used for limiting the conversation so users don't drain your tokens
+    };
+
+    if (personaClient && props.shouldStartPersona && !didStartPersona) {
+      setDidStartPersona(true);
+      const personaName = "<persona-name>";
+      getUserID().then((userId) => {
+        personaClient
+        .init(userId, personaName)
+        .then(() => {
+          personaClient.on("ready", () => {
+            props.onReady();
+            setIsReady(true);
+          });
+        })
+        .catch((err) => {
+          console.log("personaClient init error", err);
+          if (/You have/gi.test(err)) {
+            props.onLimitReached();
+          }
+        });
+      });
+    }
+  }, [
+    personaClient,
+    props.shouldStartPersona,
+    props.onReady,
+    didStartPersona,
+    props.onLimitReached,
+  ]);
+  
+  return null; // or return UI elements if needed
+};
+export default PersonaClient`}
+          />
         </div>
       </div>
     </CommonModal>

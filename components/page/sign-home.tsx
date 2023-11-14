@@ -10,6 +10,7 @@ import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {getTranscriptArr} from '../../lib/persona'
+import {Alert} from '../shared/alert'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
@@ -134,6 +135,7 @@ export default function SignHome({session}: {session: any}) {
       {selMenu === 'voiceChat' && <VoiceChat/>}
       {selMenu === 'transcripts' && <Transcripts/>}
       {selMenu === 'dashboard' && <Dashboard/>}
+      <Alert/>
     </>
   ) : (
     <div className='z-10 w-full p-6 text-center text-text-gray'>{status || 'Loading...'}</div>

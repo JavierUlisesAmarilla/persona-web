@@ -19,7 +19,7 @@ export const CommonModal = ({
     <AnimatePresence>
       {show &&
         <motion.div
-          className='fixed flex items-center justify-center w-screen h-screen overflow-hidden -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'
+          className='fixed z-50 flex items-center justify-center w-screen h-screen overflow-hidden -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'
           initial={{
             opacity: 0,
             width: 0,

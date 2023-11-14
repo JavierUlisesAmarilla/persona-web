@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
@@ -24,9 +23,8 @@ let isFirst = true
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, curEmail, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setSelMenu, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
-  const isAdmin = curEmail === ADMIN_EMAIL
 
   useEffect(() => {
     (async () => {
@@ -38,9 +36,11 @@ export default function SignHome({session}: {session: any}) {
 
       isFirst = false
       setStatus('Loading...')
-      console.log('SignHome#useEffect')
+      const isAdmin = newCurEmail === ADMIN_EMAIL
+      console.log('SignHome#useEffect: isAdmin: ', isAdmin)
       setCurEmail(newCurEmail)
       const allApiKeyArr = await getAllData()
+      console.log('SignHome#useEffect: allApiKeyArr: ', allApiKeyArr)
       let newApiKeyArr
 
       if (isAdmin) {

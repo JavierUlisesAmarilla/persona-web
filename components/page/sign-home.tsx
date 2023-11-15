@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {getAllData, getDataByEmail, saveData} from '@/lib/mongodb/mongodb-client'
+import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
@@ -36,14 +36,8 @@ export default function SignHome({session}: {session: any}) {
       setStatus('Loading...')
 
       // Fetch api key array
-      const isAdmin = newCurEmail === ADMIN_EMAIL
-      let newApiKeyArr
-
-      if (isAdmin) {
-        newApiKeyArr = await getAllData()
-      } else {
-        newApiKeyArr = await getDataByEmail(newCurEmail)
-      }
+      let newApiKeyArr = await getData(newCurEmail);
+      console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
 
       if (!newApiKeyArr?.length) {
         const token = await addTeam(newCurEmail)
@@ -55,7 +49,7 @@ export default function SignHome({session}: {session: any}) {
           manager: newCurEmail,
           apiKey: token,
         }
-        const res = await saveData(newTeam)
+        const res = await saveData(newTeam, newCurEmail)
 
         if (res?.data?.insertedId) {
           newApiKeyArr.push({...newTeam, _id: res.data.insertedId})

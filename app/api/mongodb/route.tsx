@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
 
 import {emailCanAccess} from '@/lib/common'
+import {ADMIN_EMAIL} from '@/lib/constants'
 import {connectToDatabase} from '@/lib/mongodb/mongodb-server'
 import {ObjectId} from 'mongodb'
 
@@ -25,7 +26,8 @@ export const GET = async (request: NextRequest) => {
       where._id = new ObjectId(id)
     }
 
-    if (email) {
+    // allow admin to see all data
+    if (email && email !== ADMIN_EMAIL) {
       where['emailArr.name'] = email
     }
 
@@ -39,9 +41,11 @@ export const GET = async (request: NextRequest) => {
 }
 
 
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   try {
-    const canAccess = await emailCanAccess()
+    const email = request.nextUrl.searchParams.get('email')
+    const canAccess = await emailCanAccess(email)
+    
 
     if (!canAccess) {
       const message = 'You can\'t access this API'
@@ -72,7 +76,8 @@ export const POST = async (request: Request) => {
 
 export const DELETE = async (request: NextRequest) => {
   try {
-    const canAccess = await emailCanAccess()
+    const email = request.nextUrl.searchParams.get('email')
+    const canAccess = await emailCanAccess(email)
 
     if (!canAccess) {
       const message = 'You can\'t access this API'

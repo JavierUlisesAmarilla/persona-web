@@ -40,7 +40,7 @@ export default function TeamSection({apiKeyIndex, data}: any) {
 
   const onSave = async () => {
     setLocalStatus('Saving...')
-    const res = await saveData(data)
+    const res = await saveData(data, curEmail)
 
     if (res?.data?.insertedId) {
       const newApiKeyArr = [...apiKeyArr]
@@ -54,7 +54,7 @@ export default function TeamSection({apiKeyIndex, data}: any) {
   const onRemove = async () => {
     if (apiKeyArr[apiKeyIndex]?._id) {
       setLocalStatus('Removing...')
-      await removeData(apiKeyArr[apiKeyIndex]._id)
+      await removeData(apiKeyArr[apiKeyIndex]._id, curEmail)
       setLocalStatus('Success')
     }
 

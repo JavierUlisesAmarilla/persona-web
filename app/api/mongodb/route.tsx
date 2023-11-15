@@ -10,19 +10,17 @@ export const GET = async (request: NextRequest) => {
     const email = request.nextUrl.searchParams.get('email')
     const {db} = await connectToDatabase()
     let res = {}
+    const where: any = {}
 
     if (id) {
-      res = await db.collection('main').findOne({_id: new ObjectId(id)})
-    } else {
-      const where: any = {}
-
-      if (email) {
-        where['emailArr.name'] = email
-      }
-
-      res = await db.collection('main').find(where).toArray()
+      where._id = new ObjectId(id)
     }
 
+    if (email) {
+      where['emailArr.name'] = email
+    }
+
+    res = await db.collection('main').find(where).toArray()
     return NextResponse.json(res)
   } catch (error: any) {
     const message = new Error(error).message

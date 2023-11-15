@@ -10,7 +10,6 @@ export const saveData = async (data: any) => {
       return
     }
 
-    // const res = await axios.post(`${DEPLOY_URL}/api/mongodb/save`, data)
     const res = await axios.post(`${DEPLOY_URL}/api/mongodb`, data)
     return res
   } catch (e) {
@@ -25,7 +24,6 @@ export const getData = async (id: string) => {
       return
     }
 
-    // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get?id=${id}`)
     const res = await axios.get(`${DEPLOY_URL}/api/mongodb?id=${id}`)
     return res?.data
   } catch (e) {
@@ -40,7 +38,6 @@ export const getDataByEmail = async (email: string) => {
       return
     }
 
-    // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get?id=${id}`)
     const res = await axios.get(`${DEPLOY_URL}/api/mongodb?email=${email}`)
     return res?.data
   } catch (e) {
@@ -54,7 +51,6 @@ export const getAllData = async () => {
     if (USE_SAMPLE_DATA) {
       return SAMPLE_DB_DATA_ARR
     } else {
-      // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get`)
       const res = await axios.get(`${DEPLOY_URL}/api/mongodb`)
       return res?.data
     }
@@ -70,7 +66,6 @@ export const removeData = async (id: string) => {
       return
     }
 
-    // const res = await axios.delete(`${DEPLOY_URL}/api/mongodb/remove?id=${id}`)
     const res = await axios.delete(`${DEPLOY_URL}/api/mongodb?id=${id}`)
     return res
   } catch (e) {

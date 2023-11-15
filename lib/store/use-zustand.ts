@@ -47,9 +47,6 @@ interface ZustandState {
   status: string
   setStatus: (status: string) => void
 
-  isUser: boolean
-  setIsUser: (isUser: boolean) => void
-
   alertMsg: string
   setAlertMsg: (alertMsg: string) => void
 }
@@ -165,9 +162,6 @@ export const useZustand = create<ZustandState>((set, get) => ({
 
   status: '',
   setStatus: (status) => set((state) => ({...state, status})),
-
-  isUser: false,
-  setIsUser: (isUser) => set((state) => ({...state, isUser})),
 
   alertMsg: '',
   setAlertMsg: (alertMsg) => set((state) => ({...state, alertMsg})),

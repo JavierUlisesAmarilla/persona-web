@@ -23,7 +23,7 @@ export default function NavBar({session}: {session: any}) {
   // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)
-  const {selMenu, setSelMenu, isUser} = useZustand()
+  const {selMenu, setSelMenu} = useZustand()
 
   useEffect(() => {
     console.log('NavBar#useEffect: session: ', session)
@@ -50,7 +50,7 @@ export default function NavBar({session}: {session: any}) {
               />
               <p>Persona</p>
             </Link>
-            {session && isUser && Object.keys(MENUS).map((menuKey) =>
+            {session && Object.keys(MENUS).map((menuKey) =>
               <div
                 key={menuKey}
                 className={classnames({
@@ -67,7 +67,7 @@ export default function NavBar({session}: {session: any}) {
             )}
           </div>
           <div>
-            {session && isUser ? (
+            {session ? (
               <UserDropdown session={session}/>
             ) : (
               <BlueButton

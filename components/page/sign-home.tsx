@@ -22,7 +22,7 @@ let prevApiKey: string
  *
  */
 export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, isUser, setIsUser, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
   const apiKey = useApiKey()
 
   useEffect(() => {
@@ -64,7 +64,6 @@ export default function SignHome({session}: {session: any}) {
       }
 
       setCurEmail(newCurEmail)
-      setIsUser(true)
       setApiKeyArr(newApiKeyArr)
       setStatus('')
     })()
@@ -77,6 +76,7 @@ export default function SignHome({session}: {session: any}) {
         return
       }
 
+      setStatus('Loading...')
       console.log('SignHome#useEffect: apiKey: ', apiKey)
       prevApiKey = apiKey
 
@@ -127,7 +127,9 @@ export default function SignHome({session}: {session: any}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey])
 
-  return isUser ? (
+  return status ? (
+    <div className='z-10 w-full p-6 text-center text-text-gray'>{status}</div>
+  ) : (
     <>
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
@@ -135,7 +137,5 @@ export default function SignHome({session}: {session: any}) {
       {selMenu === 'dashboard' && <Dashboard/>}
       <Alert/>
     </>
-  ) : (
-    <div className='z-10 w-full p-6 text-center text-text-gray'>{status || 'Loading...'}</div>
   )
 }

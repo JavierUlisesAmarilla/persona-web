@@ -20,7 +20,10 @@ interface ZustandState {
   setPersonaLLM: (personaIndex: number, llmSelected: string) => void
   selPersonaIndex: number
   setSelPersonaIndex: (selPersonaIndex: number) => void
-  setScenarioInitMsg: (personaIndex: number, text: string) => void
+  setScenarioInitMsg: (personaIndex: number, phoneNumber: string) => void
+  setPersonaPhoneNumber: (personaIndex: number, text: string) => void
+  setPersonaTwilioAuthToken: (personaIndex: number, authToken: string) => void
+  setPersonaTwilioAccountSid: (personaIndex: number, accountSid: string) => void
   setScenarioRateLimit: (personaIndex: number, text: string) => void
   setScenarioPrompt: (personaIndex: number, text: string) => void
   setScenarioContext: (personaIndex: number, scenarioIndex: number, text: string) => void
@@ -78,6 +81,23 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setScenarioInitMsg: (personaIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].initialMessage = text
+    return {...state, personaArr}
+  }),
+  setPersonaTwilioAuthToken: (personaIndex, authToken) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
+    personaArr[personaIndex].twilio.authToken = authToken;
+    return {...state, personaArr}
+  }),
+  setPersonaTwilioAccountSid: (personaIndex, accountSid) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
+    personaArr[personaIndex].twilio.authToken = accountSid;
+    return {...state, personaArr}
+  }),
+  setPersonaPhoneNumber: (personaIndex, phoneNumber) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].phoneNumber = phoneNumber
     return {...state, personaArr}
   }),
   setScenarioRateLimit: (personaIndex, text) => set((state) => {

@@ -8,9 +8,11 @@ import React, {useRef, useState} from 'react'
 import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
+import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
+import axios from 'axios'
 
 
 interface Props {
@@ -23,23 +25,65 @@ export const DeployTwilioModal = ({
   show,
   onClose,
 }: Props) => {
-  const formRef = useRef<HTMLFormElement>(null)
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [accountSid, setAccountSid] = useState('')
-  const [authToken, setAuthToken] = useState('')
-  const {setAlertMsg, personaArr, selPersonaIndex} = useZustand()
-  const selPersonaId = personaArr[selPersonaIndex]?._id
 
-  const clearFormRef = () => {
-    if (!formRef?.current) {
-      return
+  const apiKey = useApiKey()
+
+  const onUpdatePersonaPhoneNumber = async () => {
+    try {
+      const selPersonaId = personaArr[selPersonaIndex]?._id
+
+      if (!selPersonaId) {
+        return
+      }
+
+      // setInitialMsgState('Saving...')
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {phoneNumber: personaArr[selPersonaIndex].phoneNumber})
+      // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
+    } catch (error) {
+      console.log('VoiceChat#onInitialization: error: ', error)
     }
-
-    formRef.current.action = `https://api.sindarin.tech/api/personas/${selPersonaId}/twilio`
-    formRef.current.phoneNumber.value = ''
-    formRef.current.accountSid.value = ''
-    formRef.current.authToken.value = ''
   }
+  const onUpdatePersonaTwilioAuthToken = async () => {
+    try {
+      const selPersonaId = personaArr[selPersonaIndex]?._id
+
+      if (!selPersonaId) {
+        return
+      }
+
+      // setInitialMsgState('Saving...')
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {authToken: personaArr[selPersonaIndex].twilio.authToken})
+      // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
+    } catch (error) {
+      console.log('VoiceChat#onInitialization: error: ', error)
+    }
+  }
+  const onUpdatePersonaTwilioAccountSid = async () => {
+    try {
+      const selPersonaId = personaArr[selPersonaIndex]?._id
+
+      if (!selPersonaId) {
+        return
+      }
+
+      // setInitialMsgState('Saving...')
+      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {accountSid: personaArr[selPersonaIndex].twilio.accountSid})
+      // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
+    } catch (error) {
+      console.log('VoiceChat#onInitialization: error: ', error)
+    }
+  }
+
+  const {setAlertMsg, personaArr, selPersonaIndex, setPersonaTwilioAuthToken, setPersonaTwilioAccountSid, setPersonaPhoneNumber} = useZustand()
+  console.log('current persona', personaArr[selPersonaIndex])
+  console.log('current persona phone number', personaArr[selPersonaIndex]?.phoneNumber)
+
+  const formRef = useRef<HTMLFormElement>(null)
+  const phoneNumber = personaArr[selPersonaIndex]?.phoneNumber || '';
+  const accountSid = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.accountSid : '';
+  const authToken = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.authToken : '';
+
+  const selPersonaId = personaArr[selPersonaIndex]?._id
 
   return (
     <CommonModal
@@ -70,20 +114,9 @@ export const DeployTwilioModal = ({
               <div className='flex gap-3'>
                 <InputText
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={(e) => setPersonaPhoneNumber(selPersonaIndex, e.target.value)}
                 />
-                <BlueButton onClick={() => {
-                  if (!formRef?.current || !phoneNumber) {
-                    setAlertMsg('Input phone number.')
-                    return
-                  }
-
-                  window.open('', 'TheWindow')
-                  clearFormRef()
-                  formRef.current.phoneNumber.value = phoneNumber
-                  formRef.current.submit()
-                }}
-                >
+                <BlueButton onClick={onUpdatePersonaPhoneNumber}>
                   Submit
                 </BlueButton>
               </div>
@@ -100,19 +133,9 @@ export const DeployTwilioModal = ({
               <div className='flex gap-3'>
                 <InputText
                   value={accountSid}
-                  onChange={(e) => setAccountSid(e.target.value)}
+                  onChange={(e) => setPersonaTwilioAccountSid(selPersonaIndex, e.target.value)}
                 />
-                <BlueButton onClick={() => {
-                  if (!formRef?.current || !accountSid) {
-                    setAlertMsg('Input account sid.')
-                    return
-                  }
-
-                  window.open('', 'TheWindow')
-                  clearFormRef()
-                  formRef.current.accountSid.value = accountSid
-                  formRef.current.submit()
-                }}
+                <BlueButton onClick={onUpdatePersonaTwilioAccountSid}
                 >
                   Submit
                 </BlueButton>
@@ -123,20 +146,9 @@ export const DeployTwilioModal = ({
               <div className='flex gap-3'>
                 <InputText
                   value={authToken}
-                  onChange={(e) => setAuthToken(e.target.value)}
+                  onChange={(e) => setPersonaTwilioAuthToken(selPersonaIndex, e.target.value)}
                 />
-                <BlueButton onClick={() => {
-                  if (!formRef?.current || !authToken) {
-                    setAlertMsg('Input auth token.')
-                    return
-                  }
-
-                  window.open('', 'TheWindow')
-                  clearFormRef()
-                  formRef.current.authToken.value = authToken
-                  formRef.current.submit()
-                }}
-                >
+                <BlueButton onClick={onUpdatePersonaTwilioAuthToken}>
                   Submit
                 </BlueButton>
               </div>

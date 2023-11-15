@@ -1,17 +1,8 @@
 import {NextRequest, NextResponse} from 'next/server'
 
-import {getServerSessionMiddle} from '@/lib/common'
-import {ADMIN_EMAIL} from '@/lib/constants'
+import {emailCanAccess} from '@/lib/common'
 import {connectToDatabase} from '@/lib/mongodb/mongodb-server'
 import {ObjectId} from 'mongodb'
-
-
-export const emailCanAccess = async (email: string | null = null) => {
-  const session = await getServerSessionMiddle()
-  const sessionEmail = session?.user?.email
-  const canAccess = sessionEmail && (sessionEmail === ADMIN_EMAIL || sessionEmail === email)
-  return canAccess
-}
 
 
 export const GET = async (request: NextRequest) => {

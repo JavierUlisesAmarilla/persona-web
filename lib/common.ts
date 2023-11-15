@@ -1,5 +1,6 @@
-import {WITHOUT_SIGN} from './constants'
 /* eslint-disable max-len */
+import {ADMIN_EMAIL, WITHOUT_SIGN} from './constants'
+
 import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import {getServerSession} from 'next-auth/next'
 
@@ -49,4 +50,12 @@ export const getDateNum = (num: number) => {
     useGrouping: false,
   })
   return dateNum
+}
+
+
+export const emailCanAccess = async (email: string | null = null) => {
+  const session = await getServerSessionMiddle()
+  const sessionEmail = session?.user?.email
+  const canAccess = sessionEmail && (sessionEmail === ADMIN_EMAIL || sessionEmail === email)
+  return canAccess
 }

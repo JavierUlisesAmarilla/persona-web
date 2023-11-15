@@ -3,7 +3,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 
 import {MENUS} from '@/lib/constants'
 import useScroll from '@/lib/hooks/use-scroll'
@@ -23,7 +23,7 @@ export default function NavBar({session}: {session: any}) {
   // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)
-  const {selMenu, setSelMenu} = useZustand()
+  const {selMenu, setSelMenu, status} = useZustand()
 
   useEffect(() => {
     console.log('NavBar#useEffect: session: ', session)
@@ -59,6 +59,10 @@ export default function NavBar({session}: {session: any}) {
                   'text-text-gray': selMenu !== menuKey,
                 })}
                 onClick={() => {
+                  if (status) {
+                    return
+                  }
+
                   setSelMenu(menuKey)
                 }}
               >

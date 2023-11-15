@@ -2,7 +2,7 @@
 'use client'
 
 import {getAllData, saveData} from '@/lib/mongodb/mongodb-client'
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
@@ -65,7 +65,6 @@ export default function SignHome({session}: {session: any}) {
 
       setCurEmail(newCurEmail)
       setApiKeyArr(newApiKeyArr)
-      setStatus('')
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user?.email])
@@ -112,9 +111,11 @@ export default function SignHome({session}: {session: any}) {
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            })
+            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            // })
+            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
         }
 

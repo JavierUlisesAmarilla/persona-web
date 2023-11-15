@@ -1,8 +1,6 @@
-import {DEPLOY_URL, USE_SAMPLE_DATA} from '../constants'
+import {DEPLOY_URL} from '../constants'
 
 import axios from 'axios'
-import {SAMPLE_DB_DATA_ARR} from '../sample-data'
-
 
 export const saveData = async (data: any, email: string) => {
   try {

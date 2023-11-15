@@ -3,8 +3,6 @@
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
-
-import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {useState, useEffect} from 'react'
@@ -40,7 +38,7 @@ export default function SignHome({session}: {session: any}) {
       setStatus('Loading...')
 
       // Fetch api key array
-      let newApiKeyArr = await getData(newCurEmail);
+      const newApiKeyArr = await getData(newCurEmail)
       console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
 
       if (!newApiKeyArr?.length && !hasAddedTeam) {

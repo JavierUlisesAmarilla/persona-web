@@ -86,13 +86,13 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setPersonaTwilioAuthToken: (personaIndex, authToken) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
-    personaArr[personaIndex].twilio.authToken = authToken;
+    personaArr[personaIndex].twilio.authToken = authToken
     return {...state, personaArr}
   }),
   setPersonaTwilioAccountSid: (personaIndex, accountSid) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
-    personaArr[personaIndex].twilio.authToken = accountSid;
+    personaArr[personaIndex].twilio.authToken = accountSid
     return {...state, personaArr}
   }),
   setPersonaPhoneNumber: (personaIndex, phoneNumber) => set((state) => {

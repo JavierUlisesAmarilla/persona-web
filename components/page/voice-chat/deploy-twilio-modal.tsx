@@ -25,7 +25,6 @@ export const DeployTwilioModal = ({
   show,
   onClose,
 }: Props) => {
-
   const apiKey = useApiKey()
 
   const onUpdatePersonaPhoneNumber = async () => {
@@ -136,8 +135,7 @@ export const DeployTwilioModal = ({
                   value={accountSid}
                   onChange={(e) => setPersonaTwilioAccountSid(selPersonaIndex, e.target.value)}
                 />
-                <BlueButton onClick={onUpdatePersonaTwilioAccountSid}
-                >
+                <BlueButton onClick={onUpdatePersonaTwilioAccountSid}>
                   Submit
                 </BlueButton>
               </div>

@@ -1,13 +1,13 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {getAllData, saveData} from '@/lib/mongodb/mongodb-client'
-import {useEffect} from 'react'
+import {getAllData, getDataByEmail, saveData} from '@/lib/mongodb/mongodb-client'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
+import {useEffect} from 'react'
 import {Alert} from '../shared/alert'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
@@ -37,13 +37,12 @@ export default function SignHome({session}: {session: any}) {
 
       // Fetch api key array
       const isAdmin = newCurEmail === ADMIN_EMAIL
-      const allApiKeyArr = await getAllData()
       let newApiKeyArr
 
       if (isAdmin) {
-        newApiKeyArr = allApiKeyArr
+        newApiKeyArr = await getAllData()
       } else {
-        newApiKeyArr = allApiKeyArr.filter((apiKeyObj: any) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === newCurEmail))
+        newApiKeyArr = await getDataByEmail(newCurEmail)
       }
 
       if (!newApiKeyArr?.length) {

@@ -7,22 +7,27 @@ import {ObjectId} from 'mongodb'
 export const GET = async (request: NextRequest) => {
   try {
     const id = request.nextUrl.searchParams.get('id')
-    console.log('api#mongodb#get: id: ', id)
+    const email = request.nextUrl.searchParams.get('email')
     const {db} = await connectToDatabase()
     let res = {}
 
     if (id) {
       res = await db.collection('main').findOne({_id: new ObjectId(id)})
     } else {
-      res = await db.collection('main').find({}).toArray()
+      const where: any = {}
+
+      if (email) {
+        where['emailArr.name'] = email
+      }
+
+      res = await db.collection('main').find(where).toArray()
     }
 
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#GET: message: ', message)
+    return NextResponse.json({message})
   }
 }
 
@@ -30,7 +35,6 @@ export const GET = async (request: NextRequest) => {
 export const POST = async (request: Request) => {
   try {
     const postData = await request.json()
-    console.log('api#mongodb#save: postData: ', postData)
     const id = postData._id
     const {db} = await connectToDatabase()
     let res = {}
@@ -44,10 +48,9 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#POST: message: ', message)
+    return NextResponse.json({message})
   }
 }
 
@@ -55,7 +58,6 @@ export const POST = async (request: Request) => {
 export const DELETE = async (request: NextRequest) => {
   try {
     const id = request.nextUrl.searchParams.get('id')
-    console.log('api#mongodb#remove: id: ', id)
 
     if (!id) {
       return
@@ -65,9 +67,8 @@ export const DELETE = async (request: NextRequest) => {
     const res = await db.collection('main').deleteOne({_id: new ObjectId(id)})
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#DELETE: message: ', message)
+    return NextResponse.json({message})
   }
 }

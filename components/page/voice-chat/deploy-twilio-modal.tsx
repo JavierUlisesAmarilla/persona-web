@@ -3,7 +3,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import React, {useRef, useState} from 'react'
+import React, {useRef} from 'react'
 
 import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
@@ -38,6 +38,7 @@ export const DeployTwilioModal = ({
 
       // setInitialMsgState('Saving...')
       const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {phoneNumber: personaArr[selPersonaIndex].phoneNumber})
+      console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
@@ -53,6 +54,7 @@ export const DeployTwilioModal = ({
 
       // setInitialMsgState('Saving...')
       const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {authToken: personaArr[selPersonaIndex].twilio.authToken})
+      console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
@@ -68,22 +70,21 @@ export const DeployTwilioModal = ({
 
       // setInitialMsgState('Saving...')
       const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {accountSid: personaArr[selPersonaIndex].twilio.accountSid})
+      console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
     }
   }
 
-  const {setAlertMsg, personaArr, selPersonaIndex, setPersonaTwilioAuthToken, setPersonaTwilioAccountSid, setPersonaPhoneNumber} = useZustand()
+  const {personaArr, selPersonaIndex, setPersonaTwilioAuthToken, setPersonaTwilioAccountSid, setPersonaPhoneNumber} = useZustand()
   console.log('current persona', personaArr[selPersonaIndex])
   console.log('current persona phone number', personaArr[selPersonaIndex]?.phoneNumber)
 
   const formRef = useRef<HTMLFormElement>(null)
-  const phoneNumber = personaArr[selPersonaIndex]?.phoneNumber || '';
-  const accountSid = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.accountSid : '';
-  const authToken = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.authToken : '';
-
-  const selPersonaId = personaArr[selPersonaIndex]?._id
+  const phoneNumber = personaArr[selPersonaIndex]?.phoneNumber || ''
+  const accountSid = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.accountSid : ''
+  const authToken = personaArr[selPersonaIndex]?.twilio ? personaArr[selPersonaIndex]?.twilio.authToken : ''
 
   return (
     <CommonModal

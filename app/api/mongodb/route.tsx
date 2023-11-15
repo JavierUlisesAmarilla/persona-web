@@ -44,8 +44,7 @@ export const GET = async (request: NextRequest) => {
 export const POST = async (request: NextRequest) => {
   try {
     const email = request.nextUrl.searchParams.get('email')
-    const canAccess = await emailCanAccess(email)    
-
+    const canAccess = await emailCanAccess(email)
     if (!canAccess) {
       const message = 'You can\'t access this API'
       console.log('api#mongodb#POST: message: ', message)

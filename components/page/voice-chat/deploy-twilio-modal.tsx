@@ -92,7 +92,7 @@ export const DeployTwilioModal = ({
     >
       <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='text-sm'>INBOUND ONLY:</div>
+          <div className='text-sm'>INBOUND AND OUTBOUND CALLS:</div>
           <div className='flex flex-col gap-1'>
             <div>
               1.&nbsp;
@@ -125,7 +125,7 @@ export const DeployTwilioModal = ({
           <div>That's it for inbound calls! Feel free to try calling your Persona.</div>
         </div>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='text-sm'>OUTBOUND:</div>
+          <div className='text-sm'>OUTBOUND CALLS (CONT'D):</div>
           <div>To enable your Persona to make outbound calls, we require your Twilio Account SID and Auth Token.</div>
           <div className='flex flex-col gap-1'>
             <div className='flex flex-col'>

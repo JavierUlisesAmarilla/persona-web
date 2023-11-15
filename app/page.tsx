@@ -8,6 +8,7 @@ import React from 'react'
  *
  */
 export default async function Page() {
+  console.log('*** RENDERING PAGE ***')
   const session = await getServerSessionMiddle()
   return session ? <SignHome session={session}/> : <div/>
 }

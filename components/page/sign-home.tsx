@@ -7,7 +7,7 @@ import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/pe
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
-import {useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {Alert} from '../shared/alert'
 import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
@@ -23,10 +23,14 @@ let prevApiKey: string
  */
 export default function SignHome({session}: {session: any}) {
   const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+  const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
+  console.log('***SIGN HOME RENDERING***')
 
   useEffect(() => {
+    console.log('USE EFFECT RUNNING WITH EMAIL', session?.user?.email);
     (async () => {
+      console.log('USE EFFECT INNER LOOP RUNNING')
       const newCurEmail = session?.user?.email
 
       if (!newCurEmail || status) {
@@ -39,8 +43,13 @@ export default function SignHome({session}: {session: any}) {
       let newApiKeyArr = await getData(newCurEmail);
       console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
 
-      if (!newApiKeyArr?.length) {
+      if (!newApiKeyArr?.length && !hasAddedTeam) {
+        setHasAddedTeam(true)
         const token = await addTeam(newCurEmail)
+        if (!token) {
+          return
+        }
+
         const newTeam = {
           name: newCurEmail,
           emailArr: [{
@@ -115,7 +124,7 @@ export default function SignHome({session}: {session: any}) {
         setTranscriptArr(newTranscriptArr)
         setStatus('')
       } else {
-        setStatus('API key seems to be incorrect.')
+        setStatus('Something went wrong.')
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps

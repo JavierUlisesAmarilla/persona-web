@@ -111,11 +111,11 @@ export default function SignHome({session}: {session: any}) {
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            // })
-            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            })
+            // const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            // newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
         }
 

@@ -1,7 +1,7 @@
-import {ObjectId} from 'mongodb'
-import {NextResponse} from 'next/server'
-import {NextRequest} from 'next/server'
+import {NextRequest, NextResponse} from 'next/server'
+
 import {connectToDatabase} from '@/lib/mongodb/mongodb-server'
+import {ObjectId} from 'mongodb'
 
 
 export const GET = async (request: NextRequest) => {

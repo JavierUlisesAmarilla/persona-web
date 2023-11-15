@@ -20,17 +20,17 @@ export const DB_NAME = process.env.DB_NAME
 
 export const MASTER_API_KEY = process.env.SINDARIN_MASTER_API_KEY
 
-console.log('constants: NODE_ENV: ', NODE_ENV)
-console.log('constants: DEPLOY_URL: ', DEPLOY_URL)
-console.log('constants: GOOGLE_CLIENT_ID: ', GOOGLE_CLIENT_ID)
-console.log('constants: GOOGLE_CLIENT_SECRET: ', GOOGLE_CLIENT_SECRET)
-console.log('constants: AUTH0_CLIENT_ID: ', AUTH0_CLIENT_ID)
-console.log('constants: AUTH0_CLIENT_SECRET: ', AUTH0_CLIENT_SECRET)
-console.log('constants: AUTH0_ISSUER: ', AUTH0_ISSUER)
-console.log('constants: ADMIN_EMAIL: ', ADMIN_EMAIL)
-console.log('constants: MONGODB_URI: ', MONGODB_URI)
-console.log('constants: DB_NAME: ', DB_NAME)
-console.log('constants: MASTER_API_KEY: ', MASTER_API_KEY)
+// console.log('constants: NODE_ENV: ', NODE_ENV)
+// console.log('constants: DEPLOY_URL: ', DEPLOY_URL)
+// console.log('constants: GOOGLE_CLIENT_ID: ', GOOGLE_CLIENT_ID)
+// console.log('constants: GOOGLE_CLIENT_SECRET: ', GOOGLE_CLIENT_SECRET)
+// console.log('constants: AUTH0_CLIENT_ID: ', AUTH0_CLIENT_ID)
+// console.log('constants: AUTH0_CLIENT_SECRET: ', AUTH0_CLIENT_SECRET)
+// console.log('constants: AUTH0_ISSUER: ', AUTH0_ISSUER)
+// console.log('constants: ADMIN_EMAIL: ', ADMIN_EMAIL)
+// console.log('constants: MONGODB_URI: ', MONGODB_URI)
+// console.log('constants: DB_NAME: ', DB_NAME)
+// console.log('constants: MASTER_API_KEY: ', MASTER_API_KEY)
 
 // Setting
 

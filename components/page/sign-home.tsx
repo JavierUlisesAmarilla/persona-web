@@ -2,9 +2,8 @@
 'use client'
 
 import {getAllData, saveData} from '@/lib/mongodb/mongodb-client'
-import {getLLMSArr, getPersonaArr} from '@/lib/persona'
 import React, {useEffect} from 'react'
-import {addTeam, getTranscriptArr} from '../../lib/persona'
+import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -30,17 +29,15 @@ export default function SignHome({session}: {session: any}) {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status || prevApiKey === apiKey) {
+      if (!newCurEmail || status) {
         return
       }
 
-      prevApiKey = apiKey
       setStatus('Loading...')
+
+      // Fetch api key array
       const isAdmin = newCurEmail === ADMIN_EMAIL
-      console.log('SignHome#useEffect: isAdmin: ', isAdmin)
-      setCurEmail(newCurEmail)
       const allApiKeyArr = await getAllData()
-      console.log('SignHome#useEffect: allApiKeyArr: ', allApiKeyArr)
       let newApiKeyArr
 
       if (isAdmin) {
@@ -51,8 +48,6 @@ export default function SignHome({session}: {session: any}) {
 
       if (!newApiKeyArr?.length) {
         const token = await addTeam(newCurEmail)
-        console.log('SignHome#useEffect: token: ', token)
-
         const newTeam = {
           name: newCurEmail,
           emailArr: [{
@@ -61,7 +56,6 @@ export default function SignHome({session}: {session: any}) {
           manager: newCurEmail,
           apiKey: token,
         }
-
         const res = await saveData(newTeam)
 
         if (res?.data?.insertedId) {
@@ -69,10 +63,24 @@ export default function SignHome({session}: {session: any}) {
         }
       }
 
-      console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
+      setCurEmail(newCurEmail)
+      setIsUser(true)
       setApiKeyArr(newApiKeyArr)
+      setStatus('')
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.email])
+
+  useEffect(() => {
+    (async () => {
+      if (prevApiKey === apiKey) {
+        return
+      }
 
       console.log('SignHome#useEffect: apiKey: ', apiKey)
+      prevApiKey = apiKey
+
+      // Set persona client
       const script = document.createElement('script')
       script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${apiKey}`
       document.head.appendChild(script)
@@ -80,26 +88,23 @@ export default function SignHome({session}: {session: any}) {
       script.addEventListener('load', () => {
         if (window.PersonaClient) {
           const newPersonaClient = new window.PersonaClient(apiKey)
-          newPersonaClient.on('json', ({detail}: any) => {
-            console.log('persona action is ', detail)
 
+          newPersonaClient.on('json', ({detail}: any) => {
             if (Object.keys(detail).length > 0 && !detail.transcription) {
               setPersonaAction(detail)
             }
           })
 
-          console.log('SignHome#useEffect#script#load: newPersonaClient: ', newPersonaClient)
           setPersonaClient(newPersonaClient)
         }
       })
 
       const newPersonaArr = await getPersonaArr(apiKey)
-      console.log('SignHome#useEffect: newPersonaArr: ', newPersonaArr)
       const llmsArr = await getLLMSArr(apiKey)
-      console.log('SignHome#useEffect: llmsArr: ', llmsArr)
 
-      if (Array.isArray(newPersonaArr)) {
+      if (Array.isArray(newPersonaArr) && Array.isArray(llmsArr)) {
         setPersonaArr(newPersonaArr)
+        setLLMSArray(llmsArr)
         const newTranscriptArr: Array<any> = []
 
         for (let i = 0; i < newPersonaArr.length; i++) {
@@ -108,7 +113,6 @@ export default function SignHome({session}: {session: any}) {
 
           if (personaId && personaName) {
             getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-              console.log('SignHome#useEffect: additionalTranscriptArr: ', additionalTranscriptArr)
               newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
             })
           }
@@ -119,18 +123,9 @@ export default function SignHome({session}: {session: any}) {
       } else {
         setStatus('API key seems to be incorrect.')
       }
-
-      if (Array.isArray(llmsArr)) {
-        console.log('GOT LLMS', llmsArr)
-        setLLMSArray(llmsArr)
-      }
-
-      setIsUser(true)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiKey, session])
-
-  console.log('SignHome: status: ', status)
+  }, [apiKey])
 
   return isUser ? (
     <>

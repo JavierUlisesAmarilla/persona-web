@@ -1,5 +1,3 @@
-
-
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
@@ -18,7 +16,7 @@ import {AiOutlineCloseCircle} from 'react-icons/ai'
  */
 export default function TeamSection({apiKeyIndex, data}: any) {
   const {apiKeyArr, setApiKeyArr, curEmail} = useZustand()
-  const [status, setStatus] = useState('')
+  const [localStatus, setLocalStatus] = useState('')
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || curEmail === apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.manager
 
@@ -41,7 +39,7 @@ export default function TeamSection({apiKeyIndex, data}: any) {
   }
 
   const onSave = async () => {
-    setStatus('Saving...')
+    setLocalStatus('Saving...')
     const res = await saveData(data)
 
     if (res?.data?.insertedId) {
@@ -50,14 +48,14 @@ export default function TeamSection({apiKeyIndex, data}: any) {
       setApiKeyArr(newApiKeyArr)
     }
 
-    setStatus('Success')
+    setLocalStatus('Success')
   }
 
   const onRemove = async () => {
     if (apiKeyArr[apiKeyIndex]?._id) {
-      setStatus('Removing...')
+      setLocalStatus('Removing...')
       await removeData(apiKeyArr[apiKeyIndex]._id)
-      setStatus('Success')
+      setLocalStatus('Success')
     }
 
     setApiKeyArr(apiKeyArr.filter((apiKeyObj, index) => index !== apiKeyIndex))
@@ -88,7 +86,7 @@ export default function TeamSection({apiKeyIndex, data}: any) {
           <BlueButton onClick={onAddEmail}>Add Email</BlueButton>
           <BlueButton onClick={onSave}>Save</BlueButton>
           <BlueButton onClick={onRemove}>Remove</BlueButton>
-          <div className='text-blue-500'>{status}</div>
+          <div className='text-blue-500'>{localStatus}</div>
         </div>
       }
       <div className="flex items-center w-full gap-4">

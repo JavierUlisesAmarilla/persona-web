@@ -14,8 +14,9 @@ export const AUTH0_CLIENT_SECRET = process.env.NEXT_PUBLIC_AUTH0_CLIENT_SECRET
 export const AUTH0_ISSUER = process.env.NEXT_PUBLIC_AUTH0_ISSUER
 
 export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL
-export const MONGODB_URI = process.env.NEXT_PUBLIC_MONGODB_URI
-export const DB_NAME = process.env.NEXT_PUBLIC_DB_NAME
+
+export const MONGODB_URI = process.env.MONGODB_URI
+export const DB_NAME = process.env.DB_NAME
 
 export const MASTER_API_KEY = process.env.SINDARIN_MASTER_API_KEY
 

@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 
 import {BlueButton} from '@/components/shared/button'
 import {UserSelect} from '@/components/shared/user-select'
@@ -9,6 +9,7 @@ import {ADMIN_EMAIL} from '@/lib/constants'
 import {getTeam} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import CredentialSection from './credential-section'
+import {PlanModal} from './plan-modal'
 import PlanSection from './plan-section'
 import TeamSection from './team-section'
 
@@ -16,6 +17,7 @@ import TeamSection from './team-section'
  *
  */
 export default function ApiKeyAssign() {
+  const [showPlanModal, setShowPlanModal] = useState(false)
   const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
 
@@ -95,7 +97,7 @@ export default function ApiKeyAssign() {
       <div className="flex items-center justify-start gap-3">
         {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
-          <BlueButton>Update Plan</BlueButton>
+          <BlueButton onClick={() => setShowPlanModal(true)}>Update Plan</BlueButton>
         }
       </div>
       {!status && apiKeyArr[selApiKeyIndex] &&
@@ -104,6 +106,10 @@ export default function ApiKeyAssign() {
           data={apiKeyArr[selApiKeyIndex]}
         />
       }
+      <PlanModal
+        show={showPlanModal}
+        onClose={() => setShowPlanModal(false)}
+      />
     </div>
   )
 }

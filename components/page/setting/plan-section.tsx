@@ -21,8 +21,8 @@ export default function PlanSection({apiKeyIndex, data}: any) {
     setApiKeyArr(newApiKeyArr)
   }
 
-  const messagesUsedString = `${team?.currentMessagesCount || 0} / ${team?.monthlyMessageLimit || 0}`;
-  const nextMessageReset = team?.nextMessageResetDate || 'N/A';
+  const messagesUsedString = `${team?.currentMessagesCount || 0} / ${team?.monthlyMessageLimit || 0}`
+  const nextMessageReset = team?.nextMessageResetDate || 'N/A'
   console.log('messagesUsedString HERE', messagesUsedString)
 
   return (

@@ -21,15 +21,35 @@ export default function PlanSection({apiKeyIndex, data}: any) {
     setApiKeyArr(newApiKeyArr)
   }
 
+  const messagesUsedString = `${team?.currentMessagesCount || 0} / ${team?.monthlyMessageLimit || 0}`;
+  const nextMessageReset = team?.nextMessageResetDate || 'N/A';
+  console.log('messagesUsedString HERE', messagesUsedString)
+
   return (
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
       <div className='text-xs whitespace-nowrap'>Tier:</div>
       <InputText
         classNames='w-1/3'
-        defaultValue={team?.tier}
+        value={team?.tier || 'free'}
         placeholder="Tier"
         // onChange={onApiKeyChange}
-        disabled={!isAdmin && !isManager}
+        disabled={true}
+      />
+      <div className='text-xs whitespace-nowrap'>Messages used this month:</div>
+      <InputText
+        classNames='w-1/3'
+        value={messagesUsedString}
+        placeholder="Messages used this month"
+        // onChange={onApiKeyChange}
+        disabled={true}
+      />
+      <div className='text-xs whitespace-nowrap'>Monthly messages reset at:</div>
+      <InputText
+        classNames='w-1/3'
+        value={nextMessageReset}
+        placeholder="Messages used this month"
+        // onChange={onApiKeyChange}
+        disabled={true}
       />
     </div>
   )

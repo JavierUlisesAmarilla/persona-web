@@ -46,7 +46,7 @@ script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-k
             extensions={[javascript({jsx: true})]}
             value={`script.addEventListener("load", async () => {
   console.log("persona client loaded");
-  const apiKey = "<api-key>";
+  const apiKey = "<public-api-key>";
   const personaClient = new window.PersonaClient(apiKey);`
             }
           />
@@ -84,11 +84,11 @@ const PersonaClient = (props) => {
   useEffect(() => {
     console.log("loading persona client");
     const script = document.createElement("script");
-    script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<api-key>";
+    script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-key>";
 
     script.addEventListener("load", async () => {
       console.log("persona client loaded");
-      const apiKey = "<api-key>";
+      const apiKey = "<public-api-key>";
       const personaClient = new window.PersonaClient(apiKey);
       setPersonaClient(personaClient);
     });

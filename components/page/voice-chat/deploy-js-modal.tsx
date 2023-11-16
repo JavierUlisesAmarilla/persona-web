@@ -23,13 +23,14 @@ export const DeployJsModal = ({
     >
       <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div>
-            1. To deploy your Persona to a webapp, you’ll need your page to download our Persona web client from our server at&nbsp;
+          <div className='p-2'>
+          <strong>1.</strong> To deploy your Persona to a webapp, you’ll need your page to download our Persona web client from our server at&nbsp;
             <span className='text-blue-500'>
               https://api.sindarin.tech/PersonaClientPublic?apikey=[public-api-key]
             </span>
           </div>
           <CodeMirror
+            className='p-2'
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
@@ -37,10 +38,11 @@ export const DeployJsModal = ({
 script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-key>";`
             }
           />
-          <div>
-            2. Once the script loads, you must initialize the Persona Client using your public api key
+          <div className='p-2'>
+          <strong>2.</strong> Once the script loads, you must initialize the Persona Client using your public api key
           </div>
           <CodeMirror
+            className='p-2'
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
@@ -50,20 +52,22 @@ script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-k
   const personaClient = new window.PersonaClient(apiKey);`
             }
           />
-          <div>
-            3. The Persona Client manages all audio streaming internally, so all you need to do is initialize it to begin speaking by calling
+          <div className='p-2'>
+          <strong>3.</strong> The Persona Client manages all audio streaming internally, so all you need to do is initialize it to begin speaking by calling
           </div>
           <CodeMirror
+            className='p-2'
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}
             value={`  personaClient.init(userId, personaName)`
             }
           />
-          <div>
-            4. Below is an example illustrating how the persona in our public AI pitch deck - a React app - is configured
+          <div className='p-2'>
+          <strong>4.</strong> Below is an example illustrating how the persona in our public AI pitch deck - a React app - is configured
           </div>
           <CodeMirror
+            className='p-2'
             theme='dark'
             editable={false}
             extensions={[javascript({jsx: true})]}

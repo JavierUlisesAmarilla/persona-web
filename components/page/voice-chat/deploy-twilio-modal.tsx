@@ -92,26 +92,26 @@ export const DeployTwilioModal = ({
     >
       <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='text-sm'>INBOUND AND OUTBOUND CALLS:</div>
+          <div className='text-sm'><strong>INBOUND AND OUTBOUND CALLS:</strong></div>
           <div className='flex flex-col gap-1'>
-            <div>
-              1.&nbsp;
+            <div className='p-2'>
+              <strong>1.</strong>&nbsp;
               <a className='text-blue-500' href='https://www.twilio.com/try-twilio' target='_blank' rel="noreferrer">Create a Twilio account</a>
               &nbsp;if you don't have one, and&nbsp;
               <a className='text-blue-500' href='https://www.twilio.com/docs/phone-numbers' target='_blank' rel="noreferrer">buy a voice phone number</a>
               .
             </div>
             <div className='flex flex-col gap-1'>
-              <div>
-                2. Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
+              <div className='p-2'>
+              <strong>2.</strong> Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
                 <a className='text-blue-500' href='https://twilio.sindarin.tech/twiml' target='_blank' rel="noreferrer">https://twilio.sindarin.tech/twiml</a>
                 &nbsp;and “HTTP” is set to HTTP GET.
               </div>
-              <img src='assets/images/twilio-modal/image1.png' alt=''/>
+              <img className='p-2' src='assets/images/twilio-modal/image1.png' alt=''/>
             </div>
             <div className='flex flex-col gap-1'>
-              <div>3. Enter the phone number here (Including the “+” at the beginning):</div>
-              <div className='flex gap-3'>
+              <div className='p-2'><strong>3.</strong> Enter the phone number here (Including the “+” at the beginning):</div>
+              <div className='flex gap-3 p-2'>
                 <InputText
                   value={phoneNumber}
                   onChange={(e) => setPersonaPhoneNumber(selPersonaIndex, e.target.value)}
@@ -122,15 +122,15 @@ export const DeployTwilioModal = ({
               </div>
             </div>
           </div>
-          <div>That's it for inbound calls! Feel free to try calling your Persona.</div>
+          <div className='p-2'>That's it for inbound calls! Feel free to try calling your Persona.</div>
         </div>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='text-sm'>OUTBOUND CALLS (CONT'D):</div>
-          <div>To enable your Persona to make outbound calls, we require your Twilio Account SID and Auth Token.</div>
+          <div className='text-sm'><strong>OUTBOUND CALLS (CONT'D):</strong></div>
+          <div className='p-2'>To enable your Persona to make outbound calls, we require your Twilio Account SID and Auth Token.</div>
           <div className='flex flex-col gap-1'>
             <div className='flex flex-col'>
-              <div>4. Under Account &gt; API keys & tokens &gt; Auth Tokens, find your Account SID and paste it here:</div>
-              <div className='flex gap-3'>
+              <div className='p-2'><strong>4.</strong> Under Account &gt; API keys & tokens &gt; Auth Tokens, find your Account SID and paste it here:</div>
+              <div className='flex gap-3 p-2'>
                 <InputText
                   value={accountSid}
                   onChange={(e) => setPersonaTwilioAccountSid(selPersonaIndex, e.target.value)}
@@ -141,8 +141,8 @@ export const DeployTwilioModal = ({
               </div>
             </div>
             <div className='flex flex-col gap-1'>
-              <div>5. Below that, find your Auth token and paste it here:</div>
-              <div className='flex gap-3'>
+              <div className='p-2'><strong>5.</strong> Below that, find your Auth Token and paste it here:</div>
+              <div className='flex gap-3 p-2'>
                 <InputText
                   value={authToken}
                   onChange={(e) => setPersonaTwilioAuthToken(selPersonaIndex, e.target.value)}
@@ -153,7 +153,7 @@ export const DeployTwilioModal = ({
               </div>
             </div>
           </div>
-          <div className='flex flex-col gap-1'>
+          <div className='flex flex-col gap-1 p-2'>
             <div>Congrats! You can now make outbound calls using the API by calling the endpoint: https://api.sindarin.tech/api/personas/:persona-id/makecall?apikey=[api-key] with the JSON request body</div>
             <CodeMirror
               theme='dark'

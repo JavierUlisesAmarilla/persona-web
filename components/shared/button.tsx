@@ -9,15 +9,18 @@ export const Button = ({
   className,
   onClick,
   children,
+  style,
 }: {
   className?: string
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
+  style?: React.CSSProperties
 }) => {
   return (
     <div
       className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit whitespace-nowrap ${className}`}
       onClick={onClick}
+      style={{display: 'flex', justifyContent: 'center', ...style}}
     >
       {children}
     </div>
@@ -64,14 +67,20 @@ export const GreenButton = ({
 export const BlueButton = ({
   onClick,
   children,
+  className,
+  style,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
+  className?: string
+  style?: React.CSSProperties
 }) => {
+  console.log('the classname is', className)
   return (
     <Button
-      className='bg-bg-btn-blue text-text-light'
+      className={`bg-bg-btn-blue text-text-light ${className}`}
       onClick={onClick}
+      style={style}
     >
       {children}
     </Button>

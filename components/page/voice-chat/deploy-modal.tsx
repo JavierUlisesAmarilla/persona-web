@@ -29,10 +29,10 @@ export const DeployModal = ({
       >
         <div className='flex flex-col items-center justify-center gap-3 p-6'>
           <div className='text-sm'>Deploy to:</div>
-          <BlueButton onClick={() => setShowTwilioModal(true)}>Phone (Twilio)</BlueButton>
-          <BlueButton onClick={() => setShowJsModal(true)}>Browser (JS)</BlueButton>
-          <BlueButton>Unity</BlueButton>
-          <BlueButton>Other</BlueButton>
+          <BlueButton style={{width: '120px'}} onClick={() => setShowTwilioModal(true)}>Phone (Twilio)</BlueButton>
+          <BlueButton style={{width: '120px'}} onClick={() => setShowJsModal(true)}>Browser (JS)</BlueButton>
+          <BlueButton style={{width: '120px'}}>Unity</BlueButton>
+          <BlueButton style={{width: '120px'}}>Other</BlueButton>
         </div>
       </CommonModal>
       <DeployTwilioModal

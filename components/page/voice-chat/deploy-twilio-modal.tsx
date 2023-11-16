@@ -103,7 +103,7 @@ export const DeployTwilioModal = ({
             </div>
             <div className='flex flex-col gap-1'>
               <div className='p-2'>
-              <strong>2.</strong> Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
+                <strong>2.</strong> Under Phone Numbers &gt; Manage &gt; Active Numbers &gt; [Phone number] &gt; Configure &gt; Voice Configuration, ensure that when "A call comes in" it set to Webhook, the "URL" is set to&nbsp;
                 <a className='text-blue-500' href='https://twilio.sindarin.tech/twiml' target='_blank' rel="noreferrer">https://twilio.sindarin.tech/twiml</a>
                 &nbsp;and “HTTP” is set to HTTP GET.
               </div>

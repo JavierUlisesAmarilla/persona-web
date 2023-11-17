@@ -6,7 +6,7 @@
 'use client'
 
 import {BlueButton, BorderGreenButton, GreenButton, LightBlueButton} from '@/components/shared/button'
-import React, {useState} from 'react'
+import {useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
@@ -15,6 +15,7 @@ import {useApiKey} from '@/lib/hooks/use-api-key'
 import {changeLLM} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
+import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import Scenario from './scenario'
@@ -56,6 +57,7 @@ export default function VoiceChat() {
 
   const [showChatModal, setShowChatModal] = useState(false)
   const [showDeployModal, setShowDeployModal] = useState(false)
+  const [showChangeVoiceModal, setShowChangeVoiceModal] = useState(false)
 
   const apiKey = useApiKey()
 
@@ -231,6 +233,7 @@ export default function VoiceChat() {
                 <option key={index} value={index}>{llm}</option>
               ))}
             </UserSelect>
+            <GreenButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</GreenButton>
             <div
               className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
               onClick={async () => {
@@ -396,6 +399,10 @@ export default function VoiceChat() {
       <DeployModal
         show={showDeployModal}
         onClose={() => setShowDeployModal(false)}
+      />
+      <ChangeVoiceModal
+        show={showChangeVoiceModal}
+        onClose={() => setShowChangeVoiceModal(false)}
       />
     </div>
   )

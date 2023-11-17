@@ -18,7 +18,7 @@ export const Button = ({
 }) => {
   return (
     <div
-      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit whitespace-nowrap ${className}`}
+      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit h-fit whitespace-nowrap ${className}`}
       onClick={onClick}
       style={{display: 'flex', justifyContent: 'center', ...style}}
     >

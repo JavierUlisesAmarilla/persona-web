@@ -20,6 +20,7 @@ export default function ApiKeyAssign() {
   const [showPlanModal, setShowPlanModal] = useState(false)
   const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
+  const isManager = isAdmin || (apiKeyArr[selApiKeyIndex]?.manager === curEmail)
 
   const onTeamChange = (e: any) => {
     setSelApiKeyIndex(e.target.value)
@@ -96,7 +97,7 @@ export default function ApiKeyAssign() {
       <h2 className='text-2xl'>Plan</h2>
       <div className="flex items-center justify-start gap-3">
         {status ?
-          <div className='text-text-gray'>{status}</div> : isAdmin &&
+          <div className='text-text-gray'>{status}</div> : isManager &&
           <BlueButton onClick={() => setShowPlanModal(true)}>Update Plan</BlueButton>
         }
       </div>

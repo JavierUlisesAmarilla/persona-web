@@ -5,7 +5,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {BlueButton, BorderGreenButton, GreenButton, LightBlueButton} from '@/components/shared/button'
+import {BlueButton, BorderGreenButton, GreenButton, LightBlueButton, BorderGrayButton, BorderOrangeButton} from '@/components/shared/button'
 import {useState} from 'react'
 
 import {InputText} from '@/components/shared/input-text'
@@ -233,7 +233,7 @@ export default function VoiceChat() {
                 <option key={index} value={index}>{llm}</option>
               ))}
             </UserSelect>
-            <GreenButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</GreenButton>
+            <BorderOrangeButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</BorderOrangeButton>
             <div
               className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
               onClick={async () => {
@@ -284,6 +284,7 @@ export default function VoiceChat() {
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center w-full gap-3'>
                   <InputText
+                    classNames='w-full'
                     value={personaArr[selPersonaIndex]?.initialMessage || ''}
                     placeholder='Enter initial message here'
                     onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
@@ -293,6 +294,7 @@ export default function VoiceChat() {
                 </div>
                 <div className='flex items-center w-full gap-3'>
                   <InputText
+                    classNames='w-full'
                     value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
                     placeholder='Enter rate limit message here'
                     onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}

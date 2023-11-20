@@ -32,10 +32,13 @@ module.exports = {
         'bg-btn-light': '#FFFFFF',
         'bg-btn-red': '#CC0000',
         'bg-btn-green': '#00C48C',
+        'bg-btn-gray': '#98A2B3',
         'bg-btn-blue': '#4464F3',
+        'bg-btn-orange': '#FFA500',
         'bg-btn-light-blue': '#00bfff',
         'border-gray': '#EAECF0',
         'border-green': '#00C48C',
+        'border-orange': '#FFA500',
       },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],

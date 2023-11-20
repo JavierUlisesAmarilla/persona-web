@@ -22,14 +22,14 @@ export default function PlanSection({apiKeyIndex, data}: any) {
   }
 
   const messagesUsedString = `${team?.currentMessagesCount || 0} / ${team?.monthlyMessageLimit || 0}`
-  const nextMessageReset = team?.nextMessageResetDate || 'N/A'
+  const nextMessageReset = team?.nextMessageResetDate ? new Date(team?.nextMessageResetDate).toLocaleString() : 'N/A'
   console.log('messagesUsedString HERE', messagesUsedString)
 
   return (
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
       <div className='text-xs whitespace-nowrap'>Tier:</div>
       <InputText
-        classNames='w-1/3'
+        classNames='w-fit'
         value={team?.tier || 'free'}
         placeholder="Tier"
         // onChange={onApiKeyChange}
@@ -37,7 +37,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
       />
       <div className='text-xs whitespace-nowrap'>Messages used this month:</div>
       <InputText
-        classNames='w-1/3'
+        classNames='w-fit'
         value={messagesUsedString}
         placeholder="Messages used this month"
         // onChange={onApiKeyChange}
@@ -45,7 +45,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
       />
       <div className='text-xs whitespace-nowrap'>Monthly messages reset at:</div>
       <InputText
-        classNames='w-1/3'
+        classNames='w-fit'
         value={nextMessageReset}
         placeholder="Messages used this month"
         // onChange={onApiKeyChange}

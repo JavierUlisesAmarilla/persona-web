@@ -20,7 +20,7 @@ export const InputText = ({
 }) => {
   return (
     <input
-      className={`w-full px-3 py-1 text-xs border-gray-200 rounded ${classNames}`}
+      className={`px-3 py-1 text-xs border-gray-200 rounded ${classNames}`}
       type="text"
       defaultValue={defaultValue}
       value={value}

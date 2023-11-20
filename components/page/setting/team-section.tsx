@@ -92,6 +92,7 @@ export default function TeamSection({apiKeyIndex, data}: any) {
       <div className="flex items-center w-full gap-4">
         <div className='text-xs whitespace-nowrap'>Team Name:</div>
         <InputText
+          classNames='w-1/3'
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}

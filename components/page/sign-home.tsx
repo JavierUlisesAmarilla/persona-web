@@ -11,6 +11,7 @@ import {Dashboard} from './dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
+import { SINDARIN_API_URL } from '@/lib/constants'
 
 
 let prevApiKey: string
@@ -81,7 +82,7 @@ export default function SignHome({session}: {session: any}) {
 
       // Set persona client
       const script = document.createElement('script')
-      script.src = `https://api.sindarin.tech/PersonaClientPublic?apikey=${apiKey}`
+      script.src = `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
       document.head.appendChild(script)
 
       script.addEventListener('load', () => {

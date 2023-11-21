@@ -19,6 +19,8 @@ export const MONGODB_URI = process.env.MONGODB_URI
 export const DB_NAME = process.env.DB_NAME
 
 export const MASTER_API_KEY = process.env.SINDARIN_MASTER_API_KEY
+export const SINDARIN_API_URL = process.env.NEXT_PUBLIC_SINDARIN_API_URL
+export const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
 
 // console.log('constants: NODE_ENV: ', NODE_ENV)
 // console.log('constants: DEPLOY_URL: ', DEPLOY_URL)

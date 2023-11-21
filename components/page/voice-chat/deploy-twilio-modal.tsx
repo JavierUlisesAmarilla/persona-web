@@ -13,6 +13,7 @@ import {useZustand} from '@/lib/store/use-zustand'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
 import axios from 'axios'
+import { SINDARIN_API_URL } from '@/lib/constants'
 
 
 interface Props {
@@ -36,7 +37,7 @@ export const DeployTwilioModal = ({
       }
 
       // setInitialMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {phoneNumber: personaArr[selPersonaIndex].phoneNumber})
+      const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {phoneNumber: personaArr[selPersonaIndex].phoneNumber})
       console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
@@ -52,7 +53,7 @@ export const DeployTwilioModal = ({
       }
 
       // setInitialMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {authToken: personaArr[selPersonaIndex].twilio.authToken})
+      const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {authToken: personaArr[selPersonaIndex].twilio.authToken})
       console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
@@ -68,7 +69,7 @@ export const DeployTwilioModal = ({
       }
 
       // setInitialMsgState('Saving...')
-      const res = await axios.put(`https://api.sindarin.tech/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {accountSid: personaArr[selPersonaIndex].twilio.accountSid})
+      const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${selPersonaId}/twilio?apikey=${apiKey}`, {accountSid: personaArr[selPersonaIndex].twilio.accountSid})
       console.log('res', res)
       // setInitialMsgState(res.status === 200 ? 'Success' : 'Error')
     } catch (error) {
@@ -154,7 +155,7 @@ export const DeployTwilioModal = ({
             </div>
           </div>
           <div className='flex flex-col gap-1 p-2'>
-            <div>Congrats! You can now make outbound calls using the API by calling the endpoint: https://api.sindarin.tech/api/personas/:persona-id/makecall?apikey=[api-key] with the JSON request body</div>
+            <div>Congrats! You can now make outbound calls using the API by calling the endpoint: ${SINDARIN_API_URL}/api/personas/:persona-id/makecall?apikey=[api-key] with the JSON request body</div>
             <CodeMirror
               theme='dark'
               editable={false}

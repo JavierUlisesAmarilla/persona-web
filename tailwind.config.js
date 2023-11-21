@@ -11,11 +11,11 @@ module.exports = {
   theme: {
     extend: {
       transitionProperty: {
-        'opacity': 'opacity',
-        'transform': 'transform',
+        opacity: 'opacity',
+        transform: 'transform',
       },
       transitionDuration: {
-        '2000': '2000ms',
+        2000: '2000ms',
       },
       transitionTimingFunction: {
         'in': 'cubic-bezier(0.4, 0, 1, 1)',

@@ -1,13 +1,18 @@
-/* eslint-disable jsdoc/require-returns */
+/* eslint-disable require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
+
 'use client'
 
-import {useApiKey} from '@/lib/hooks/use-api-key'
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
-import {useZustand} from '@/lib/store/use-zustand'
 import {useEffect, useState} from 'react'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
+
+import {useApiKey} from '@/lib/hooks/use-api-key'
+import {useZustand} from '@/lib/store/use-zustand'
+import {ExtendedRecordMap} from 'notion-types'
 import {Alert} from '../shared/alert'
-import {Dashboard} from './dashboard'
+import {ApiDocs} from './api-docs/api-docs'
+import {Dashboard} from './dashboard/dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
@@ -16,11 +21,18 @@ import VoiceChat from './voice-chat/voice-chat'
 let prevApiKey: string
 
 
-/**
- *
- */
-export default function SignHome({session}: {session: any}) {
-  const {selMenu, setCurEmail, status, setStatus, setApiKeyArr, setPersonaAction, setPersonaClient, setPersonaArr, setLLMSArray, setTranscriptArr} = useZustand()
+export default function SignHome({session, recordMap}: {session: any, recordMap: ExtendedRecordMap}) {
+  const {
+    selMenu,
+    setCurEmail,
+    status, setStatus,
+    setApiKeyArr,
+    setPersonaAction,
+    setPersonaClient,
+    setPersonaArr,
+    setLLMSArray,
+    setTranscriptArr,
+  } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
   console.log('***SIGN HOME RENDERING***')
@@ -132,10 +144,11 @@ export default function SignHome({session}: {session: any}) {
     <div className='z-10 w-full p-6 text-center text-text-gray'>{status}</div>
   ) : (
     <>
+      {selMenu === 'dashboard' && <Dashboard/>}
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
       {selMenu === 'transcripts' && <Transcripts/>}
-      {selMenu === 'dashboard' && <Dashboard/>}
+      {selMenu === 'docs' && <ApiDocs recordMap={recordMap}/>}
       <Alert/>
     </>
   )

@@ -6,6 +6,7 @@ import SignHome from '@/components/page/sign-home'
 import {getServerSessionMiddle} from '@/lib/common'
 import {getNotionPage} from '../lib/notion'
 
+
 export default async function Page() {
   console.log('*** RENDERING PAGE ***')
   const session = await getServerSessionMiddle()

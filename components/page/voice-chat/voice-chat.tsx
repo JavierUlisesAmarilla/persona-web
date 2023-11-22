@@ -19,7 +19,7 @@ import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import Scenario from './scenario'
-import { SINDARIN_API_URL } from '@/lib/constants'
+import {SINDARIN_API_URL} from '@/lib/constants'
 
 
 declare global {

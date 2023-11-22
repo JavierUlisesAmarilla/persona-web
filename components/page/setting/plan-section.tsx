@@ -24,7 +24,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
   }
 
   const messagesUsedString = `${team?.currentMessagesCount || 0} / ${team?.monthlyMessageLimit || 0}`
-  const isOver90Percent = team?.currentMessagesCount / team?.monthlyMessageLimit > 0.9;
+  const isOver90Percent = team?.currentMessagesCount / team?.monthlyMessageLimit > 0.9
   const nextMessageReset = team?.nextMessageResetDate ? new Date(team?.nextMessageResetDate).toLocaleString() : 'N/A'
   console.log('messagesUsedString HERE', messagesUsedString)
 

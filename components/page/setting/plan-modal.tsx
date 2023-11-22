@@ -1,20 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import {MouseEventHandler, useEffect, useState} from 'react'
+import React, {MouseEventHandler, useEffect, useState} from 'react'
 import {GreenButton} from '../../shared/button'
 import {CommonModal} from '../../shared/common-modal'
 import _ from 'lodash'
 import axios from 'axios'
-import { SINDARIN_API_URL, STRIPE_PUBLIC_KEY } from '@/lib/constants'
+import {SINDARIN_API_URL, STRIPE_PUBLIC_KEY} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
-import {loadStripe, Stripe} from '@stripe/stripe-js';
+import {loadStripe} from '@stripe/stripe-js'
+
+
 interface Props {
   show?: boolean
   onClose?: MouseEventHandler<SVGElement>
 }
 
-const stripePromise = loadStripe(STRIPE_PUBLIC_KEY!);
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY!)
 
 export const PlanModal = ({
   show,
@@ -22,36 +24,35 @@ export const PlanModal = ({
 }: Props) => {
   const apiKey = useApiKey()
   const [shouldShowCheckout, setShouldShowCheckout] = useState(false)
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [checkoutInstance, setCheckoutInstance] = useState<any>(null)
 
   const handleClose = (event?: React.MouseEvent<SVGElement>) => {
     if (onClose && event) {
-      onClose(event);
+      onClose(event)
     }
-  
+
     if (checkoutInstance) {
-      console.log('going to unmount checkout');
+      console.log('going to unmount checkout')
       checkoutInstance.unmount()
       checkoutInstance.destroy()
       setCheckoutInstance(null)
     }
     // Reset the state values
     setShouldShowCheckout(false)
-    setClientSecret(null)
-  
-    // If you need to perform any additional cleanup, do it here
-  };
+    setStripeClientSecret(null)
+  }
 
   const onChoosePlan = async (tier: string) => {
     try {
       // setInitialMsgState('Saving...')
-      const response = await axios.post(`${SINDARIN_API_URL}/api/start-plan-update?apikey=${apiKey}`, {tier})
-      const { clientSecret } = response.data;
-      
-      setClientSecret(clientSecret)
+      if (!stripeClientSecret) {
+        const response = await axios.post(`${SINDARIN_API_URL}/api/start-plan-update?apikey=${apiKey}`, {tier})
+        // @ts-ignore
+        const {clientSecret} = response.data
+        setStripeClientSecret(clientSecret)
+      }
       setShouldShowCheckout(true)
-
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
     }
@@ -66,7 +67,7 @@ export const PlanModal = ({
         '1 fully-customized Persona.',
         'Basic support (Email only, 1-2 business days).',
       ],
-      onCtaClick: () => onChoosePlan('I')
+      onCtaClick: () => onChoosePlan('I'),
     },
     {
       name: 'Persona - Tier II',
@@ -76,7 +77,7 @@ export const PlanModal = ({
         '3 fully-customizable Personas.',
         'Basic support (Email only, 1-2 business days).',
       ],
-      onCtaClick: () => onChoosePlan('II')
+      onCtaClick: () => onChoosePlan('II'),
     },
     {
       name: 'Persona - Tier III',
@@ -86,7 +87,7 @@ export const PlanModal = ({
         '5 fully-customizable Personas.',
         'Advanced suppprt (Slack Connect / WhatsApp + Email, < 1 business day, priority feature requests).',
       ],
-      onCtaClick: () => onChoosePlan('III')
+      onCtaClick: () => onChoosePlan('III'),
     },
     {
       name: 'Persona - Custom',
@@ -104,8 +105,8 @@ export const PlanModal = ({
 
   useEffect(() => {
     const mountStripeCheckout = async () => {
-      if (shouldShowCheckout && clientSecret) {
-        const stripe = await stripePromise;
+      if (shouldShowCheckout && stripeClientSecret) {
+        const stripe = await stripePromise
         if (stripe) {
           if (checkoutInstance) {
             checkoutInstance.unmount()
@@ -113,24 +114,23 @@ export const PlanModal = ({
             setCheckoutInstance(null)
           }
           const checkout = await stripe.initEmbeddedCheckout({
-            clientSecret,
-          });
-          setCheckoutInstance(checkout);
-          checkout.mount('#checkout');
+            clientSecret: stripeClientSecret,
+          })
+          setCheckoutInstance(checkout)
+          checkout.mount('#checkout')
         }
       }
-    };
-  
-    mountStripeCheckout();
+    }
+
+    mountStripeCheckout()
 
     return () => {
       if (checkoutInstance) {
         checkoutInstance.unmount()
         checkoutInstance.destroy()
       }
-    };
-  }, [shouldShowCheckout, clientSecret]);
-      
+    }
+  }, [shouldShowCheckout, stripeClientSecret])
 
   return (
     <CommonModal
@@ -138,7 +138,7 @@ export const PlanModal = ({
       onClose={handleClose}
     >
       <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-        { shouldShowCheckout ? <div id="checkout"></div> : planArr.map((plan, planIndex) =>
+        { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
           <div
             key={planIndex}
             className='flex flex-col gap-1 p-6 border rounded-lg bg-bg-light border-border-gray'
@@ -164,13 +164,11 @@ export const PlanModal = ({
               )}
             </div>
             <div className='flex justify-end w-full pt-2'>
-              <GreenButton
-                onClick={plan.onCtaClick}
-              >{plan.cta || 'Buy'}</GreenButton>
+              <GreenButton onClick={plan.onCtaClick}>{plan.cta || 'Buy'}</GreenButton>
             </div>
           </div>,
         )
-      }
+        }
       </div>
     </CommonModal>
   )

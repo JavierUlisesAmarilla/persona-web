@@ -142,39 +142,45 @@ export const PlanModal = ({
       show={show}
       onClose={handleClose}
     >
-      <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-        { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
-          <div
-            key={planIndex}
-            className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-500 border-2' : 'border-border-gray'} bg-bg-light`}
-            style={{width: '500px'}}
-          >
-            <div className='flex items-center justify-between gap-3'>
-              <div className='flex items-center'>
-                <img className='w-8' src='persona-logo-rounded.png' alt=''/>
-                <div>{plan.name}</div>
+      {team ? (
+        <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+          { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
+            <div
+              key={planIndex}
+              className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-500 border-2' : 'border-border-gray'} bg-bg-light`}
+              style={{width: '500px'}}
+            >
+              <div className='flex items-center justify-between gap-3'>
+                <div className='flex items-center'>
+                  <img className='w-8' src='persona-logo-rounded.png' alt=''/>
+                  <div>{plan.name}</div>
+                </div>
+                <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
               </div>
-              <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
-            </div>
-            <div className='pl-10'>
-              {plan.descArr.map((desc, descIndex) =>
-                <div
-                  key={descIndex}
-                  className='flex items-start text-xs'
-                  style={{marginTop: '5px'}}
-                >
-                  <div className='mr-2'>•</div>
-                  <div style={{wordWrap: 'break-word'}}>{desc}</div>
-                </div>,
-              )}
-            </div>
-            <div className='flex justify-end w-full pt-2'>
-              <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
-            </div>
-          </div>,
-        )
-        }
-      </div>
+              <div className='pl-10'>
+                {plan.descArr.map((desc, descIndex) =>
+                  <div
+                    key={descIndex}
+                    className='flex items-start text-xs'
+                    style={{marginTop: '5px'}}
+                  >
+                    <div className='mr-2'>•</div>
+                    <div style={{wordWrap: 'break-word'}}>{desc}</div>
+                  </div>,
+                )}
+              </div>
+              <div className='flex justify-end w-full pt-2'>
+                <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
+              </div>
+            </div>,
+          )
+          }
+        </div>
+      ) : (
+        <div className='flex justify-center items-center' style={{height: '100%'}}>
+          <p>Loading...</p>
+        </div>
+      )}
     </CommonModal>
   )
 }

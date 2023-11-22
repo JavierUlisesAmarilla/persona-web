@@ -38,7 +38,6 @@ export const NOTION_PAGE_ID = process.env.NOTION_PAGE_ID
 
 // Setting
 
-export const COMMON_API_KEY = 'abc'
 export const MENUS: any = {
   // dashboard: 'Dashboard',
   setting: 'Settings',

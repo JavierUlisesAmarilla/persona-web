@@ -67,7 +67,7 @@ export const PlanModal = ({
       price: 99,
       descArr: [
         '2,000 messages / ~5.5 hours per month of conversation.',
-        '1 fully-customized Persona.',
+        '1 fully-customizable Persona.',
         'Basic support (Email only, 1-2 business days).',
       ],
       onCtaClick: () => onChoosePlan('I'),
@@ -147,7 +147,7 @@ export const PlanModal = ({
           { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
             <div
               key={planIndex}
-              className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-500 border-2' : 'border-border-gray'} bg-bg-light`}
+              className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-300 border-2' : 'border-border-gray'} bg-bg-light`}
               style={{width: '500px'}}
             >
               <div className='flex items-center justify-between gap-3'>

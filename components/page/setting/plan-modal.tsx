@@ -1,57 +1,60 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import {MouseEventHandler, useEffect, useState} from 'react'
+import React, {MouseEventHandler, useEffect, useState} from 'react'
 import {GreenButton} from '../../shared/button'
 import {CommonModal} from '../../shared/common-modal'
 import _ from 'lodash'
 import axios from 'axios'
-import { SINDARIN_API_URL, STRIPE_PUBLIC_KEY } from '@/lib/constants'
+import {SINDARIN_API_URL, STRIPE_PUBLIC_KEY} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
-import {loadStripe, Stripe} from '@stripe/stripe-js';
+import {useZustand} from '@/lib/store/use-zustand'
+import {loadStripe} from '@stripe/stripe-js'
+
+
 interface Props {
   show?: boolean
   onClose?: MouseEventHandler<SVGElement>
 }
 
-const stripePromise = loadStripe(STRIPE_PUBLIC_KEY!);
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY!)
 
 export const PlanModal = ({
   show,
   onClose,
 }: Props) => {
   const apiKey = useApiKey()
+  const {team} = useZustand()
   const [shouldShowCheckout, setShouldShowCheckout] = useState(false)
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [checkoutInstance, setCheckoutInstance] = useState<any>(null)
 
   const handleClose = (event?: React.MouseEvent<SVGElement>) => {
     if (onClose && event) {
-      onClose(event);
+      onClose(event)
     }
-  
+
     if (checkoutInstance) {
-      console.log('going to unmount checkout');
+      console.log('going to unmount checkout')
       checkoutInstance.unmount()
       checkoutInstance.destroy()
       setCheckoutInstance(null)
     }
     // Reset the state values
     setShouldShowCheckout(false)
-    setClientSecret(null)
-  
-    // If you need to perform any additional cleanup, do it here
-  };
+    setStripeClientSecret(null)
+  }
 
   const onChoosePlan = async (tier: string) => {
     try {
       // setInitialMsgState('Saving...')
-      const response = await axios.post(`${SINDARIN_API_URL}/api/start-plan-update?apikey=${apiKey}`, {tier})
-      const { clientSecret } = response.data;
-      
-      setClientSecret(clientSecret)
+      if (!stripeClientSecret) {
+        const response = await axios.post(`${SINDARIN_API_URL}/api/start-plan-update?apikey=${apiKey}`, {tier})
+        // @ts-ignore
+        const {clientSecret} = response.data
+        setStripeClientSecret(clientSecret)
+      }
       setShouldShowCheckout(true)
-
     } catch (error) {
       console.log('VoiceChat#onInitialization: error: ', error)
     }
@@ -59,6 +62,7 @@ export const PlanModal = ({
 
   const planArr = [
     {
+      tier: 'I',
       name: 'Persona - Base',
       price: 99,
       descArr: [
@@ -66,9 +70,10 @@ export const PlanModal = ({
         '1 fully-customized Persona.',
         'Basic support (Email only, 1-2 business days).',
       ],
-      onCtaClick: () => onChoosePlan('I')
+      onCtaClick: () => onChoosePlan('I'),
     },
     {
+      tier: 'II',
       name: 'Persona - Tier II',
       price: 239,
       descArr: [
@@ -76,9 +81,10 @@ export const PlanModal = ({
         '3 fully-customizable Personas.',
         'Basic support (Email only, 1-2 business days).',
       ],
-      onCtaClick: () => onChoosePlan('II')
+      onCtaClick: () => onChoosePlan('II'),
     },
     {
+      tier: 'III',
       name: 'Persona - Tier III',
       price: 449,
       descArr: [
@@ -86,7 +92,7 @@ export const PlanModal = ({
         '5 fully-customizable Personas.',
         'Advanced suppprt (Slack Connect / WhatsApp + Email, < 1 business day, priority feature requests).',
       ],
-      onCtaClick: () => onChoosePlan('III')
+      onCtaClick: () => onChoosePlan('III'),
     },
     {
       name: 'Persona - Custom',
@@ -104,8 +110,8 @@ export const PlanModal = ({
 
   useEffect(() => {
     const mountStripeCheckout = async () => {
-      if (shouldShowCheckout && clientSecret) {
-        const stripe = await stripePromise;
+      if (shouldShowCheckout && stripeClientSecret) {
+        const stripe = await stripePromise
         if (stripe) {
           if (checkoutInstance) {
             checkoutInstance.unmount()
@@ -113,65 +119,68 @@ export const PlanModal = ({
             setCheckoutInstance(null)
           }
           const checkout = await stripe.initEmbeddedCheckout({
-            clientSecret,
-          });
-          setCheckoutInstance(checkout);
-          checkout.mount('#checkout');
+            clientSecret: stripeClientSecret,
+          })
+          setCheckoutInstance(checkout)
+          checkout.mount('#checkout')
         }
       }
-    };
-  
-    mountStripeCheckout();
+    }
+
+    mountStripeCheckout()
 
     return () => {
       if (checkoutInstance) {
         checkoutInstance.unmount()
         checkoutInstance.destroy()
       }
-    };
-  }, [shouldShowCheckout, clientSecret]);
-      
+    }
+  }, [shouldShowCheckout, stripeClientSecret])
 
   return (
     <CommonModal
       show={show}
       onClose={handleClose}
     >
-      <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-        { shouldShowCheckout ? <div id="checkout"></div> : planArr.map((plan, planIndex) =>
-          <div
-            key={planIndex}
-            className='flex flex-col gap-1 p-6 border rounded-lg bg-bg-light border-border-gray'
-            style={{width: '500px'}}
-          >
-            <div className='flex items-center justify-between gap-3'>
-              <div className='flex items-center'>
-                <img className='w-8' src='persona-logo-rounded.png' alt=''/>
-                <div>{plan.name}</div>
+      {team ? (
+        <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+          { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
+            <div
+              key={planIndex}
+              className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-500 border-2' : 'border-border-gray'} bg-bg-light`}
+              style={{width: '500px'}}
+            >
+              <div className='flex items-center justify-between gap-3'>
+                <div className='flex items-center'>
+                  <img className='w-8' src='persona-logo-rounded.png' alt=''/>
+                  <div>{plan.name}</div>
+                </div>
+                <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
               </div>
-              <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
-            </div>
-            <div className='pl-10'>
-              {plan.descArr.map((desc, descIndex) =>
-                <div
-                  key={descIndex}
-                  className='flex items-start text-xs'
-                  style={{marginTop: '5px'}}
-                >
-                  <div className='mr-2'>•</div>
-                  <div style={{wordWrap: 'break-word'}}>{desc}</div>
-                </div>,
-              )}
-            </div>
-            <div className='flex justify-end w-full pt-2'>
-              <GreenButton
-                onClick={plan.onCtaClick}
-              >{plan.cta || 'Buy'}</GreenButton>
-            </div>
-          </div>,
-        )
-      }
-      </div>
+              <div className='pl-10'>
+                {plan.descArr.map((desc, descIndex) =>
+                  <div
+                    key={descIndex}
+                    className='flex items-start text-xs'
+                    style={{marginTop: '5px'}}
+                  >
+                    <div className='mr-2'>•</div>
+                    <div style={{wordWrap: 'break-word'}}>{desc}</div>
+                  </div>,
+                )}
+              </div>
+              <div className='flex justify-end w-full pt-2'>
+                <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
+              </div>
+            </div>,
+          )
+          }
+        </div>
+      ) : (
+        <div className='flex justify-center items-center' style={{height: '100%'}}>
+          <p>Loading...</p>
+        </div>
+      )}
     </CommonModal>
   )
 }

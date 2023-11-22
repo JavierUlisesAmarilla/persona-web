@@ -94,7 +94,7 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
 
       // Set persona client
       const script = document.createElement('script')
-      script.src = `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
+      script.src = SINDARIN_API_URL!.includes('localhost') ? `${SINDARIN_API_URL}/PersonaClient?apikey=${apiKey}` : `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
       document.head.appendChild(script)
 
       script.addEventListener('load', () => {

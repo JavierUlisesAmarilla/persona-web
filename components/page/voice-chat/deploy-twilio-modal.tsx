@@ -13,7 +13,7 @@ import {useZustand} from '@/lib/store/use-zustand'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
 import axios from 'axios'
-import { SINDARIN_API_URL } from '@/lib/constants'
+import {SINDARIN_API_URL} from '@/lib/constants'
 
 
 interface Props {

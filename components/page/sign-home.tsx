@@ -7,6 +7,7 @@ import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
 import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
+import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {ExtendedRecordMap} from 'notion-types'
@@ -16,7 +17,6 @@ import {Dashboard} from './dashboard/dashboard'
 import Setting from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
 import VoiceChat from './voice-chat/voice-chat'
-import {SINDARIN_API_URL} from '@/lib/constants'
 
 
 let prevApiKey: string

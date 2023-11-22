@@ -990,9 +990,9 @@
     "lodash" "^4.17.15"
 
 "@stripe/stripe-js@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/@stripe/stripe-js/-/stripe-js-2.2.0.tgz"
-  integrity sha512-YyXQbsXvnNRJ6MofFhCLIQ4W7UpfkfSOQhjIaHEiCMBv3IBxhzugXiYNNzceGTK/7DL31v7HtTnkJ+FI+6AIow==
+  "integrity" "sha512-YyXQbsXvnNRJ6MofFhCLIQ4W7UpfkfSOQhjIaHEiCMBv3IBxhzugXiYNNzceGTK/7DL31v7HtTnkJ+FI+6AIow=="
+  "resolved" "https://registry.npmjs.org/@stripe/stripe-js/-/stripe-js-2.2.0.tgz"
+  "version" "2.2.0"
 
 "@swc/helpers@0.5.1":
   "integrity" "sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg=="
@@ -4386,7 +4386,7 @@
   "resolved" "https://registry.npmjs.org/normalize-url/-/normalize-url-7.2.0.tgz"
   "version" "7.2.0"
 
-"notion-client@^6.15.6":
+"notion-client@^6.16.0":
   "integrity" "sha512-gI2kPpls8XxJfXt7cs2JDmSHPZL1HkkXQnE5YWKPT4OnpiniUgHk5b+rRB2dXUqGT4003vSYmPnxXUTbzKPoLA=="
   "resolved" "https://registry.npmjs.org/notion-client/-/notion-client-6.16.0.tgz"
   "version" "6.16.0"
@@ -4396,12 +4396,12 @@
     "notion-utils" "^6.16.0"
     "p-map" "^5.3.0"
 
-"notion-types@^6.15.6", "notion-types@^6.16.0":
+"notion-types@^6.16.0":
   "integrity" "sha512-Cv83GaAczx57q1qsnuG8DHOuOb63c83u9LX2IainG5aqBEB0GUuLZ4DUQfB6MaXt+FMY9fO+KTgPeZWwX9hbrQ=="
   "resolved" "https://registry.npmjs.org/notion-types/-/notion-types-6.16.0.tgz"
   "version" "6.16.0"
 
-"notion-utils@^6.15.6", "notion-utils@^6.16.0":
+"notion-utils@^6.16.0":
   "integrity" "sha512-DxToriZAJW/64O1xlAjyU/50dRmkO1e54+i0dEAPDij0MlHyihEivAMsdEG/6/4eFC972BIsEKZ6BXsSTUYKlQ=="
   "resolved" "https://registry.npmjs.org/notion-utils/-/notion-utils-6.16.0.tgz"
   "version" "6.16.0"
@@ -4967,7 +4967,7 @@
     "react-lifecycles-compat" "^3.0.0"
     "warning" "^4.0.3"
 
-"react-notion-x@^6.15.6":
+"react-notion-x@^6.16.0":
   "integrity" "sha512-YdJikX38YNX5eIKAO9diw/tEhsc0ypnaqOqcdXEr7zFf0h/+eoppEzlLdzYJktnZy4n2q0z5ooXWAQi4QLi8Zw=="
   "resolved" "https://registry.npmjs.org/react-notion-x/-/react-notion-x-6.16.0.tgz"
   "version" "6.16.0"

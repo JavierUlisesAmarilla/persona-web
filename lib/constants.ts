@@ -1,6 +1,6 @@
 // Both (Client + Server)
-export const WITHOUT_SIGN = true
-export const USE_SAMPLE_DATA = true
+export const WITHOUT_SIGN = false
+export const USE_SAMPLE_DATA = false
 export const COMMON_API_KEY = 'abc'
 export const MENUS: any = {
   // dashboard: 'Dashboard',

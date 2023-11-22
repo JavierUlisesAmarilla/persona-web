@@ -4,13 +4,12 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css'
 
 import SignHome from '@/components/page/sign-home'
 import {getServerSessionMiddle} from '@/lib/common'
-import {getNotionRendererProps} from '../lib/notion'
-
+import {getNotionPage} from '../lib/notion'
 
 export default async function Page() {
   console.log('*** RENDERING PAGE ***')
   const session = await getServerSessionMiddle()
-  const {recordMap} = await getNotionRendererProps()
+  const {recordMap} = await getNotionPage()
   return session ?
     <SignHome
       session={session} recordMap={recordMap}

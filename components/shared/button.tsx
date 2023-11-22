@@ -10,16 +10,24 @@ export const Button = ({
   onClick,
   children,
   style,
+  disabled,
 }: {
   className?: string
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
   style?: React.CSSProperties
+  disabled?: boolean
 }) => {
+  const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
+    if (!disabled && onClick) {
+      onClick(event)
+    }
+  }
+
   return (
     <div
-      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit h-fit whitespace-nowrap ${className}`}
-      onClick={onClick}
+      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit h-fit whitespace-nowrap ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      onClick={handleClick}
       style={{display: 'flex', justifyContent: 'center', ...style}}
     >
       {children}
@@ -49,14 +57,17 @@ export const RedButton = ({
 export const GreenButton = ({
   onClick,
   children,
+  disabled,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
+  disabled?: boolean
 }) => {
   return (
     <Button
       className='bg-bg-btn-green text-text-light'
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </Button>

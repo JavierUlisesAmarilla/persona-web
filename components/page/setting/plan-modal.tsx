@@ -8,6 +8,7 @@ import _ from 'lodash'
 import axios from 'axios'
 import {SINDARIN_API_URL, STRIPE_PUBLIC_KEY} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
+import {useZustand} from '@/lib/store/use-zustand'
 import {loadStripe} from '@stripe/stripe-js'
 
 
@@ -23,6 +24,7 @@ export const PlanModal = ({
   onClose,
 }: Props) => {
   const apiKey = useApiKey()
+  const {team} = useZustand()
   const [shouldShowCheckout, setShouldShowCheckout] = useState(false)
   const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null)
   const [checkoutInstance, setCheckoutInstance] = useState<any>(null)
@@ -60,6 +62,7 @@ export const PlanModal = ({
 
   const planArr = [
     {
+      tier: 'I',
       name: 'Persona - Base',
       price: 99,
       descArr: [
@@ -70,6 +73,7 @@ export const PlanModal = ({
       onCtaClick: () => onChoosePlan('I'),
     },
     {
+      tier: 'II',
       name: 'Persona - Tier II',
       price: 239,
       descArr: [
@@ -80,6 +84,7 @@ export const PlanModal = ({
       onCtaClick: () => onChoosePlan('II'),
     },
     {
+      tier: 'III',
       name: 'Persona - Tier III',
       price: 449,
       descArr: [
@@ -141,7 +146,7 @@ export const PlanModal = ({
         { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
           <div
             key={planIndex}
-            className='flex flex-col gap-1 p-6 border rounded-lg bg-bg-light border-border-gray'
+            className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-500 border-2' : 'border-border-gray'} bg-bg-light`}
             style={{width: '500px'}}
           >
             <div className='flex items-center justify-between gap-3'>
@@ -164,7 +169,7 @@ export const PlanModal = ({
               )}
             </div>
             <div className='flex justify-end w-full pt-2'>
-              <GreenButton onClick={plan.onCtaClick}>{plan.cta || 'Buy'}</GreenButton>
+              <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
             </div>
           </div>,
         )

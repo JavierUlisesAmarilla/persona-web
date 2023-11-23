@@ -30,6 +30,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
   const [selectedGender, setSelectedGender] = useState<string>('')
   const [selectedAge, setSelectedAge] = useState<string>('')
   const [selectedAccent, setSelectedAccent] = useState<string>('')
+  const currentPersonaSelectedVoiceId = personaArr[selPersonaIndex]?.voiceId;
   
   const apiKey = useApiKey()
 
@@ -48,6 +49,27 @@ export const ChangeVoiceModal: React.FC<Props> = ({
       (!age || age === '-' ? true : voice.age === age) &&
       (!accent || accent === '-' ? true : voice.accent === accent)
     );
+  };
+
+  const groupVoices = (voices: VoiceOption[]) => {
+    const grouped = voices.reduce((acc, voice) => {
+      const { gender, age, accent } = voice;
+      const key = `${gender}-${age}-${accent}`;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(voice);
+      return acc;
+    }, {} as Record<string, VoiceOption[]>);
+    
+    // Add an index to each voice within its group
+    Object.values(grouped).forEach(group => {
+      group.forEach((voice, index) => {
+        voice.index = index + 1; // Start index at 1 for display
+      });
+    });
+    
+    return Object.values(grouped).flat();
   };
 
   const uniqueGenders = Array.from(new Set(voices.map(voice => voice.gender)))
@@ -71,7 +93,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
     }))
     .filter(accent => accent.count > 0);
 
-  const filteredVoices = getFilteredVoices(selectedGender, selectedAge, selectedAccent);
+  const filteredVoices = groupVoices(getFilteredVoices(selectedGender, selectedAge, selectedAccent));
 
   return (
     <CommonModal
@@ -110,13 +132,17 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           </div>
         </div>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray' style={{ maxHeight: '300px', overflowY: 'auto' }}>
-          {filteredVoices.map((voice, index) => (
-            <div key={index} className='flex items-center justify-between gap-3'>
+          {filteredVoices.map((voice) => (
+            <div key={`${voice.gender}-${voice.age}-${voice.accent}-${voice.index}`} className='flex items-center justify-between gap-3'>
               <div className='flex items-center gap-3 cursor-pointer'>
-                <div>{`${voice.gender}, ${voice.age}, ${voice.accent}`}</div>
+                <div>{`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}</div>
                 <AiFillSound className='text-sm'/>
               </div>
-              <BlueButton>Use Voice</BlueButton>
+              {currentPersonaSelectedVoiceId === voice.id ? (
+                <BlueButton disabled>Current Voice</BlueButton>
+              ) : (
+                <BlueButton>Use Voice</BlueButton>
+              )}
             </div>
           ))}
         </div>

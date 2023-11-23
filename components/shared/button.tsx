@@ -80,11 +80,13 @@ export const BlueButton = ({
   children,
   className,
   style,
+  disabled
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
   className?: string
   style?: React.CSSProperties
+  disabled?: boolean
 }) => {
   console.log('the classname is', className)
   return (
@@ -92,6 +94,7 @@ export const BlueButton = ({
       className={`bg-bg-btn-blue text-text-light ${className}`}
       onClick={onClick}
       style={style}
+      disabled={disabled}
     >
       {children}
     </Button>

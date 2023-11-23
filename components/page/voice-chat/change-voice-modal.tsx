@@ -9,6 +9,7 @@ import {useZustand} from '../../../lib/store/use-zustand'
 import {UserSelect} from '../../shared/user-select'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
+import {updatePersonaVoice} from '../../../lib/persona'
 interface VoiceOption {
   gender: string;
   age: string;
@@ -24,7 +25,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
   show,
   onClose,
 }) => {
-  const {personaArr, selPersonaIndex} = useZustand()
+  const {personaArr, selPersonaIndex, setPersonaVoiceId} = useZustand()
   const selPersonaName = personaArr[selPersonaIndex]?.name
   const [voices, setVoices] = useState<VoiceOption[]>([])
   const [selectedGender, setSelectedGender] = useState<string>('')
@@ -33,6 +34,28 @@ export const ChangeVoiceModal: React.FC<Props> = ({
   const currentPersonaSelectedVoiceId = personaArr[selPersonaIndex]?.voiceId;
   
   const apiKey = useApiKey()
+
+  // const onPrompt = async () => {
+  //   try {
+  //     const selPersonaId = personaArr[selPersonaIndex]?._id
+
+  //     if (!selPersonaId) {
+  //       return
+  //     }
+
+  //     setPromptState('Saving...')
+  //     const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${selPersonaId}/prompt?apikey=${apiKey}`, {prompt: personaArr[selPersonaIndex].currentVoicePrompt})
+  //     setPromptState(res.status === 200 ? 'Success' : 'Error')
+  //   } catch (error) {
+  //     console.log('VoiceChat#onPrompt: error: ', error)
+  //   }
+  // }
+
+  const onChangePersonaVoice = async (voiceId: string) => {
+    const personaId = personaArr[selPersonaIndex]?._id;
+    await updatePersonaVoice(personaId, apiKey, voiceId);
+    setPersonaVoiceId(selPersonaIndex, voiceId);
+  }
 
   useEffect(() => {
     fetch(`${SINDARIN_API_URL}/api/voices?apikey=${apiKey}`)
@@ -141,7 +164,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
               {currentPersonaSelectedVoiceId === voice.id ? (
                 <BlueButton disabled>Current Voice</BlueButton>
               ) : (
-                <BlueButton>Use Voice</BlueButton>
+                <BlueButton onClick={() => {onChangePersonaVoice(voice.id)}}>Use Voice</BlueButton>
               )}
             </div>
           ))}

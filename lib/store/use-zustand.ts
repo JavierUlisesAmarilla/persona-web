@@ -24,6 +24,7 @@ interface ZustandState {
   setPersonaPhoneNumber: (personaIndex: number, text: string) => void
   setPersonaTwilioAuthToken: (personaIndex: number, authToken: string) => void
   setPersonaTwilioAccountSid: (personaIndex: number, accountSid: string) => void
+  setPersonaVoiceId: (personaIndex: number, voiceId: string) => void
   setScenarioRateLimit: (personaIndex: number, text: string) => void
   setScenarioPrompt: (personaIndex: number, text: string) => void
   setScenarioContext: (personaIndex: number, scenarioIndex: number, text: string) => void
@@ -95,6 +96,11 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setPersonaPhoneNumber: (personaIndex, phoneNumber) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].phoneNumber = phoneNumber
+    return {...state, personaArr}
+  }),
+  setPersonaVoiceId: (personaIndex, voiceId) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].voiceId = voiceId
     return {...state, personaArr}
   }),
   setScenarioRateLimit: (personaIndex, text) => set((state) => {

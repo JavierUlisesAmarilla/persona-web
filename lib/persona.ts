@@ -77,3 +77,8 @@ export const addTeam = async (name: string) => {
     console.log('persona#addTeam: e: ', e)
   }
 }
+
+export const updatePersonaVoice = async (personaId: string, apiKey: string, voiceId: string) => {
+  const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${personaId}/voice?apikey=${apiKey}`, {voiceId});
+  return res.data.success;
+}

@@ -1,5 +1,9 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable jsdoc/require-jsdoc */
+import 'katex/dist/katex.min.css'
+import 'prismjs/themes/prism-tomorrow.css'
+import 'react-notion-x/src/styles.css'
+
 import {IS_DEV, NOTION_ROOT_PAGE_ID, NOTION_ROOT_SPACE_ID} from '../lib/constants'
 
 import {ExtendedRecordMap} from 'notion-types'

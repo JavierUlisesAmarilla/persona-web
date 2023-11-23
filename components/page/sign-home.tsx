@@ -85,6 +85,7 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
   useEffect(() => {
     (async () => {
       if (prevApiKey === apiKey) {
+        setStatus('')
         return
       }
 

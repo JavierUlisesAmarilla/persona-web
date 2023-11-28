@@ -1,5 +1,5 @@
 // Both (Client + Server)
-export const WITHOUT_SIGN = true
+export const WITHOUT_SIGN = false
 export const USE_SAMPLE_DATA = false
 export const USE_NOTION_X = false
 export const USE_REAL_NOTION = true

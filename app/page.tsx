@@ -15,7 +15,7 @@ export default async function Page() {
   return session ?
     <SignHome
       session={session}
-    // recordMap={recordMap}
+      recordMap={recordMap}
     /> :
     <div/>
 }

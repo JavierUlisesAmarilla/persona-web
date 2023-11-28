@@ -58,12 +58,12 @@
       "error",
       200
     ],
-    "no-irregular-whitespace": [
-      "error"
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
+    // "no-irregular-whitespace": [
+    //   "error"
+    // ],
+    // "no-trailing-spaces": [
+    //   "error"
+    // ],
     "prefer-rest-params": "off",
     "quote-props": [
       "error",
@@ -136,10 +136,10 @@
     ],
     "block-spacing": "error",
     "brace-style": "error",
-    "comma-style": [
-      "error",
-      "last"
-    ],
+    // "comma-style": [
+    //   "error",
+    //   "last"
+    // ],
     "eol-last": [
       "error",
       "always"

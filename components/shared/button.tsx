@@ -80,7 +80,7 @@ export const BlueButton = ({
   children,
   className,
   style,
-  disabled
+  disabled,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode

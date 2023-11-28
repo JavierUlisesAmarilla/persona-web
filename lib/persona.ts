@@ -79,6 +79,6 @@ export const addTeam = async (name: string) => {
 }
 
 export const updatePersonaVoice = async (personaId: string, apiKey: string, voiceId: string) => {
-  const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${personaId}/voice?apikey=${apiKey}`, {voiceId});
-  return res.data.success;
+  const res = await axios.put(`${SINDARIN_API_URL}/api/personas/${personaId}/voice?apikey=${apiKey}`, {voiceId})
+  return res.data.success
 }

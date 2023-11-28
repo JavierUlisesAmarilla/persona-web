@@ -1,11 +1,8 @@
 import {getServerSessionMiddle} from '@/lib/common'
-import React from 'react'
-import Navbar from './navbar'
+import {Navbar} from './navbar'
 
-/**
- *
- */
-export default async function Nav() {
+
+export const Nav = async () => {
   const session = await getServerSessionMiddle()
   return <Navbar session={session}/>
 }

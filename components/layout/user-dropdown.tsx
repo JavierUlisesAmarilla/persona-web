@@ -1,19 +1,16 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
 import {LayoutDashboard, LogOut} from 'lucide-react'
-import React, {useState} from 'react'
 
-import Popover from '@/components/shared/popover'
+import {Popover} from '@/components/shared/popover'
 import {useZustand} from '@/lib/store/use-zustand'
 import {Session} from 'next-auth'
 import {signOut} from 'next-auth/react'
 import Image from 'next/image'
+import {useState} from 'react'
 
-/**
- *
- */
-export default function UserDropdown({session}: {session: Session}) {
+
+export const UserDropdown = ({session}: {session: Session}) => {
   const {email, image} = session?.user || {}
   const [openPopover, setOpenPopover] = useState(false)
   // eslint-disable-next-line no-unused-vars

@@ -1,11 +1,4 @@
-/* eslint-disable jsdoc/require-returns */
-import React from 'react'
-
-
-/**
- *
- */
-export default function Google({className}: { className: string }) {
+export const Google = ({className}: {className: string}) => {
   return (
     <svg viewBox="0 0 100 100" className={className}>
       <linearGradient

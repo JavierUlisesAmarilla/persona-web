@@ -1,6 +1,6 @@
 'use client'
 
-import React, {ChangeEventHandler, ReactNode} from 'react'
+import {ChangeEventHandler, ReactNode} from 'react'
 
 
 export const UserSelect = ({

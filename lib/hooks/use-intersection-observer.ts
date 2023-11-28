@@ -1,16 +1,14 @@
+/* eslint-disable semi */
 /* eslint-disable no-undef */
-/* eslint-disable jsdoc/require-returns */
-import {RefObject, useEffect, useState} from 'react'
+import {RefObject, useEffect, useState} from 'react';
 
 
 interface Args extends IntersectionObserverInit {
   freezeOnceVisible?: boolean;
 }
 
-/**
- *
- */
-function useIntersectionObserver(
+
+export const useIntersectionObserver = (
     elementRef: RefObject<Element>,
     {
       threshold = 0,
@@ -18,7 +16,7 @@ function useIntersectionObserver(
       rootMargin = '0%',
       freezeOnceVisible = false,
     }: Args,
-): IntersectionObserverEntry | undefined {
+): IntersectionObserverEntry | undefined => {
   const [entry, setEntry] = useState<IntersectionObserverEntry>()
 
   const frozen = entry?.isIntersecting && freezeOnceVisible
@@ -47,5 +45,3 @@ function useIntersectionObserver(
 
   return entry
 }
-
-export default useIntersectionObserver

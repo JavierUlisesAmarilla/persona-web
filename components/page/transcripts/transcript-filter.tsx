@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {getCustomDateFromDate, getNextCustomDateFromDate, getUniqueArr} from '../../../lib/common'
 
 import {Calendar} from 'primereact/calendar'
@@ -46,7 +46,7 @@ export const TranscriptFilter = () => {
   }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, transcriptArr])
 
   return (
-    <div className='flex items-center gap-3 p-6 border rounded-lg bg-bg-light'>
+    <div className='flex items-center gap-3 p-6 border rounded-lg bg-bg-light w-fit'>
       <MultiSelect
         className='text-xs border w-fit border-border-gray h-fit'
         value={selectedPersonaNameOptionArr}
@@ -68,7 +68,7 @@ export const TranscriptFilter = () => {
         maxSelectedLabels={1}
       />
       <Calendar
-        className='p-2 text-xs border rounded w-fit border-border-gray h-fit'
+        className='p-2 text-xs border rounded w-fit min-w-[16rem] border-border-gray h-fit'
         value={dateArr}
         onChange={(e) => setDateArr(e.value)}
         selectionMode='range'

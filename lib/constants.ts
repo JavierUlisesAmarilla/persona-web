@@ -3,13 +3,6 @@ export const WITHOUT_SIGN = false
 export const USE_SAMPLE_DATA = false
 export const USE_NOTION_X = false
 export const USE_REAL_NOTION = true
-export const MENUS: any = {
-  // dashboard: 'Dashboard',
-  setting: 'Settings',
-  voiceChat: 'Playground',
-  transcripts: 'Transcripts',
-  docs: 'API Docs',
-}
 
 export const DEPLOY_URL = process.env.NEXT_PUBLIC_DEPLOY_URL
 export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
@@ -24,7 +17,6 @@ export const NOTION_ROOT_PAGE = process.env.NEXT_PUBLIC_NOTION_ROOT_PAGE
 export const NOTION_FAKE_ROOT_PAGE = process.env.NEXT_PUBLIC_NOTION_FAKE_ROOT_PAGE
 
 // Client
-
 export const NODE_ENV = process.env.NODE_ENV
 export const IS_DEV = NODE_ENV === 'development' || !NODE_ENV
 export const PORT = process.env.PORT

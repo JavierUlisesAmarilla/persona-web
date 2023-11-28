@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {useZustand} from '../../../lib/store/use-zustand'
 import {Transcript} from './transcript'
 import {TranscriptFilter} from './transcript-filter'
@@ -10,9 +9,9 @@ export const Transcripts = () => {
   const {filteredTranscriptArr} = useZustand()
 
   return (
-    <div className='flex flex-col w-full gap-3 px-4 Transcripts'>
+    <div className='flex flex-col w-full h-full gap-3 p-4 Transcripts'>
       <TranscriptFilter/>
-      <div className="flex flex-wrap w-full p-3 border rounded-lg bg-bg-light">
+      <div className="flex flex-wrap p-3 border rounded-lg bg-bg-light w-fit">
         {filteredTranscriptArr.map((transcript, index) =>
           <Transcript
             key={index}

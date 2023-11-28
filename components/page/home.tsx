@@ -1,164 +1,152 @@
-/* eslint-disable max-len */
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
-import Card from '@/components/home/card'
-import ComponentGrid from '@/components/home/component-grid'
-import WebVitals from '@/components/home/web-vitals'
-import {Github, Twitter} from '@/components/shared/icons'
-import {DEPLOY_URL} from '@/lib/constants'
-import Image from 'next/image'
-import React from 'react'
-import Balancer from 'react-wrap-balancer'
+import {getData, saveData} from '@/lib/mongodb/mongodb-client'
+import {useEffect, useState} from 'react'
+import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
+
+import {SINDARIN_API_URL} from '@/lib/constants'
+import {useApiKey} from '@/lib/hooks/use-api-key'
+import {useZustand} from '@/lib/store/use-zustand'
+import {MENUS} from '../layout/sidebar'
+import {Alert} from '../shared/alert'
 
 
-/**
- *
- */
-export default function Home() {
-  return (
-    <div className=''>
-      <div className="z-10 w-full max-w-xl px-5 xl:px-0">
-        <a
-          href="https://twitter.com/steventey/status/1613928948915920896"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center justify-center py-2 mx-auto mb-5 space-x-2 overflow-hidden transition-colors bg-blue-100 rounded-full max-w-fit animate-fade-up px-7 hover:bg-blue-200"
-        >
-          <Twitter className="h-5 w-5 text-[#1d9bf0]"/>
-          <p className="text-sm font-semibold text-[#1d9bf0]">
-            Introducing Precedent
-          </p>
-        </a>
-        <h1
-          className="animate-fade-up bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent opacity-0 drop-shadow-sm md:text-7xl md:leading-[5rem]"
-          style={{animationDelay: '0.15s', animationFillMode: 'forwards'}}
-        >
-          <Balancer>Building blocks for your Next project</Balancer>
-        </h1>
-        <p
-          className="mt-6 text-center text-gray-500 opacity-0 animate-fade-up md:text-xl"
-          style={{animationDelay: '0.25s', animationFillMode: 'forwards'}}
-        >
-          <Balancer>
-            An opinionated collection of components, hooks, and utilities for
-            your Next.js project.
-          </Balancer>
-        </p>
-        <div
-          className="flex items-center justify-center mx-auto mt-6 space-x-5 opacity-0 animate-fade-up"
-          style={{animationDelay: '0.3s', animationFillMode: 'forwards'}}
-        >
-          <a
-            className="flex items-center justify-center px-5 py-2 space-x-2 text-sm text-white transition-colors bg-black border border-black rounded-full group max-w-fit hover:bg-white hover:text-black"
-            href={DEPLOY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              className="w-4 h-4 group-hover:text-black"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4L20 20H4L12 4Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Deploy to Vercel</p>
-          </a>
-          <a
-            className="flex items-center justify-center px-5 py-2 space-x-2 text-sm text-gray-600 transition-colors bg-white border border-gray-300 rounded-full shadow-md max-w-fit hover:border-gray-800"
-            href="https://github.com/steven-tey/precedent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github/>
-            <p>
-              <span className="hidden sm:inline-block">Star on</span> GitHub{' '}
-              {/* <span className="font-semibold">{nFormatter(stars)}</span> */}
-            </p>
-          </a>
-        </div>
-      </div>
-      <div className="grid w-full max-w-screen-xl grid-cols-1 gap-5 px-5 my-10 animate-fade-up md:grid-cols-3 xl:px-0">
-        {features.map(({title, description, demo, large}) => (
-          <Card
-            key={title}
-            title={title}
-            description={description}
-            demo={
-              title === 'Beautiful, reusable components' ? (
-                <ComponentGrid/>
-              ) : (
-                demo
-              )
+let prevApiKey: string
+
+
+export const Home = ({session}: {session: any}) => {
+  const {
+    selMenu,
+    setCurEmail,
+    status, setStatus,
+    setApiKeyArr,
+    setPersonaAction,
+    setPersonaClient,
+    setPersonaArr,
+    setLLMSArray,
+    setTranscriptArr,
+  } = useZustand()
+  const [hasAddedTeam, setHasAddedTeam] = useState(false)
+  const apiKey = useApiKey()
+  console.log('***SIGN HOME RENDERING***')
+
+  useEffect(() => {
+    console.log('USE EFFECT RUNNING WITH EMAIL', session?.user?.email);
+    (async () => {
+      console.log('USE EFFECT INNER LOOP RUNNING')
+      const newCurEmail = session?.user?.email
+
+      if (!newCurEmail || status) {
+        return
+      }
+
+      setStatus('Loading...')
+
+      // Fetch api key array
+      const newApiKeyArr = await getData(newCurEmail)
+      console.log('Home#useEffect: newApiKeyArr: ', newApiKeyArr)
+
+      if (!newApiKeyArr?.length && !hasAddedTeam) {
+        setHasAddedTeam(true)
+        const token = await addTeam(newCurEmail)
+        if (!token) {
+          return
+        }
+
+        const newTeam = {
+          name: newCurEmail,
+          emailArr: [{
+            name: newCurEmail,
+          }],
+          manager: newCurEmail,
+          apiKey: token,
+        }
+        const res = await saveData(newTeam, newCurEmail)
+
+        if (res?.data?.insertedId) {
+          newApiKeyArr.push({...newTeam, _id: res.data.insertedId})
+        }
+      }
+
+      setCurEmail(newCurEmail)
+      setApiKeyArr(newApiKeyArr)
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.email])
+
+  useEffect(() => {
+    (async () => {
+      if (prevApiKey === apiKey) {
+        setStatus('')
+        return
+      }
+
+      setStatus('Loading...')
+      console.log('Home#useEffect: apiKey: ', apiKey)
+      prevApiKey = apiKey
+
+      // Set persona client
+      const script = document.createElement('script')
+      script.src = SINDARIN_API_URL!.includes('localhost') ? `${SINDARIN_API_URL}/PersonaClient?apikey=${apiKey}` : `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
+      document.head.appendChild(script)
+
+      script.addEventListener('load', () => {
+        if (window.PersonaClient) {
+          const newPersonaClient = new window.PersonaClient(apiKey)
+
+          newPersonaClient.on('json', ({detail}: any) => {
+            if (Object.keys(detail).length > 0 && !detail.transcription) {
+              setPersonaAction(detail)
             }
-            large={large}
-          />
-        ))}
-      </div>
+          })
+
+          setPersonaClient(newPersonaClient)
+        }
+      })
+
+      const newPersonaArr = await getPersonaArr(apiKey)
+      const llmsArr = await getLLMSArr(apiKey)
+
+      if (Array.isArray(newPersonaArr) && Array.isArray(llmsArr)) {
+        setPersonaArr(newPersonaArr)
+        setLLMSArray(llmsArr)
+        const newTranscriptArr: Array<any> = []
+
+        for (let i = 0; i < newPersonaArr.length; i++) {
+          const personaId = newPersonaArr[i]._id
+          const personaName = newPersonaArr[i].name
+
+          if (personaId && personaName) {
+            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            })
+            // const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            // newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+          }
+        }
+
+        setTranscriptArr(newTranscriptArr)
+        setStatus('')
+      } else {
+        setStatus('Something went wrong.')
+      }
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiKey])
+
+  return (
+    <div className='flex items-center justify-center w-full h-full overflow-auto'>
+      {session ?
+        (status ? (
+          <div className='text-2xl font-semibold'>{status}</div>
+        ) : (
+          <>
+            {MENUS[selMenu]?.menuComp}
+            <Alert/>
+          </>
+        )) : (
+          <div>Please log in.</div>
+        )}
     </div>
   )
 }
-
-const features = [
-  {
-    title: 'Beautiful, reusable components',
-    description:
-      'Pre-built beautiful, a11y-first components, powered by [Tailwind CSS](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), and [Framer Motion](https://framer.com/motion)',
-    large: true,
-  },
-  {
-    title: 'Performance first',
-    description:
-      'Built on [Next.js](https://nextjs.org/) primitives like `@next/font` and `next/image` for stellar performance.',
-    demo: <WebVitals/>,
-  },
-  {
-    title: 'One-click Deploy',
-    description:
-      'Jumpstart your next project by deploying Precedent to [Vercel](https://vercel.com/) in one click.',
-    demo: (
-      <a href={DEPLOY_URL}>
-        <Image
-          src="https://vercel.com/button"
-          alt="Deploy with Vercel"
-          width={120}
-          height={30}
-          unoptimized
-        />
-      </a>
-    ),
-  },
-  {
-    title: 'Built-in Auth + Database',
-    description:
-      'Precedent comes with authentication and database via [Auth.js](https://authjs.dev/) + [Prisma](https://prisma.io/)',
-    demo: (
-      <div className="flex items-center justify-center space-x-20">
-        <Image alt="Auth.js logo" src="/authjs.webp" width={50} height={50}/>
-        <Image alt="Prisma logo" src="/prisma.svg" width={50} height={50}/>
-      </div>
-    ),
-  },
-  {
-    title: 'Hooks, utilities, and more',
-    description:
-      'Precedent offers a collection of hooks, utilities, and `@vercel/og`',
-    demo: (
-      <div className="grid grid-flow-col grid-rows-3 gap-10 p-10">
-        <span className="font-mono font-semibold">useIntersectionObserver</span>
-        <span className="font-mono font-semibold">useLocalStorage</span>
-        <span className="font-mono font-semibold">useScroll</span>
-        <span className="font-mono font-semibold">nFormatter</span>
-        <span className="font-mono font-semibold">capitalize</span>
-        <span className="font-mono font-semibold">truncate</span>
-      </div>
-    ),
-  },
-]

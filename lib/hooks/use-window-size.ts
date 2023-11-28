@@ -1,11 +1,8 @@
-/* eslint-disable jsdoc/require-returns */
-import {useEffect, useState} from 'react'
+/* eslint-disable semi */
+import {useEffect, useState} from 'react';
 
 
-/**
- *
- */
-export default function useWindowSize() {
+export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState<{
     width: number | undefined;
     height: number | undefined;

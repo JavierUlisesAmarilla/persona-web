@@ -1,15 +1,11 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
-import ApiKeyAssign from './api-key-assign'
+import {ApiKeyAssign} from './api-key-assign'
 
 
-/**
- *
- */
-export default function Setting() {
+export const Setting = () => {
   return (
-    <div className="z-10 flex flex-col w-full px-4">
+    <div className="z-10 flex flex-col w-full h-full p-4">
       <ApiKeyAssign/>
     </div>
   )

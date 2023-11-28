@@ -1,8 +1,5 @@
 'use client'
 
-import React from 'react'
-
-
 export const Transcript = ({data}: {data: any}) => {
   return (
     <div className='w-1/2 p-3 lg:w-1/4'>

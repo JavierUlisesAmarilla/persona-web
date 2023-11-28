@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
 import {useEffect, useState} from 'react'
@@ -11,12 +10,10 @@ import {useZustand} from '@/lib/store/use-zustand'
 import CredentialSection from './credential-section'
 import {PlanModal} from './plan-modal'
 import PlanSection from './plan-section'
-import TeamSection from './team-section'
+import {TeamSection} from './team-section'
 
-/**
- *
- */
-export default function ApiKeyAssign() {
+
+export const ApiKeyAssign = () => {
   const [showPlanModal, setShowPlanModal] = useState(false)
   const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL

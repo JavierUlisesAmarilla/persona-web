@@ -1,12 +1,8 @@
-
-
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
 import {BlueButton} from '@/components/shared/button'
 import {InputText} from '@/components/shared/input-text'
 import {useZustand} from '@/lib/store/use-zustand'
-import React from 'react'
 
 
 interface Props {
@@ -14,10 +10,8 @@ interface Props {
   scenario: any
 }
 
-/**
- *
- */
-export default function Scenario({scenario, scenarioIndex}: Props) {
+
+export const Scenario = ({scenario, scenarioIndex}: Props) => {
   const {selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse} = useZustand()
 
   return (

@@ -1,12 +1,14 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
+
 import './globals.css'
 
 import React, {Suspense} from 'react'
 import {inter, sfPro} from './fonts'
 
+import {Nav} from '@/components/layout/nav'
+import {Sidebar} from '@/components/layout/sidebar'
 import {Analytics} from '@vercel/analytics/react'
-/* eslint-disable jsdoc/require-returns */
-import Footer from '@/components/layout/footer'
-import Nav from '@/components/layout/nav'
 import cx from 'classnames'
 
 
@@ -25,27 +27,30 @@ export const metadata = {
   themeColor: '#FFF',
 }
 
-/**
- *
- */
-export default function RootLayout({
+
+export default function Layout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-gray text-text-dark')}>
-        {/* <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/> */}
+    <html className='w-full h-full' lang="en">
+      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
         <Suspense fallback="...">
-          {/* @ts-expect-error Server Component */}
-          <Nav/>
+          <div className='h-16'>
+            {/* @ts-expect-error Server Component */}
+            <Nav/>
+          </div>
+          <div className='h-[100%-4rem] flex flex-grow overflow-auto'>
+            <div className='h-full overflow-auto w-80'>
+              <Sidebar/>
+            </div>
+            <main className="w-[calc(100%-20rem)] h-full overflow-auto">
+              {children}
+            </main>
+          </div>
+          <Analytics/>
         </Suspense>
-        <main className="flex flex-col items-center w-full min-h-screen pt-20">
-          {children}
-        </main>
-        <Footer/>
-        <Analytics/>
       </body>
     </html>
   )

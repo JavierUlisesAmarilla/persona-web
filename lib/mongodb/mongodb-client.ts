@@ -1,6 +1,5 @@
-import {DEPLOY_URL} from '../constants'
-
 import axios from 'axios'
+import {DEPLOY_URL} from '../constants'
 
 
 export const saveData = async (data: any, email: string) => {

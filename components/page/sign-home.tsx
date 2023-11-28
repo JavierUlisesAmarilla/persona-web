@@ -10,7 +10,7 @@ import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/pe
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
-import {ExtendedRecordMap} from 'notion-types'
+// import {ExtendedRecordMap} from 'notion-types'
 import {Alert} from '../shared/alert'
 import {ApiDocs} from './api-docs/api-docs'
 import {Dashboard} from './dashboard/dashboard'
@@ -22,7 +22,15 @@ import VoiceChat from './voice-chat/voice-chat'
 let prevApiKey: string
 
 
-export default function SignHome({session, recordMap}: {session: any, recordMap: ExtendedRecordMap}) {
+export default function SignHome(
+    {
+      session,
+    // recordMap,
+    }: {
+    session: any,
+    // recordMap: ExtendedRecordMap
+  },
+) {
   const {
     selMenu,
     setCurEmail,
@@ -150,7 +158,7 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
       {selMenu === 'setting' && <Setting/>}
       {selMenu === 'voiceChat' && <VoiceChat/>}
       {selMenu === 'transcripts' && <Transcripts/>}
-      {selMenu === 'docs' && <ApiDocs recordMap={recordMap}/>}
+      {selMenu === 'docs' && <ApiDocs/>}
       <Alert/>
     </>
   )

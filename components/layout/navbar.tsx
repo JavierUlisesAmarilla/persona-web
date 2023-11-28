@@ -5,7 +5,7 @@
 
 import {useEffect} from 'react'
 
-import {MENUS} from '@/lib/constants'
+import {MENUS, NOTION_ROOT_PAGE} from '@/lib/constants'
 import useScroll from '@/lib/hooks/use-scroll'
 import {useZustand} from '@/lib/store/use-zustand'
 import classnames from 'classnames'
@@ -60,6 +60,11 @@ export default function NavBar({session}: {session: any}) {
                 })}
                 onClick={() => {
                   if (status) {
+                    return
+                  }
+
+                  if (menuKey === 'docs' && NOTION_ROOT_PAGE) {
+                    window.location.href = NOTION_ROOT_PAGE
                     return
                   }
 

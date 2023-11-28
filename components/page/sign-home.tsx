@@ -22,7 +22,7 @@ import VoiceChat from './voice-chat/voice-chat'
 let prevApiKey: string
 
 
-export default function SignHome({session, recordMap}: {session: any, recordMap: ExtendedRecordMap}) {
+export default function SignHome({session, recordMap}: {session: any, recordMap: ExtendedRecordMap | undefined}) {
   const {
     selMenu,
     setCurEmail,

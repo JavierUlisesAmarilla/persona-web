@@ -1,15 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
+
 import React, {useEffect, useState} from 'react'
+import {AiFillCustomerService, AiFillDelete, AiFillSound, AiOutlineEdit, AiOutlineShareAlt} from 'react-icons/ai'
+
 import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
-import {AiFillCustomerService, AiFillDelete, AiFillSound, AiOutlineEdit, AiOutlineShareAlt} from 'react-icons/ai'
-import {useZustand} from '../../../lib/store/use-zustand'
-import {UserSelect} from '../../shared/user-select'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {updatePersonaVoice} from '../../../lib/persona'
+import {useZustand} from '../../../lib/store/use-zustand'
+import {UserSelect} from '../../shared/user-select'
 
 
 interface VoiceOption {
@@ -68,6 +70,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           setVoices(data)
         })
         .catch((error) => console.error('Error fetching voice options:', error))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getFilteredVoices = (gender?: string, age?: string, accent?: string) => {
@@ -226,4 +229,3 @@ export const ChangeVoiceModal: React.FC<Props> = ({
     </CommonModal>
   )
 }
-

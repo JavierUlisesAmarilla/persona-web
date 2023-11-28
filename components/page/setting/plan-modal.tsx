@@ -1,15 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import React, {MouseEventHandler, useEffect, useState} from 'react'
-import {GreenButton} from '../../shared/button'
-import {CommonModal} from '../../shared/common-modal'
-import _ from 'lodash'
-import axios from 'axios'
 import {SINDARIN_API_URL, STRIPE_PUBLIC_KEY} from '@/lib/constants'
+import React, {MouseEventHandler, useEffect, useState} from 'react'
+
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {loadStripe} from '@stripe/stripe-js'
+import axios from 'axios'
+import _ from 'lodash'
+import {GreenButton} from '../../shared/button'
+import {CommonModal} from '../../shared/common-modal'
 
 
 interface Props {
@@ -135,6 +136,7 @@ export const PlanModal = ({
         checkoutInstance.destroy()
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldShowCheckout, stripeClientSecret])
 
   return (
@@ -144,7 +146,7 @@ export const PlanModal = ({
     >
       {team ? (
         <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          { shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
+          {shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
             <div
               key={planIndex}
               className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-300 border-2' : 'border-border-gray'} bg-bg-light`}

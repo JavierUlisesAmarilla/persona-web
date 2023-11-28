@@ -77,13 +77,13 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
   }
 
   return (
-    <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
+    <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-light">
       {isManager &&
-        <div className="flex items-center w-full gap-4">
+        <div className="flex items-center justify-end w-full gap-4">
+          <div className='text-blue-500'>{localStatus}</div>
           <BlueButton onClick={onAddEmail}>Add Email</BlueButton>
           <BlueButton onClick={onSave}>Save</BlueButton>
           <BlueButton onClick={onRemove}>Remove</BlueButton>
-          <div className='text-blue-500'>{localStatus}</div>
         </div>
       }
       <div className="flex items-center w-full gap-4">

@@ -77,13 +77,13 @@ export const Home = ({session}: {session: any}) => {
 
   useEffect(() => {
     (async () => {
+      console.log('Home#useEffect: apiKey: ', apiKey, prevApiKey)
+
       if (prevApiKey === apiKey) {
-        setStatus('')
         return
       }
 
       setStatus('Loading...')
-      console.log('Home#useEffect: apiKey: ', apiKey)
       prevApiKey = apiKey
 
       // Set persona client
@@ -130,11 +130,11 @@ export const Home = ({session}: {session: any}) => {
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            })
-            // const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            // newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            // })
+            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
         }
 

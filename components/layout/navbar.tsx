@@ -3,7 +3,7 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {useEffect} from 'react'
+import {NOTION_ROOT_PAGE, USE_REAL_NOTION} from '../../lib/constants'
 
 import {MENUS} from '@/lib/constants'
 import useScroll from '@/lib/hooks/use-scroll'
@@ -12,6 +12,7 @@ import classnames from 'classnames'
 import {signIn} from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import {useEffect} from 'react'
 import {BlueButton} from '../shared/button'
 import {useSignInModal} from './sign-in-modal'
 import UserDropdown from './user-dropdown'
@@ -60,6 +61,11 @@ export default function NavBar({session}: {session: any}) {
                 })}
                 onClick={() => {
                   if (status) {
+                    return
+                  }
+
+                  if (menuKey === 'docs' && USE_REAL_NOTION && NOTION_ROOT_PAGE) {
+                    window.location.href = NOTION_ROOT_PAGE
                     return
                   }
 

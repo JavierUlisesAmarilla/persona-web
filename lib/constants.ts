@@ -1,6 +1,8 @@
 // Both (Client + Server)
 export const WITHOUT_SIGN = false
 export const USE_SAMPLE_DATA = false
+export const USE_NOTION_X = false
+export const USE_REAL_NOTION = true
 export const MENUS: any = {
   // dashboard: 'Dashboard',
   setting: 'Settings',
@@ -19,8 +21,10 @@ export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL
 export const SINDARIN_API_URL = process.env.NEXT_PUBLIC_SINDARIN_API_URL
 export const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
 export const NOTION_ROOT_PAGE = process.env.NEXT_PUBLIC_NOTION_ROOT_PAGE
+export const NOTION_FAKE_ROOT_PAGE = process.env.NEXT_PUBLIC_NOTION_FAKE_ROOT_PAGE
 
 // Client
+
 export const NODE_ENV = process.env.NODE_ENV
 export const IS_DEV = NODE_ENV === 'development' || !NODE_ENV
 export const PORT = process.env.PORT

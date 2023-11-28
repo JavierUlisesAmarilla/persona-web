@@ -2,7 +2,7 @@
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
-import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
+import {addTeam, getTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
 
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -25,6 +25,7 @@ export const Home = ({session}: {session: any}) => {
     setPersonaArr,
     setLLMSArray,
     setTranscriptArr,
+    setTeam,
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
@@ -106,6 +107,18 @@ export const Home = ({session}: {session: any}) => {
 
       const newPersonaArr = await getPersonaArr(apiKey)
       const llmsArr = await getLLMSArr(apiKey)
+      const fetchTeam = async () => {
+        try {
+          if (apiKey) {
+            const team = await getTeam(apiKey)
+            setTeam(team)
+          }
+        } catch (error) {
+          console.error('Error fetching team:', error)
+        }
+      }
+
+      fetchTeam()
 
       if (Array.isArray(newPersonaArr) && Array.isArray(llmsArr)) {
         setPersonaArr(newPersonaArr)

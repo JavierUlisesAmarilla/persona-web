@@ -42,7 +42,13 @@ export const MENUS: any = {
 
 
 export const Sidebar = () => {
-  const {selMenu, setSelMenu} = useZustand()
+  const {selMenu, setSelMenu, team} = useZustand()
+  console.log('team', team)
+  const teamString = team && (team.tier === 'free' ? 'Free Tier' :
+    team.tier === 'I' ? 'Tier I' :
+      team.tier === 'II' ? 'Tier II' :
+        team.tier === 'III' ? 'Tier III' :
+          'Customer Plan')
 
   return (
     <div className="flex flex-col justify-between h-full gap-6 p-6 border-r border-border-gray">
@@ -52,7 +58,7 @@ export const Sidebar = () => {
             <Image className='rounded' src='assets/images/sidebar_logo.svg' width={40} height={40} alt='Sindarin'/>
             <div className='flex flex-col text-sm font-medium'>
               <div className='text-text-dark'>Brian</div>
-              <div className='text-text-gray'>Team Plan</div>
+              <div className='text-text-gray'>{teamString}</div>
             </div>
           </div>
         </div>

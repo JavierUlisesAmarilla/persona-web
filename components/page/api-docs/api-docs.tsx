@@ -17,6 +17,6 @@ export const ApiDocs = (
     //   className='NotionRenderer'
     //   recordMap={recordMap}
     // />
-    <iframe src={NOTION_ROOT_PAGE} className='w-full h-screen' title='Api Docs'>ApiDocs</iframe>
+    <iframe src={NOTION_ROOT_PAGE} className='w-full h-screen' title='Api Docs'/>
   )
 }

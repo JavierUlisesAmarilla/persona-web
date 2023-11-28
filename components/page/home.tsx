@@ -1,5 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable jsdoc/require-jsdoc */
 'use client'
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
@@ -9,19 +7,14 @@ import {addTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/pe
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
-import {ExtendedRecordMap} from 'notion-types'
+import {MENUS} from '../layout/sidebar'
 import {Alert} from '../shared/alert'
-import {ApiDocs} from './api-docs/api-docs'
-import {Dashboard} from './dashboard/dashboard'
-import {Setting} from './setting/setting'
-import {Transcripts} from './transcripts/transcripts'
-import {VoiceChat} from './voice-chat/voice-chat'
 
 
 let prevApiKey: string
 
 
-export default function SignHome({session, recordMap}: {session: any, recordMap: ExtendedRecordMap | undefined}) {
+export const Home = ({session}: {session: any}) => {
   const {
     selMenu,
     setCurEmail,
@@ -51,7 +44,7 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
 
       // Fetch api key array
       const newApiKeyArr = await getData(newCurEmail)
-      console.log('SignHome#useEffect: newApiKeyArr: ', newApiKeyArr)
+      console.log('Home#useEffect: newApiKeyArr: ', newApiKeyArr)
 
       if (!newApiKeyArr?.length && !hasAddedTeam) {
         setHasAddedTeam(true)
@@ -89,7 +82,7 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
       }
 
       setStatus('Loading...')
-      console.log('SignHome#useEffect: apiKey: ', apiKey)
+      console.log('Home#useEffect: apiKey: ', apiKey)
       prevApiKey = apiKey
 
       // Set persona client
@@ -141,16 +134,19 @@ export default function SignHome({session, recordMap}: {session: any, recordMap:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey])
 
-  return status ? (
-    <div className='z-10 w-full p-6 text-center text-text-gray'>{status}</div>
-  ) : (
-    <>
-      {selMenu === 'dashboard' && <Dashboard/>}
-      {selMenu === 'setting' && <Setting/>}
-      {selMenu === 'voiceChat' && <VoiceChat/>}
-      {selMenu === 'transcripts' && <Transcripts/>}
-      {selMenu === 'docs' && <ApiDocs recordMap={recordMap}/>}
-      <Alert/>
-    </>
+  return (
+    <div className='flex items-center justify-center w-full h-full overflow-auto'>
+      {session ?
+        (status ? (
+          <div className='text-2xl font-semibold'>{status}</div>
+        ) : (
+          <>
+            {MENUS[selMenu]?.menuComp}
+            <Alert/>
+          </>
+        )) : (
+          <div>Please log in.</div>
+        )}
+    </div>
   )
 }

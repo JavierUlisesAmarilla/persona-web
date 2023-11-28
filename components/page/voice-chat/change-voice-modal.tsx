@@ -140,7 +140,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
       onClose={onClose}
     >
       <div className='flex flex-col justify-center gap-3 p-6 text-xs border rounded-lg bg-bg-gray border-border-gray'>
-        <div className='text-base text-center text-red-500'>{`Change voice for ${selPersonaName}`}</div>
+        <div className='text-base text-center text-red-500'>{`Change voice for ${selPersonaName || 'Anonymous'}`}</div>
         <div className='flex items-center gap-3'>
           <div className='flex items-center gap-1'>
             <div className='text-red-500'>Gender:</div>

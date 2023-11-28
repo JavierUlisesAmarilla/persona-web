@@ -1,15 +1,8 @@
 // Both (Client + Server)
-export const WITHOUT_SIGN = false
+export const WITHOUT_SIGN = true
 export const USE_SAMPLE_DATA = false
 export const USE_NOTION_X = false
 export const USE_REAL_NOTION = true
-export const MENUS: any = {
-  // dashboard: 'Dashboard',
-  setting: 'Settings',
-  voiceChat: 'Playground',
-  transcripts: 'Transcripts',
-  docs: 'API Docs',
-}
 
 export const DEPLOY_URL = process.env.NEXT_PUBLIC_DEPLOY_URL
 export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID

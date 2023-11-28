@@ -205,8 +205,8 @@ export const VoiceChat = () => {
   }
 
   return (
-    <div className='z-10 w-full px-4'>
-      <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light">
+    <div className='z-10 w-full h-full p-4'>
+      <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light w-fit">
         <h2 className='text-2xl'>Configuration</h2>
         <div className='flex items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
           {/* <div className='flex items-center gap-2'> */}

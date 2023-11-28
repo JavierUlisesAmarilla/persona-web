@@ -7,6 +7,7 @@ import React, {Suspense} from 'react'
 import {inter, sfPro} from './fonts'
 
 import {Nav} from '@/components/layout/nav'
+import {Sidebar} from '@/components/layout/sidebar'
 import {Analytics} from '@vercel/analytics/react'
 import cx from 'classnames'
 
@@ -33,14 +34,19 @@ export default function Layout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark')}>
+    <html className='w-full h-full' lang="en">
+      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
         <Suspense fallback="...">
           {/* @ts-expect-error Server Component */}
           <Nav/>
-          <main className="flex flex-col items-center w-full min-h-screen pt-20">
-            {children}
-          </main>
+          <div className='flex flex-grow'>
+            <div className='h-full w-80'>
+              <Sidebar/>
+            </div>
+            <main className="w-[calc(100%-20rem)] h-full overflow-auto">
+              {children}
+            </main>
+          </div>
           <Analytics/>
         </Suspense>
       </body>

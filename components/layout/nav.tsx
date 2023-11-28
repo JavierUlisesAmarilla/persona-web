@@ -1,8 +1,8 @@
 import {getServerSessionMiddle} from '@/lib/common'
-import {NavBar} from './navbar'
+import {Navbar} from './navbar'
 
 
 export const Nav = async () => {
   const session = await getServerSessionMiddle()
-  return <NavBar session={session}/>
+  return <Navbar session={session}/>
 }

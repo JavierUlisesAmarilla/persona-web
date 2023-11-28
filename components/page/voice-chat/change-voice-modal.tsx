@@ -39,6 +39,14 @@ export const ChangeVoiceModal: React.FC<Props> = ({
 
   const apiKey = useApiKey()
 
+  const playVoiceSample = async (voiceId: string) => {
+    const response = await fetch(`${SINDARIN_API_URL}/api/voices/${voiceId}/sample?apikey=${apiKey}`)
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    const audio = new Audio(url)
+    audio.play()
+  }
+
   // const onPrompt = async () => {
   //   try {
   //     const selPersonaId = personaArr[selPersonaIndex]?._id
@@ -163,7 +171,10 @@ export const ChangeVoiceModal: React.FC<Props> = ({
             <div key={`${voice.gender}-${voice.age}-${voice.accent}-${voice.index}`} className='flex items-center justify-between gap-3'>
               <div className='flex items-center gap-3 cursor-pointer'>
                 <div>{`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}</div>
-                <AiFillSound className='text-sm'/>
+                <AiFillSound className='text-sm' onClick={() => {
+                  playVoiceSample(voice.id)
+                }}
+                />
               </div>
               {currentPersonaSelectedVoiceId === voice.id ? (
                 <BlueButton disabled>Current Voice</BlueButton>

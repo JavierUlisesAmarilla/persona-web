@@ -86,10 +86,9 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
           <BlueButton onClick={onRemove}>Remove</BlueButton>
         </div>
       }
-      <div className="flex items-center w-full gap-4">
-        <div className='text-xs whitespace-nowrap'>Team Name:</div>
+      <div className="flex items-center justify-between w-full gap-4">
+        <div className='font-medium whitespace-nowrap'>Team Name:</div>
         <InputText
-          classNames='w-1/3'
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
@@ -98,7 +97,7 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
 
         {isAdmin &&
           <>
-            <div className='text-xs whitespace-nowrap'>Manager:</div>
+            <div className='font-medium whitespace-nowrap'>Manager:</div>
             <UserSelect
               value={data?.manager}
               onChange={onManagerChange}

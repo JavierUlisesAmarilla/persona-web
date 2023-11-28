@@ -54,9 +54,9 @@ export const ApiKeyAssign = () => {
   }, [selApiKeyIndex])
 
   return (
-    <div className="flex flex-col items-start w-full gap-3 p-6 bg-bg-gray">
+    <div className="flex flex-col items-start w-full gap-3 p-6">
       <div className="flex items-center justify-start gap-3">
-        <h2 className='text-2xl'>Team</h2>
+        <div className='text-2xl font-semibold'>Team</div>
         {apiKeyArr.length > 1 &&
           <UserSelect
             value={selApiKeyIndex}
@@ -78,12 +78,14 @@ export const ApiKeyAssign = () => {
           data={apiKeyArr[selApiKeyIndex]}
         />
       }
-      <h2 className='text-2xl'>Credentials</h2>
-      <div className="flex items-center justify-end w-full gap-3">
-        {status ?
+      <div className='flex items-center gap-3'>
+        <div className='text-2xl font-semibold'>Credentials</div>
+        <div className="flex items-center justify-end w-full gap-3">
+          {status ?
           <div className='text-text-gray'>{status}</div> : isAdmin &&
           <BlueButton onClick={onAddTeam}>Add Credential</BlueButton>
-        }
+          }
+        </div>
       </div>
       {!status && apiKeyArr[selApiKeyIndex] &&
         <CredentialSection
@@ -91,8 +93,9 @@ export const ApiKeyAssign = () => {
           data={apiKeyArr[selApiKeyIndex]}
         />
       }
-      <h2 className='text-2xl'>Plan</h2>
-      <div className="flex items-center justify-end w-full gap-3">
+
+      <div className="flex items-center justify-between w-full gap-3">
+        <div className='text-2xl font-semibold'>Plan</div>
         {status ?
           <div className='text-text-gray'>{status}</div> : isManager &&
           <BlueButton onClick={() => setShowPlanModal(true)}>Update Plan</BlueButton>

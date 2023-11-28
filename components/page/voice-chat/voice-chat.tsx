@@ -205,12 +205,12 @@ export const VoiceChat = () => {
   }
 
   return (
-    <div className='z-10 w-full h-full p-4'>
-      <div className="flex flex-col gap-3 p-6 border rounded-lg bg-bg-light w-fit">
-        <h2 className='text-2xl'>Configuration</h2>
-        <div className='flex items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+    <div className='w-full h-full'>
+      <div className="flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray">
+        <h2 className='text-2xl font-semibold'>Playground</h2>
+        <div className='flex flex-wrap items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-light'>
           {/* <div className='flex items-center gap-2'> */}
-          <div className='flex gap-2'>
+          <div className='flex flex-wrap gap-2'>
             <div className='flex flex-col items-start gap-2'>
               <UserSelect onChange={onPersona}>
                 {personaArr.map((persona, index) => (
@@ -257,7 +257,7 @@ export const VoiceChat = () => {
         </div>
         {personaArr[selPersonaIndex] &&
           <>
-            <div className='flex gap-3 p-6 border rounded-lg bg-bg-gray'>
+            <div className='flex gap-3 p-6 border rounded-lg bg-bg-light'>
               {/* <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center w-full gap-3'>
                   <InputText
@@ -320,7 +320,7 @@ export const VoiceChat = () => {
                 Prompt Engineering Guide 2
               </a>
             </div> */}
-            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-light'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='text-sm'>Prompt</div>
                 <Textarea
@@ -361,7 +361,7 @@ export const VoiceChat = () => {
               </div>
             </div> */}
             <div className='flex flex-col w-full gap-3'>
-              <h2 className='text-2xl'>Scenarios</h2>
+              <h2 className='text-2xl font-semibold'>Scenarios</h2>
               <div className='flex w-full gap-3'>
                 <BlueButton onClick={onNewScenario}>Add new scenario</BlueButton>
                 <div className='flex items-center gap-3'>

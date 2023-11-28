@@ -46,7 +46,7 @@ export const TranscriptFilter = () => {
   }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, transcriptArr])
 
   return (
-    <div className='flex items-center gap-3 p-6 border rounded-lg bg-bg-light w-fit'>
+    <div className='flex flex-wrap items-center w-full gap-3 p-6 border rounded-lg bg-bg-light'>
       <MultiSelect
         className='text-xs border w-fit border-border-gray h-fit'
         value={selectedPersonaNameOptionArr}
@@ -68,7 +68,7 @@ export const TranscriptFilter = () => {
         maxSelectedLabels={1}
       />
       <Calendar
-        className='p-2 text-xs border rounded w-fit min-w-[16rem] border-border-gray h-fit'
+        className='p-2 text-xs border rounded-lg w-fit min-w-[16rem] border-border-gray h-11'
         value={dateArr}
         onChange={(e) => setDateArr(e.value)}
         selectionMode='range'

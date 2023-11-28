@@ -15,7 +15,7 @@ export const Scenario = ({scenario, scenarioIndex}: Props) => {
   const {selPersonaIndex, setScenarioPersonaSay, setScenarioUserSay, setScenarioContext, setScenarioResponse} = useZustand()
 
   return (
-    <div className='flex flex-col w-full gap-3 p-6 text-sm border rounded-lg border-border-gray bg-bg-gray'>
+    <div className='flex flex-col w-full gap-3 p-6 text-sm border rounded-lg border-border-gray bg-bg-light'>
       <div className='flex flex-col w-full gap-3'>
         <div>Context</div>
         <InputText

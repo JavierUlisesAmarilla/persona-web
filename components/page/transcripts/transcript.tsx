@@ -19,21 +19,19 @@ export const Transcript = ({data}: {data: any}) => {
         {data?.messages?.length &&
           <div className='flex flex-col gap-3'>
             <div>Messages: </div>
-            <div className='flex flex-col p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-60'>
+            <div className='flex flex-col gap-3 p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-60'>
               {data.messages.map((message: any, index: number) => message.role === 'assistant' ?
                 <div
                   key={index}
-                  className='flex flex-col items-start'
+                  className='flex flex-col items-start text-text-dark'
                 >
-                  <div className='px-2 py-1 border rounded bg-bg-gray w-fit border-border-gray'>{message.role}</div>
-                  <div className='w-3/4'>{message.content}</div>
+                  <div className='w-3/4 px-3 py-2 border rounded-bl-none bg-bg-gray border-border-gray rounded-xl'>{message.content}</div>
                 </div> :
                 <div
                   key={index}
-                  className='flex flex-col items-end'
+                  className='flex flex-col items-end text-text-light'
                 >
-                  <div className='px-2 py-1 border rounded bg-bg-gray w-fit border-border-gray'>{message.role}</div>
-                  <div className='w-3/4'>{message.content}</div>
+                  <div className='w-3/4 px-3 py-2 border rounded-bl-none bg-bg-blue border-border-gray rounded-xl'>{message.content}</div>
                 </div>,
               )}
             </div>

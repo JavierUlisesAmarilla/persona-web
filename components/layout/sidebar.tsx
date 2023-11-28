@@ -2,7 +2,7 @@
 
 'use client'
 
-import {AiOutlineAliwangwang, AiOutlineHome, AiOutlineSearch, AiOutlineSetting, AiOutlineSolution} from 'react-icons/ai'
+import {AiOutlineAliwangwang, AiOutlineHome, AiOutlineSetting, AiOutlineSolution} from 'react-icons/ai'
 
 import {NOTION_ROOT_PAGE} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
@@ -56,10 +56,10 @@ export const Sidebar = () => {
             </div>
           </div>
         </div>
-        <div className='flex items-center w-full gap-1 p-2 text-sm border rounded border-border-gray'>
+        {/* <div className='flex items-center w-full gap-1 p-2 text-sm border rounded border-border-gray'>
           <AiOutlineSearch className='text-2xl cursor-pointer text-text-gray'/>
           <input className='p-0 border-0 w-fit text-text-dark' type='text' placeholder='Search for anything'/>
-        </div>
+        </div> */}
         <div className='flex flex-col'>
           <div className='font-semibold border-b text-text-gray border-b-border-gray'>GENERAL</div>
           <div className='flex flex-col gap-1'>

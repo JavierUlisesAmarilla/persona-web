@@ -3,10 +3,9 @@
 'use client'
 
 import {InputText} from '@/components/shared/input-text'
-import {ADMIN_EMAIL, SINDARIN_API_URL} from '@/lib/constants'
+import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
-import React, {useEffect} from 'react'
 
 /**
  *
@@ -30,30 +29,36 @@ export default function PlanSection({apiKeyIndex, data}: any) {
 
   return (
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-gray">
-      <div className='text-xs whitespace-nowrap'>Tier:</div>
-      <InputText
-        classNames='w-fit'
-        value={team?.tier || 'free'}
-        placeholder="Tier"
-        // onChange={onApiKeyChange}
-        disabled={true}
-      />
-      <div className='text-xs whitespace-nowrap'>Messages used this month:</div>
-      <InputText
-        classNames={`w-fit ${isOver90Percent ? 'text-red-500 border-red-500' : ''}`}
-        value={messagesUsedString}
-        placeholder="Messages used this month"
-        // onChange={onApiKeyChange}
-        disabled={true}
-      />
-      <div className='text-xs whitespace-nowrap'>Monthly messages reset at:</div>
-      <InputText
-        classNames='w-fit'
-        value={nextMessageReset}
-        placeholder="Messages used this month"
-        // onChange={onApiKeyChange}
-        disabled={true}
-      />
+      <div className='flex justify-between w-full'>
+        <div className='text-xs whitespace-nowrap'>Tier:</div>
+        <InputText
+          classNames='w-fit'
+          value={team?.tier || 'free'}
+          placeholder="Tier"
+          // onChange={onApiKeyChange}
+          disabled={true}
+        />
+      </div>
+      <div className='flex justify-between w-full'>
+        <div className='text-xs whitespace-nowrap'>Messages used this month:</div>
+        <InputText
+          classNames={`w-fit ${isOver90Percent ? 'text-red-500 border-red-500' : ''}`}
+          value={messagesUsedString}
+          placeholder="Messages used this month"
+          // onChange={onApiKeyChange}
+          disabled={true}
+        />
+      </div>
+      <div className='flex justify-between w-full'>
+        <div className='text-xs whitespace-nowrap'>Monthly messages reset at:</div>
+        <InputText
+          classNames='w-fit'
+          value={nextMessageReset}
+          placeholder="Messages used this month"
+          // onChange={onApiKeyChange}
+          disabled={true}
+        />
+      </div>
     </div>
   )
 }

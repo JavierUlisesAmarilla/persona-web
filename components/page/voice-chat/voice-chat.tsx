@@ -301,7 +301,7 @@ export const VoiceChat = () => {
                 </div>
               </div>
             </div>
-            <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
+            {/* <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='text-sm'>For guidance on prompt engineering techniques for your Persona, see:</div>
               <a
                 className='text-sm text-blue-500 hover:text-blue-900 w-fit'
@@ -319,7 +319,7 @@ export const VoiceChat = () => {
               >
                 Prompt Engineering Guide 2
               </a>
-            </div>
+            </div> */}
             <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='text-sm'>Prompt</div>

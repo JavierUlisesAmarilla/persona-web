@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
+import {BlueButton, BorderGrayButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
-import {AiFillCustomerService, AiFillDelete, AiFillSound, AiOutlineEdit, AiOutlineShareAlt} from 'react-icons/ai'
 
-import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
+import {AiFillSound} from 'react-icons/ai'
 import {updatePersonaVoice} from '../../../lib/persona'
 import {useZustand} from '../../../lib/store/use-zustand'
 import {UserSelect} from '../../shared/user-select'
@@ -140,10 +140,10 @@ export const ChangeVoiceModal: React.FC<Props> = ({
       onClose={onClose}
     >
       <div className='flex flex-col justify-center gap-3 p-6 text-xs border rounded-lg bg-bg-gray border-border-gray'>
-        <div className='text-base text-center text-red-500'>{`Change voice for ${selPersonaName || 'Anonymous'}`}</div>
+        <div className='text-base font-semibold text-start'>{`Change voice for ${selPersonaName || 'Anonymous'}`}</div>
         <div className='flex items-center gap-3'>
-          <div className='flex items-center gap-1'>
-            <div className='text-red-500'>Gender:</div>
+          <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
+            <div>Gender:</div>
             <UserSelect value={selectedGender} onChange={(e) => setSelectedGender(e.target.value)}>
               <option value="-">-</option>
               {uniqueGenders.map(({gender, count}) => (
@@ -151,8 +151,8 @@ export const ChangeVoiceModal: React.FC<Props> = ({
               ))}
             </UserSelect>
           </div>
-          <div className='flex items-center gap-1'>
-            <div className='text-red-500'>Age:</div>
+          <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
+            <div>Age:</div>
             <UserSelect value={selectedAge} onChange={(e) => setSelectedAge(e.target.value)}>
               <option value="-">-</option>
               {uniqueAges.map(({age, count}) => (
@@ -160,8 +160,8 @@ export const ChangeVoiceModal: React.FC<Props> = ({
               ))}
             </UserSelect>
           </div>
-          <div className='flex items-center gap-1'>
-            <div className='text-red-500'>Accent:</div>
+          <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
+            <div>Accent:</div>
             <UserSelect value={selectedAccent} onChange={(e) => setSelectedAccent(e.target.value)}>
               <option value="-">-</option>
               {uniqueAccents.map(({accent, count}) => (
@@ -174,29 +174,30 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           {filteredVoices.map((voice) => (
             <div key={`${voice.gender}-${voice.age}-${voice.accent}-${voice.index}`} className='flex items-center justify-between gap-3'>
               <div className='flex items-center gap-3 cursor-pointer'>
-                <div>{`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}</div>
-                <AiFillSound className='text-sm' onClick={() => {
+                <AiFillSound className='text-sm text-text-blue' onClick={() => {
                   playVoiceSample(voice.id)
                 }}
                 />
+                <div>{`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}</div>
               </div>
               {currentPersonaSelectedVoiceId === voice.id ? (
                 <BlueButton disabled>Current Voice</BlueButton>
               ) : (
-                <BlueButton onClick={() => {
+                <BorderGrayButton onClick={() => {
                   onChangePersonaVoice(voice.id)
                 }}
-                >Use Voice
-                </BlueButton>
+                >
+                  Use Voice
+                </BorderGrayButton>
               )}
             </div>
           ))}
         </div>
+        <div className='text-base font-semibold text-start'>Import from ElevenLabs</div>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray'>
-          <div className='text-sm text-center text-red-500'>Import from ElevenLabs</div>
           <div className='flex flex-col gap-3'>
             <div>1. In the ElevenLabs, VoiceLab connects (link), press the "Submit" button.</div>
-            <div className='flex justify-center'>
+            {/* <div className='flex justify-center'>
               <div className='flex flex-col border rounded w-80 bg-bg-gray border-border-gray'>
                 <div className='flex flex-col gap-3 p-6'>
                   <div className='flex items-center justify-between'>
@@ -224,16 +225,16 @@ export const ChangeVoiceModal: React.FC<Props> = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className='flex flex-col gap-3'>
             <div>2. Paste the share link here.</div>
-            <div className='flex items-center justify-center gap-3'>
+            <div className='flex items-center justify-center w-full gap-3'>
               <InputText
-                classNames=''
+                classNames='w-full'
                 placeholder="Share Link"
               />
-              <BlueButton>Submit</BlueButton>
+              <BorderGrayButton>Submit</BorderGrayButton>
             </div>
           </div>
         </div>

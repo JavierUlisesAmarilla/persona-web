@@ -37,10 +37,12 @@ export default function Layout({
     <html className='w-full h-full' lang="en">
       <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
         <Suspense fallback="...">
-          {/* @ts-expect-error Server Component */}
-          <Nav/>
-          <div className='flex flex-grow'>
-            <div className='h-full w-80'>
+          <div className='h-16'>
+            {/* @ts-expect-error Server Component */}
+            <Nav/>
+          </div>
+          <div className='h-[100%-4rem] flex flex-grow overflow-auto'>
+            <div className='h-full overflow-auto w-80'>
               <Sidebar/>
             </div>
             <main className="w-[calc(100%-20rem)] h-full overflow-auto">

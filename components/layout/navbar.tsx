@@ -17,7 +17,7 @@ export const Navbar = ({session}: {session: any}) => {
   return (
     <div className='w-full Navbar'>
       <SignInModal/>
-      <div className='flex items-center justify-between w-full h-16 px-6 py-3 border-b border-b-border-gray'>
+      <div className='flex items-center justify-between w-full px-6 py-3 border-b border-b-border-gray'>
         <div className='text-2xl font-semibold'>Sindarin</div>
         <div>
           {session ? (

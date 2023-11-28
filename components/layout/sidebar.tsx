@@ -2,11 +2,12 @@
 
 'use client'
 
-import {AiOutlineAliwangwang, AiOutlineHome, AiOutlineSearch, AiOutlineSolution} from 'react-icons/ai'
+import {AiOutlineAliwangwang, AiOutlineHome, AiOutlineSearch, AiOutlineSetting, AiOutlineSolution} from 'react-icons/ai'
 
 import {NOTION_ROOT_PAGE} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
 import Image from 'next/image'
+import {Setting} from '../page/setting/setting'
 import {Transcripts} from '../page/transcripts/transcripts'
 import {VoiceChat} from '../page/voice-chat/voice-chat'
 
@@ -31,6 +32,12 @@ export const MENUS: any = {
     menuComp: NOTION_ROOT_PAGE,
     useBlankLink: true,
   },
+  settings: {
+    include: 'other',
+    menuIcon: (<AiOutlineSetting className='text-2xl'/>),
+    menuName: 'Settings',
+    menuComp: (<Setting/>),
+  },
 }
 
 
@@ -38,7 +45,7 @@ export const Sidebar = () => {
   const {selMenu, setSelMenu} = useZustand()
 
   return (
-    <div className="flex flex-col justify-between h-full p-6 border-r border-border-gray">
+    <div className="flex flex-col justify-between h-full gap-6 p-6 border-r border-border-gray">
       <div className='flex flex-col gap-6'>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -57,6 +64,33 @@ export const Sidebar = () => {
           <div className='font-semibold border-b text-text-gray border-b-border-gray'>GENERAL</div>
           <div className='flex flex-col gap-1'>
             {Object.keys(MENUS).map((menuKey: string, index: number) => MENUS[menuKey].include === 'general' &&
+              <a
+                key={index}
+                className={`flex items-center gap-3 p-1 text-sm cursor-pointer hover:text-text-dark
+                  ${selMenu === menuKey ? 'text-text-dark' : 'text-text-gray'}`}
+                href={MENUS[menuKey].useBlankLink ? MENUS[menuKey].menuComp : '#'}
+                target={MENUS[menuKey].useBlankLink ? '_blank' : '_self'}
+                rel="noreferrer"
+                onClick={() => {
+                  if (MENUS[menuKey].useBlankLink) {
+                    return
+                  }
+
+                  setSelMenu(menuKey)
+                }}
+              >
+                {MENUS[menuKey].menuIcon}
+                <div>{MENUS[menuKey].menuName}</div>
+              </a>,
+            )}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className='flex flex-col'>
+          <div className='font-semibold border-b text-text-gray border-b-border-gray'>OTHER</div>
+          <div className='flex flex-col gap-1'>
+            {Object.keys(MENUS).map((menuKey: string, index: number) => MENUS[menuKey].include === 'other' &&
               <a
                 key={index}
                 className={`flex items-center gap-3 p-1 text-sm cursor-pointer hover:text-text-dark

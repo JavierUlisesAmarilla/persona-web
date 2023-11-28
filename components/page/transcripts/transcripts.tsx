@@ -16,6 +16,7 @@ export const Transcripts = () => {
           <Transcript
             key={index}
             data={transcript}
+            classNames='min-w-[250px]'
           />,
         )}
       </div>

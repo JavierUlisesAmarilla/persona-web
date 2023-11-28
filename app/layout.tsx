@@ -41,7 +41,7 @@ export default function RootLayout({
           {/* @ts-expect-error Server Component */}
           <Nav/>
         </Suspense>
-        <main className="flex flex-col items-center w-full min-h-screen py-20">
+        <main className="flex flex-col items-center w-full min-h-screen pt-20">
           {children}
         </main>
         <Footer/>

@@ -1,8 +1,8 @@
 'use client'
 
-export const Transcript = ({data}: {data: any}) => {
+export const Transcript = ({data, classNames}: {data: any, classNames?: string}) => {
   return (
-    <div className='w-1/2 p-3 lg:w-1/4'>
+    <div className={`w-1/2 p-3 lg:w-1/4 ${classNames}`}>
       <div className="flex flex-col gap-3 p-6 text-xs border rounded-lg bg-bg-gray">
         <div className='flex items-center gap-3'>
           <div className="w-full">Persona Name: </div>
@@ -31,13 +31,13 @@ export const Transcript = ({data}: {data: any}) => {
                   key={index}
                   className='flex flex-col items-start text-text-dark'
                 >
-                  <div className='w-3/4 px-3 py-2 border rounded-bl-none bg-bg-gray border-border-gray rounded-xl'>{message.content}</div>
+                  <div className='w-auto px-3 py-2 border rounded-bl-none max-w-3/4 bg-bg-gray border-border-gray rounded-xl'>{message.content}</div>
                 </div> :
                 <div
                   key={index}
                   className='flex flex-col items-end text-text-light'
                 >
-                  <div className='w-3/4 px-3 py-2 border rounded-bl-none bg-bg-blue border-border-gray rounded-xl'>{message.content}</div>
+                  <div className='w-auto px-3 py-2 border rounded-br-none max-w-3/4 bg-bg-blue border-border-gray rounded-xl'>{message.content}</div>
                 </div>,
               )}
             </div>

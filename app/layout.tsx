@@ -1,12 +1,13 @@
+/* eslint-disable require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
+
 import './globals.css'
 
 import React, {Suspense} from 'react'
 import {inter, sfPro} from './fonts'
 
+import {Nav} from '@/components/layout/nav'
 import {Analytics} from '@vercel/analytics/react'
-/* eslint-disable jsdoc/require-returns */
-import Footer from '@/components/layout/footer'
-import Nav from '@/components/layout/nav'
 import cx from 'classnames'
 
 
@@ -25,27 +26,23 @@ export const metadata = {
   themeColor: '#FFF',
 }
 
-/**
- *
- */
-export default function RootLayout({
+
+export default function Layout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-gray text-text-dark')}>
-        {/* <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/> */}
+      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark')}>
         <Suspense fallback="...">
           {/* @ts-expect-error Server Component */}
           <Nav/>
+          <main className="flex flex-col items-center w-full min-h-screen pt-20">
+            {children}
+          </main>
+          <Analytics/>
         </Suspense>
-        <main className="flex flex-col items-center w-full min-h-screen pt-20">
-          {children}
-        </main>
-        <Footer/>
-        <Analytics/>
       </body>
     </html>
   )

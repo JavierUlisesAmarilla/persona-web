@@ -2,24 +2,23 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {BlueButton, BorderGreenButton, GreenButton, LightBlueButton, BorderGrayButton, BorderOrangeButton} from '@/components/shared/button'
-import {useState} from 'react'
+import {BlueButton, BorderGreenButton, BorderOrangeButton, GreenButton, LightBlueButton} from '@/components/shared/button'
 
 import {InputText} from '@/components/shared/input-text'
 import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
+import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {changeLLM} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
+import {useState} from 'react'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
-import Scenario from './scenario'
-import {SINDARIN_API_URL} from '@/lib/constants'
+import {Scenario} from './scenario'
 
 
 declare global {
@@ -29,10 +28,7 @@ declare global {
 }
 
 
-/**
- *
- */
-export default function VoiceChat() {
+export const VoiceChat = () => {
   const {
     personaClient,
     personaArr,

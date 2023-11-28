@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {getCustomDateFromDate, getNextCustomDateFromDate, getUniqueArr} from '../../../lib/common'
 
 import {Calendar} from 'primereact/calendar'

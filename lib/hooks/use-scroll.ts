@@ -1,11 +1,7 @@
-/* eslint-disable jsdoc/require-returns */
 import {useCallback, useEffect, useState} from 'react'
 
 
-/**
- *
- */
-export default function useScroll(threshold: number) {
+export const useScroll = (threshold: number) => {
   const [scrolled, setScrolled] = useState(false)
 
   const onScroll = useCallback(() => {

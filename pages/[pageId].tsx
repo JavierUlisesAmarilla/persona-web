@@ -9,14 +9,13 @@ import {IS_DEV, NOTION_ROOT_PAGE_ID, NOTION_ROOT_SPACE_ID} from '../lib/constant
 import {ExtendedRecordMap} from 'notion-types'
 import {getAllPagesInSpace} from 'notion-utils'
 import {defaultMapPageUrl} from 'react-notion-x'
-import {NotionPage} from '../components/page/NotionPage'
+import {NotionPage} from '../components/page/notion-page'
 import {notionApi} from '../lib/notion'
 
 
 export const getStaticProps = async (context: any) => {
   const pageId = context.params.pageId as string
   const recordMap = await notionApi.getPage(pageId)
-
   return {
     props: {
       recordMap,

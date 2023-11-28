@@ -1,6 +1,6 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
+import {AnimatePresence, motion} from 'framer-motion'
 import React, {
   Dispatch,
   SetStateAction,
@@ -8,16 +8,13 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
+
+import {useWindowSize} from '@/lib/hooks/use-window-size'
 import FocusTrap from 'focus-trap-react'
-import {AnimatePresence, motion} from 'framer-motion'
-import Leaflet from './leaflet'
-import useWindowSize from '@/lib/hooks/use-window-size'
+import {Leaflet} from './leaflet'
 
 
-/**
- *
- */
-export default function Modal({
+export const Modal = ({
   children,
   showModal,
   setShowModal,
@@ -25,7 +22,7 @@ export default function Modal({
   children: React.ReactNode;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-}) {
+}) => {
   const desktopModalRef = useRef(null)
 
   const onKeyDown = useCallback(

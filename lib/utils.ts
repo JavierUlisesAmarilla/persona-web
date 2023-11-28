@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/require-returns */
 import ms from 'ms'
 
 
@@ -10,10 +9,8 @@ export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   }`
 }
 
-/**
- *
- */
-export function nFormatter(num: number, digits?: number) {
+
+export const nFormatter = (num: number, digits?: number) => {
   if (!num) {
     return '0'
   }
@@ -38,15 +35,14 @@ export function nFormatter(num: number, digits?: number) {
     '0'
 }
 
-/**
- *
- */
-export function capitalize(str: string) {
+
+export const capitalize = (str: string) => {
   if (!str || typeof str !== 'string') {
     return str
   }
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
 
 export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) {

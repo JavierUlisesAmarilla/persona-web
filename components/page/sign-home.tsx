@@ -13,9 +13,9 @@ import {ExtendedRecordMap} from 'notion-types'
 import {Alert} from '../shared/alert'
 import {ApiDocs} from './api-docs/api-docs'
 import {Dashboard} from './dashboard/dashboard'
-import Setting from './setting/setting'
+import {Setting} from './setting/setting'
 import {Transcripts} from './transcripts/transcripts'
-import VoiceChat from './voice-chat/voice-chat'
+import {VoiceChat} from './voice-chat/voice-chat'
 
 
 let prevApiKey: string

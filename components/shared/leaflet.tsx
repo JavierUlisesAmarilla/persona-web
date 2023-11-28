@@ -1,21 +1,19 @@
-/* eslint-disable jsdoc/require-returns */
-import React, {useEffect, useRef, ReactNode, Dispatch, SetStateAction} from 'react'
-import {AnimatePresence, motion, useAnimation} from 'framer-motion'
+/* eslint-disable semi */
+import {AnimatePresence, motion, useAnimation} from 'framer-motion';
+import {Dispatch, ReactNode, SetStateAction, useEffect, useRef} from 'react';
 
 
-/**
- *
- */
-export default function Leaflet({
+export const Leaflet = ({
   setShow,
   children,
 }: {
   setShow: Dispatch<SetStateAction<boolean>>;
   children: ReactNode;
-}) {
+}) => {
   const leafletRef = useRef<HTMLDivElement>(null)
   const controls = useAnimation()
   const transitionProps = {type: 'spring', stiffness: 500, damping: 30}
+
   useEffect(() => {
     controls.start({
       y: 20,
@@ -24,10 +22,7 @@ export default function Leaflet({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  /**
-   *
-   */
-  async function handleDragEnd(_: any, info: any) {
+  const handleDragEnd = async (_: any, info: any) => {
     const offset = info.offset.y
     const velocity = info.velocity.y
     const height = leafletRef.current?.getBoundingClientRect().height || 0

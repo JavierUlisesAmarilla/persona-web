@@ -1,14 +1,14 @@
-/* eslint-disable jsdoc/require-returns */
-import React, {
-  useState,
+import {Google, LoadingDots} from '@/components/shared/icons'
+import {
   Dispatch,
   SetStateAction,
   useCallback,
   useMemo,
+  useState,
 } from 'react'
-import Modal from '@/components/shared/modal'
+
+import {Modal} from '@/components/shared/modal'
 import {signIn} from 'next-auth/react'
-import {LoadingDots, Google} from '@/components/shared/icons'
 import Image from 'next/image'
 
 
@@ -44,8 +44,7 @@ const SignInModal = ({
         <div className="flex flex-col px-4 py-8 space-y-4 bg-gray-50 md:px-16">
           <button
             disabled={signInClicked}
-            className={`${
-              signInClicked ?
+            className={`${signInClicked ?
                 'cursor-not-allowed border-gray-200 bg-gray-100' :
                 'border border-gray-200 bg-white text-black hover:bg-gray-50'
             } flex h-10 w-full items-center justify-center space-x-3 rounded-md border text-sm shadow-sm transition-all duration-75 focus:outline-none`}
@@ -69,10 +68,8 @@ const SignInModal = ({
   )
 }
 
-/**
- *
- */
-export function useSignInModal() {
+
+export const useSignInModal = () => {
   const [showSignInModal, setShowSignInModal] = useState(false)
 
   const SignInModalCallback = useCallback(() => {

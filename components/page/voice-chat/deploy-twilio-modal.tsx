@@ -8,12 +8,12 @@ import React, {useRef} from 'react'
 import {BlueButton} from '@/components/shared/button'
 import {CommonModal} from '@/components/shared/common-modal'
 import {InputText} from '@/components/shared/input-text'
+import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
 import {javascript} from '@codemirror/lang-javascript'
 import CodeMirror from '@uiw/react-codemirror'
 import axios from 'axios'
-import {SINDARIN_API_URL} from '@/lib/constants'
 
 
 interface Props {

@@ -1,8 +1,7 @@
-import React from 'react'
 import styles from './loading-dots.module.css'
 
 
-const LoadingDots = ({color = '#000'}: { color?: string }) => {
+export const LoadingDots = ({color = '#000'}: {color?: string}) => {
   return (
     <span className={styles.loading}>
       <span style={{backgroundColor: color}}/>
@@ -11,5 +10,3 @@ const LoadingDots = ({color = '#000'}: { color?: string }) => {
     </span>
   )
 }
-
-export default LoadingDots

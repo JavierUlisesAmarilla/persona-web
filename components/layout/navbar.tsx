@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
 import {NOTION_ROOT_PAGE, USE_REAL_NOTION} from '../../lib/constants'
 
 import {MENUS} from '@/lib/constants'
-import useScroll from '@/lib/hooks/use-scroll'
+import {useScroll} from '@/lib/hooks/use-scroll'
 import {useZustand} from '@/lib/store/use-zustand'
 import classnames from 'classnames'
 import {signIn} from 'next-auth/react'
@@ -15,12 +14,10 @@ import Link from 'next/link'
 import {useEffect} from 'react'
 import {BlueButton} from '../shared/button'
 import {useSignInModal} from './sign-in-modal'
-import UserDropdown from './user-dropdown'
+import {UserDropdown} from './user-dropdown'
 
-/**
- *
- */
-export default function NavBar({session}: {session: any}) {
+
+export const NavBar = ({session}: {session: any}) => {
   // eslint-disable-next-line no-unused-vars
   const {SignInModal, setShowSignInModal} = useSignInModal()
   const scrolled = useScroll(50)

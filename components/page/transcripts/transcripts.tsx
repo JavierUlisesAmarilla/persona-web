@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {useZustand} from '../../../lib/store/use-zustand'
 import {Transcript} from './transcript'
 import {TranscriptFilter} from './transcript-filter'

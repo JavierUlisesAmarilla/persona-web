@@ -84,6 +84,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
 
   const getFilteredVoices = (gender?: string, age?: string, accent?: string) => {
     return voices.filter((voice) =>
+      !!voice.gender && !!voice.age && !!voice.accent &&
       (!gender || gender === '-' ? true : voice.gender === gender) &&
       (!age || age === '-' ? true : voice.age === age) &&
       (!accent || accent === '-' ? true : voice.accent === accent),

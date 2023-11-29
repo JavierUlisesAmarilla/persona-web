@@ -7,7 +7,7 @@
 import {BlueButton, BorderGreenButton, BorderOrangeButton, GreenButton, LightBlueButton} from '@/components/shared/button'
 
 import {InputText} from '@/components/shared/input-text'
-import {Textarea} from '@/components/shared/textarea'
+import {Textarea, HighlightableTextarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -63,9 +63,13 @@ export const VoiceChat = () => {
 
   const currentPromptText = personaArr[selPersonaIndex]?.currentVoicePrompt || ''
   const stringifiedActionText = JSON.stringify(schemaText, null, 2) || ''
-  const isActionsSchemaInPrompt = currentPromptText.includes('***PERSONA_VOICE_SCHEMA***')
+
+  console.log('CURRENT PROMPT TEXT', currentPromptText)
+  const actionsSchemaOccurrences = (currentPromptText.match(/(\*\*\*PERSONA_VOICE_SCHEMA\*\*\*)/g) || []).length
+  console.log('actionsSchemaOccurrences', actionsSchemaOccurrences)
+  const isActionsSchemaInPrompt = actionsSchemaOccurrences > 0
   const areScenariosInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
-  const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + encode(stringifiedActionText).length : encode(currentPromptText).length
+  const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + (encode(stringifiedActionText).length * actionsSchemaOccurrences) : encode(currentPromptText).length
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
@@ -338,6 +342,7 @@ export const VoiceChat = () => {
                   <BlueButton disabled={isPromptSynced} onClick={onPrompt}>Update prompt</BlueButton>
                 </div>
                 <Textarea
+                // <HighlightableTextarea
                   className='h-[550px]'
                   value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                   placeholder='Enter the prompt here'
@@ -354,7 +359,7 @@ export const VoiceChat = () => {
                   <div className='text-sm text-right'>
                     Tokens:{' '}
                     <span className={
-                      `${totalPromptTokens < 1500 ? 'text-green-500' :
+                      `${totalPromptTokens < 1000 ? 'text-green-500' :
                         totalPromptTokens < 3000 ? 'text-yellow-500' :
                         totalPromptTokens <= 4000 ? 'text-orange-500' :
                         'text-red-500'}`

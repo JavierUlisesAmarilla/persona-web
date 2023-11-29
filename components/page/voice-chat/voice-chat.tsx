@@ -19,6 +19,7 @@ import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import {Scenario} from './scenario'
+import {encode} from 'gpt-tokenizer'
 
 
 declare global {
@@ -57,6 +58,11 @@ export const VoiceChat = () => {
   const [showChangeVoiceModal, setShowChangeVoiceModal] = useState(false)
 
   const apiKey = useApiKey()
+
+  const currentPromptText = personaArr[selPersonaIndex]?.currentVoicePrompt || ''
+  const stringifiedActionText = JSON.stringify(schemaText, null, 2) || ''
+  const isActionsSchemaInPrompt = currentPromptText.includes('***PERSONA_VOICE_SCHEMA***')
+  const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + encode(stringifiedActionText).length : encode(currentPromptText).length
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
@@ -329,9 +335,23 @@ export const VoiceChat = () => {
                   placeholder='Enter the prompt here'
                   onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
                 />
-                <div className='flex items-center gap-3'>
-                  <BlueButton onClick={onPrompt}>Update prompt</BlueButton>
-                  <div>{promptState}</div>
+                <div className='flex items-center justify-between w-full gap-3'>
+                  <div>
+                    <BlueButton onClick={onPrompt}>Update prompt</BlueButton>
+                    <div>{promptState}</div>
+                  </div>
+                  <div className='text-sm text-right'>
+                    Tokens:{' '}
+                    <span className={
+                      `${totalPromptTokens < 1500 ? 'text-green-500' :
+                        totalPromptTokens < 3000 ? 'text-yellow-500' :
+                        totalPromptTokens <= 4000 ? 'text-orange-500' :
+                        'text-red-500'}`
+                    }
+                    >
+                      {totalPromptTokens}
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className='flex flex-col w-full gap-3'>

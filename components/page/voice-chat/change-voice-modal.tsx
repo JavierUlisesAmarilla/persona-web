@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import {BlueButton, BorderGrayButton} from '@/components/shared/button'
+import {BlueButton, BorderGrayButton, GreenButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
 
 import {CommonModal} from '@/components/shared/common-modal'
@@ -12,6 +12,7 @@ import {AiFillSound} from 'react-icons/ai'
 import {updatePersonaVoice} from '../../../lib/persona'
 import {useZustand} from '../../../lib/store/use-zustand'
 import {UserSelect} from '../../shared/user-select'
+import {PlanModal} from '../setting/plan-modal'
 
 
 interface VoiceOption {
@@ -32,15 +33,19 @@ export const ChangeVoiceModal: React.FC<Props> = ({
   show,
   onClose,
 }) => {
-  const {personaArr, selPersonaIndex, setPersonaVoiceId} = useZustand()
+  const {personaArr, selPersonaIndex, setPersonaVoiceId, team} = useZustand()
   const selPersonaName = personaArr[selPersonaIndex]?.name
   const [voices, setVoices] = useState<VoiceOption[]>([])
   const [selectedGender, setSelectedGender] = useState<string>('')
   const [selectedAge, setSelectedAge] = useState<string>('')
   const [selectedAccent, setSelectedAccent] = useState<string>('')
   const currentPersonaSelectedVoiceId = personaArr[selPersonaIndex]?.voiceId
+  const [showPlanModal, setShowPlanModal] = useState(false)
 
   const apiKey = useApiKey()
+
+  const isTeamFreeTier = team?.tier === 'free'
+  // const isTeamFreeTier = true
 
   const playVoiceSample = async (voiceId: string) => {
     const response = await fetch(`${SINDARIN_API_URL}/api/voices/${voiceId}/sample?apikey=${apiKey}`)
@@ -209,51 +214,46 @@ export const ChangeVoiceModal: React.FC<Props> = ({
             </div>
           ))}
         </div>
-        <div className='text-base font-semibold text-start'>Import from ElevenLabs</div>
-        <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray'>
-          <div className='flex flex-col gap-3'>
-            <div>1. In the ElevenLabs, VoiceLab connects (link), press the "Submit" button.</div>
-            {/* <div className='flex justify-center'>
-              <div className='flex flex-col border rounded w-80 bg-bg-gray border-border-gray'>
-                <div className='flex flex-col gap-3 p-6'>
-                  <div className='flex items-center justify-between'>
-                    <div className='flex items-center gap-3'>
-                      <div className='text-sm'>Badly</div>
-                      <AiFillCustomerService className='text-sm'/>
-                    </div>
-                    <AiOutlineShareAlt className='text-base'/>
-                  </div>
-                  <div className='font-bold'>Can't read</div>
-                  <div>Can't read</div>
-                </div>
-                <div className='flex items-center w-full border-t border-border-gray'>
-                  <div className='flex items-center justify-center w-full gap-1 p-3 border-r cursor-pointer border-border-gray'>
-                    <AiFillSound/>
-                    <div>Volume</div>
-                  </div>
-                  <div className='flex items-center justify-center w-full gap-1 p-3 border-r cursor-pointer border-border-gray'>
-                    <AiOutlineEdit/>
-                    <div>Edit</div>
-                  </div>
-                  <div className='flex items-center justify-center w-full gap-1 p-3 cursor-pointer'>
-                    <AiFillDelete/>
-                    <div>Remove</div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-          </div>
-          <div className='flex flex-col gap-3'>
-            <div>2. Paste the share link here.</div>
-            <div className='flex items-center justify-center w-full gap-3'>
-              <InputText
-                classNames='w-full'
-                placeholder="Share Link"
-              />
-              <BorderGrayButton>Submit</BorderGrayButton>
+        <div className='text-base font-semibold text-start'>Create Custom Voice</div>
+        {isTeamFreeTier ? (
+          // <div className='flex flex-col items-center justify-center' style={{height: '100%'}}>
+          <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray items-center justify-center'>
+            <p>Please upgrade your plan to create custom voices.</p>
+            <div className="mt-2">
+              <GreenButton onClick={() => setShowPlanModal(true)}>Upgrade Plan</GreenButton>
             </div>
+            <PlanModal
+              show={showPlanModal}
+              onClose={() => setShowPlanModal(false)}
+            />
           </div>
-        </div>
+        ) : (
+          <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray items-center justify-center'>
+            <p>Please contact us to create a custom voice:</p>
+            <div className="mt-2">
+              <GreenButton onClick={() => window.location.href = 'mailto:support@sindarinventures.com?subject=Create Custom Voice'}>Contact Us</GreenButton>
+            </div>
+            <PlanModal
+              show={showPlanModal}
+              onClose={() => setShowPlanModal(false)}
+            />
+          </div>
+          // <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray'>
+          //   <div className='flex flex-col gap-3'>
+          //     <div>1. In the ElevenLabs, VoiceLab connects (link), press the "Submit" button.</div>
+          //   </div>
+          //   <div className='flex flex-col gap-3'>
+          //     <div>2. Paste the share link here.</div>
+          //     <div className='flex items-center justify-center w-full gap-3'>
+          //       <InputText
+          //         classNames='w-full'
+          //         placeholder="Share Link"
+          //       />
+          //       <BorderGrayButton>Submit</BorderGrayButton>
+          //     </div>
+          //   </div>
+          // </div>
+        )}
       </div>
     </CommonModal>
   )

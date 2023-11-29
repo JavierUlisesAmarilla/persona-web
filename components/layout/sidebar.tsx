@@ -50,6 +50,8 @@ export const Sidebar = () => {
         team.tier === 'III' ? 'Tier III' :
           'Customer Plan')
 
+  const teamNameString = (team && team.teamId) || ''
+
   return (
     <div className="flex flex-col justify-between h-full gap-6 p-6 border-r border-border-gray">
       <div className='flex flex-col gap-6'>
@@ -57,7 +59,7 @@ export const Sidebar = () => {
           <div className="flex items-center gap-3">
             <Image className='rounded' src='assets/images/sidebar_logo.svg' width={40} height={40} alt='Sindarin'/>
             <div className='flex flex-col text-sm font-medium'>
-              <div className='text-text-dark'>Brian</div>
+              <div className='text-text-dark'>{teamNameString}</div>
               <div className='text-text-gray'>{teamString}</div>
             </div>
           </div>

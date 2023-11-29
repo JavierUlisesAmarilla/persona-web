@@ -56,12 +56,15 @@ export const VoiceChat = () => {
   const [showChatModal, setShowChatModal] = useState(false)
   const [showDeployModal, setShowDeployModal] = useState(false)
   const [showChangeVoiceModal, setShowChangeVoiceModal] = useState(false)
+  const [isPromptSynced, setIsPromptSynced] = useState(true)
+  const [isActionsSchemaSynced, setIsActionsSchemaSynced] = useState(true)
 
   const apiKey = useApiKey()
 
   const currentPromptText = personaArr[selPersonaIndex]?.currentVoicePrompt || ''
   const stringifiedActionText = JSON.stringify(schemaText, null, 2) || ''
   const isActionsSchemaInPrompt = currentPromptText.includes('***PERSONA_VOICE_SCHEMA***')
+  const areScenariosInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
   const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + encode(stringifiedActionText).length : encode(currentPromptText).length
 
   const onPersona = (e: any) => {
@@ -128,6 +131,7 @@ export const VoiceChat = () => {
 
   const onPrompt = async () => {
     try {
+      setIsPromptSynced(true)
       const selPersonaId = personaArr[selPersonaIndex]?._id
 
       if (!selPersonaId) {
@@ -166,6 +170,7 @@ export const VoiceChat = () => {
 
   const onSchema = async () => {
     try {
+      setIsActionsSchemaSynced(true)
       const selPersonaId = personaArr[selPersonaIndex]?._id
 
       if (!selPersonaId || !schemaText) {
@@ -328,16 +333,22 @@ export const VoiceChat = () => {
             </div> */}
             <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-light'>
               <div className='flex flex-col w-full gap-3'>
-                <div className='text-sm'>Prompt</div>
+                <div className='flex items-center justify-between w-full gap-3'>
+                  <div className='text-sm'>Prompt</div>
+                  <BlueButton disabled={isPromptSynced} onClick={onPrompt}>Update prompt</BlueButton>
+                </div>
                 <Textarea
                   className='h-[550px]'
                   value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                   placeholder='Enter the prompt here'
-                  onChange={(e) => setScenarioPrompt(selPersonaIndex, e.target.value)}
+                  onChange={(e) => {
+                    setIsPromptSynced(false)
+                    setScenarioPrompt(selPersonaIndex, e.target.value)
+                  }}
                 />
                 <div className='flex items-center justify-between w-full gap-3'>
                   <div>
-                    <BlueButton onClick={onPrompt}>Update prompt</BlueButton>
+                    <div className='text-sm text-right'>Actions Schema {isActionsSchemaInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
                     <div>{promptState}</div>
                   </div>
                   <div className='text-sm text-right'>
@@ -353,17 +364,24 @@ export const VoiceChat = () => {
                     </span>
                   </div>
                 </div>
+                <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
               </div>
               <div className='flex flex-col w-full gap-3'>
-                <div className='text-sm'>Actions schema</div>
+                <div className='flex items-center justify-between w-full gap-3'>
+                  <div className='text-sm'>Actions Schema</div>
+                  <BlueButton disabled={isActionsSchemaSynced} onClick={onSchema}>Update Actions Schema</BlueButton>
+                </div>
                 <Textarea
-                  className='h-[550px]'
+                  className={`h-[550px] ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
                   value={schemaText}
                   placeholder='Enter the actions schema here'
-                  onChange={(e) => setSchemaText(e.target.value)}
+                  onChange={(e) => {
+                    setIsActionsSchemaSynced(false)
+                    setSchemaText(e.target.value)
+                  }}
                 />
                 <div className='flex items-center gap-3'>
-                  <BlueButton onClick={onSchema}>Update actions schema</BlueButton>
+                  <div>todo</div>
                   <div>{schemaState}</div>
                 </div>
               </div>

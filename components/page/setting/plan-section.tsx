@@ -30,7 +30,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
   return (
     <div className="flex flex-col w-full px-6 border border-gray-200 rounded-lg bg-bg-light">
       <div className='flex justify-between w-full py-6 border-b border-b-border-gray'>
-        <div className='text-base font-medium whitespace-nowrap'>Tier:</div>
+        <div className='text-base font-medium whitespace-nowrap'>Tier</div>
         <InputText
           classNames='w-fit'
           value={team?.tier || 'free'}
@@ -40,7 +40,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
         />
       </div>
       <div className='flex justify-between w-full py-6 border-b border-b-border-gray'>
-        <div className='text-base font-medium whitespace-nowrap'>Messages used this month:</div>
+        <div className='text-base font-medium whitespace-nowrap'>Messages used this month</div>
         <InputText
           classNames={`w-fit ${isOver90Percent ? 'text-red-500 border-red-500' : ''}`}
           value={messagesUsedString}
@@ -50,7 +50,7 @@ export default function PlanSection({apiKeyIndex, data}: any) {
         />
       </div>
       <div className='flex justify-between w-full py-6'>
-        <div className='text-base font-medium whitespace-nowrap'>Monthly messages reset at:</div>
+        <div className='text-base font-medium whitespace-nowrap'>Monthly messages reset at</div>
         <InputText
           classNames='w-fit'
           value={nextMessageReset}

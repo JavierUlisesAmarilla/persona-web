@@ -84,6 +84,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
 
   const getFilteredVoices = (gender?: string, age?: string, accent?: string) => {
     return voices.filter((voice) =>
+      !!voice.gender && !!voice.age && !!voice.accent &&
       (!gender || gender === '-' ? true : voice.gender === gender) &&
       (!age || age === '-' ? true : voice.age === age) &&
       (!accent || accent === '-' ? true : voice.accent === accent),
@@ -178,7 +179,22 @@ export const ChangeVoiceModal: React.FC<Props> = ({
                   playVoiceSample(voice.id)
                 }}
                 />
-                <div>{`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}</div>
+                <div
+                  className='cursor-pointer'
+                  role="button"
+                  tabIndex={0} // Make the div focusable
+                  onClick={() => {
+                    playVoiceSample(voice.id)
+                  }}
+                  onKeyDown={(event) => { // Add keyboard event listener
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      // Call the same click handler or a specific one for keyboard events
+                      /* handle click event here */
+                    }
+                  }}
+                >
+                  {`${voice.gender}, ${voice.age}, ${voice.accent} (${voice.index})`}
+                </div>
               </div>
               {currentPersonaSelectedVoiceId === voice.id ? (
                 <BlueButton disabled>Current Voice</BlueButton>

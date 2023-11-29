@@ -3,22 +3,22 @@
 export const Transcript = ({data, classNames}: {data: any, classNames?: string}) => {
   return (
     <div className={`flex flex-col gap-3 w-1/3 lg:w-1/5 p-6 text-xs border rounded-lg bg-bg-light flex-grow ${classNames}`}>
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-3 justify-end'>
         <div className="w-full">Persona Name: </div>
-        <div className="w-full">
-          <div className='px-2 py-1 border w-fit bg-bg-light border-border-gray'>{data?.personaName}</div>
+        <div className="">
+          <div className='px-2 py-1 border bg-bg-light border-border-gray text-right w-fit'>{data?.personaName}</div>
         </div>
       </div>
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-3 justify-end'>
         <div className="w-full">User ID: </div>
-        <div className="w-full">
-          <div className='px-2 py-1 border w-fit bg-bg-light border-border-gray'>{data?.userId}</div>
+        <div className="">
+          <div className='px-2 py-1 border bg-bg-light border-border-gray text-right w-fit'>{data?.userId}</div>
         </div>
       </div>
-      <div className='flex items-center gap-3'>
+      <div className='flex items-center gap-3 justify-end'>
         <div className="w-full">Date: </div>
-        <div className="w-full">
-          <div className='px-2 py-1 border w-fit bg-bg-light border-border-gray'>{data?.createdAt}</div>
+        <div className="">
+          <div className='px-2 py-1 border bg-bg-light border-border-gray text-right w-fit'>{data?.createdAt}</div>
         </div>
       </div>
       {data?.messages?.length &&

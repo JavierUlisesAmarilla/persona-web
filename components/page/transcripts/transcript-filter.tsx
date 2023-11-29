@@ -46,7 +46,7 @@ export const TranscriptFilter = () => {
   }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, transcriptArr])
 
   return (
-    <div className='flex flex-wrap items-center w-full gap-3 p-6 border rounded-lg bg-bg-light'>
+    <div className='flex flex-wrap items-center gap-3 p-6 border rounded-lg bg-bg-light'>
       <MultiSelect
         className='text-xs border w-fit border-border-gray h-fit'
         value={selectedPersonaNameOptionArr}

@@ -1,8 +1,6 @@
-
-
 'use client'
 
-import {AiOutlineAliwangwang, AiOutlineHome, AiOutlineSetting, AiOutlineSolution} from 'react-icons/ai'
+import {AiOutlineHome, AiOutlineSetting} from 'react-icons/ai'
 
 import {NOTION_ROOT_PAGE} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
@@ -10,24 +8,29 @@ import Image from 'next/image'
 import {Setting} from '../page/setting/setting'
 import {Transcripts} from '../page/transcripts/transcripts'
 import {VoiceChat} from '../page/voice-chat/voice-chat'
+import Document from '../shared/icons/document'
+import SpeechBubble from '../shared/icons/speech-bubble'
 
 
 export const MENUS: any = {
   playground: {
     include: 'general',
     menuIcon: (<AiOutlineHome className='text-2xl'/>),
+    menuSelIcon: (<AiOutlineHome className='text-2xl'/>),
     menuName: 'Playground',
     menuComp: (<VoiceChat/>),
   },
   transcripts: {
     include: 'general',
-    menuIcon: (<AiOutlineAliwangwang className='text-2xl'/>),
+    menuIcon: (<SpeechBubble fill='rgb(152 162 179)'/>),
+    menuSelIcon: (<SpeechBubble fill='rgb(0 0 0)'/>),
     menuName: 'Transcripts',
     menuComp: (<Transcripts/>),
   },
   apiDocs: {
     include: 'general',
-    menuIcon: (<AiOutlineSolution className='text-2xl'/>),
+    menuIcon: (<Document fill='rgb(152 162 179)'/>),
+    menuSelIcon: (<Document fill='rgb(0 0 0)'/>),
     menuName: 'API Docs',
     menuComp: NOTION_ROOT_PAGE,
     useBlankLink: true,
@@ -35,6 +38,7 @@ export const MENUS: any = {
   settings: {
     include: 'other',
     menuIcon: (<AiOutlineSetting className='text-2xl'/>),
+    menuSelIcon: (<AiOutlineSetting className='text-2xl'/>),
     menuName: 'Settings',
     menuComp: (<Setting/>),
   },
@@ -72,7 +76,7 @@ export const Sidebar = () => {
             {Object.keys(MENUS).map((menuKey: string, index: number) => MENUS[menuKey].include === 'general' &&
               <a
                 key={index}
-                className={`flex items-center gap-3 p-1 text-sm cursor-pointer hover:text-text-dark
+                className={`flex items-center gap-3 p-1 text-sm cursor-pointer
                   ${selMenu === menuKey ? 'text-text-dark' : 'text-text-gray'}`}
                 href={MENUS[menuKey].useBlankLink ? MENUS[menuKey].menuComp : '#'}
                 target={MENUS[menuKey].useBlankLink ? '_blank' : '_self'}
@@ -85,7 +89,7 @@ export const Sidebar = () => {
                   setSelMenu(menuKey)
                 }}
               >
-                {MENUS[menuKey].menuIcon}
+                {selMenu === menuKey ? MENUS[menuKey].menuSelIcon : MENUS[menuKey].menuIcon}
                 <div>{MENUS[menuKey].menuName}</div>
               </a>,
             )}
@@ -99,7 +103,7 @@ export const Sidebar = () => {
             {Object.keys(MENUS).map((menuKey: string, index: number) => MENUS[menuKey].include === 'other' &&
               <a
                 key={index}
-                className={`flex items-center gap-3 p-1 text-sm cursor-pointer hover:text-text-dark
+                className={`flex items-center gap-3 p-1 text-sm cursor-pointer
                   ${selMenu === menuKey ? 'text-text-dark' : 'text-text-gray'}`}
                 href={MENUS[menuKey].useBlankLink ? MENUS[menuKey].menuComp : '#'}
                 target={MENUS[menuKey].useBlankLink ? '_blank' : '_self'}
@@ -112,7 +116,7 @@ export const Sidebar = () => {
                   setSelMenu(menuKey)
                 }}
               >
-                {MENUS[menuKey].menuIcon}
+                {selMenu === menuKey ? MENUS[menuKey].menuSelIcon : MENUS[menuKey].menuIcon}
                 <div>{MENUS[menuKey].menuName}</div>
               </a>,
             )}

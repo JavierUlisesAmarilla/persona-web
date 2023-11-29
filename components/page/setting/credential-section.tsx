@@ -21,7 +21,7 @@ export default function CredentialSection({apiKeyIndex, data}: any) {
       <div className='flex items-center justify-between w-full py-6 border-b border-b-border-gray'>
         <div className='flex items-center gap-2 text-xs whitespace-nowrap'>
           <div className='text-base font-medium'>PRIVATE API Key</div>
-          <div>(Keep this secret!):</div>
+          <div className='text-gray-500'>(Keep this secret!)</div>
         </div>
         <div className='relative flex items-center justify-center'>
           <div
@@ -45,7 +45,7 @@ export default function CredentialSection({apiKeyIndex, data}: any) {
       <div className='flex items-center justify-between w-full py-6'>
         <div className='flex items-center gap-2 text-xs whitespace-nowrap'>
           <div className='text-base font-medium'>PUBLIC API Key</div>
-          <div>(Use this in the Browser client):</div>
+          <div className='text-gray-500'>(Use this in the Browser client)</div>
         </div>
         <div className='relative flex items-center justify-center'>
           <div

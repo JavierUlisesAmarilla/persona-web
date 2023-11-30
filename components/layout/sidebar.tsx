@@ -48,7 +48,7 @@ export const MENUS: any = {
 
 
 export const Sidebar = () => {
-  const {selMenu, setSelMenu, team} = useZustand()
+  const {selMenu, setSelMenu, team, apiKeyArr, selApiKeyIndex} = useZustand()
   console.log('team', team)
   const teamString = team && (team.tier === 'free' ? 'Free Tier' :
     team.tier === 'I' ? 'Tier I' :
@@ -56,7 +56,9 @@ export const Sidebar = () => {
         team.tier === 'III' ? 'Tier III' :
           'Customer Plan')
 
-  const teamNameString = (team && team.teamId) || ''
+
+  // const teamNameString = (team && team.teamId) || ''
+  const teamNameString = apiKeyArr[selApiKeyIndex]?.name || ''
 
   return (
     <div className="flex flex-col justify-between h-full gap-6 p-6 border-r border-border-gray">

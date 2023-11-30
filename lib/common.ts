@@ -59,3 +59,8 @@ export const emailCanAccess = async (email: string | null = null) => {
   const canAccess = sessionEmail && (sessionEmail === ADMIN_EMAIL || sessionEmail === email)
   return canAccess
 }
+
+
+export const isFunction = (functionToCheck: any) => {
+  return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'
+}

@@ -13,6 +13,7 @@ import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {changeLLM} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
+import {validateActionSchema} from '@/lib/utils'
 import axios from 'axios'
 import {encode} from 'gpt-tokenizer'
 import {useState} from 'react'
@@ -20,6 +21,7 @@ import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import {Scenario} from './scenario'
+import _ from 'lodash'
 
 
 declare global {
@@ -70,6 +72,9 @@ export const VoiceChat = () => {
   const isActionsSchemaInPrompt = actionsSchemaOccurrences > 0
   const areScenariosInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
   const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + (encode(stringifiedActionText).length * actionsSchemaOccurrences) : encode(currentPromptText).length
+
+  const schemaErrors = validateActionSchema(schemaText)
+  console.log('ERRORS!', schemaErrors)
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
@@ -374,7 +379,7 @@ export const VoiceChat = () => {
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
                   <div className='text-sm'>Actions Schema</div>
-                  <BlueButton disabled={isActionsSchemaSynced} onClick={onSchema}>Update Actions Schema</BlueButton>
+                  <BlueButton disabled={isActionsSchemaSynced || schemaErrors!.length > 0} onClick={onSchema}>Update Actions Schema</BlueButton>
                 </div>
                 <Textarea
                   className={`h-[550px] ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
@@ -385,9 +390,19 @@ export const VoiceChat = () => {
                     setSchemaText(e.target.value)
                   }}
                 />
-                <div className='flex items-center gap-3'>
-                  <div>todo</div>
-                  <div>{schemaState}</div>
+                <div className='flex items-center justify-end gap-3'>
+                  <div className='w-full text-right'>
+                    {schemaErrors!.length > 0 ?
+                      schemaErrors!.map((error, index) => (
+                        <div key={index} className='text-red-500 text-sm'>
+                          <div>{(error as any).instancePath || (error as any).dataPath ? `${((error as any).instancePath || (error as any).dataPath).replace('.properties', '')}:` : 'Error:'}</div>
+                          <div>{_.capitalize(error.message)}</div>
+                        </div>
+                      )) :
+                      <div className='text-sm'>Valid <span className='text-green-500'>✔</span></div>
+                    }
+                  </div>
+                  <div className='text-right'>{schemaState}</div>
                 </div>
               </div>
             </div>

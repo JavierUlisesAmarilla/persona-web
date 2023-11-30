@@ -5,7 +5,7 @@ import {BlueButton, BorderGrayButton, GreenButton} from '@/components/shared/but
 import React, {useEffect, useState} from 'react'
 
 import {CommonModal} from '@/components/shared/common-modal'
-import {InputText} from '@/components/shared/input-text'
+// import {InputText} from '@/components/shared/input-text'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {AiFillSound} from 'react-icons/ai'
@@ -231,7 +231,11 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray items-center justify-center'>
             <p>Please contact us to create a custom voice:</p>
             <div className="mt-2">
-              <GreenButton onClick={() => window.location.href = 'mailto:support@sindarinventures.com?subject=Create Custom Voice'}>Contact Us</GreenButton>
+              <GreenButton onClick={() => {
+                window.location.href = 'mailto:support@sindarinventures.com?subject=Create Custom Voice'
+              }}
+              >Contact Us
+              </GreenButton>
             </div>
             <PlanModal
               show={showPlanModal}

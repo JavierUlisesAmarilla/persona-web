@@ -44,12 +44,12 @@ export const HighlightableTextarea = ({
 }) => {
   const [content, setContent] = useState(value || '')
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setContent(e.target.value)
     if (onChange) {
       onChange(e)
     }
-  };
+  }
 
   const highlightedHtml = () => {
     if (!highlightText) {

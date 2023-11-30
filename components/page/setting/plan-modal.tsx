@@ -144,7 +144,7 @@ export const PlanModal = ({
       show={show}
       onClose={handleClose}
     >
-      <div className='w-[50rem] h-[30rem]'>
+      <div>
         {team ? (
           <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg'>
             {shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
@@ -180,7 +180,7 @@ export const PlanModal = ({
             }
           </div>
         ) : (
-          <div className='flex items-center justify-center w-full h-full'>
+          <div className='flex items-center justify-center px-10 py-5 animate-pulse'>
             <p>Loading...</p>
           </div>
         )}

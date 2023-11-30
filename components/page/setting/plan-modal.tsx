@@ -2,7 +2,7 @@
 'use client'
 
 import {SINDARIN_API_URL, STRIPE_PUBLIC_KEY} from '@/lib/constants'
-import React, {MouseEventHandler, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
@@ -15,7 +15,7 @@ import {CommonModal} from '../../shared/common-modal'
 
 interface Props {
   show?: boolean
-  onClose?: MouseEventHandler<SVGElement>
+  onClose?: any
 }
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY!)
@@ -31,8 +31,8 @@ export const PlanModal = ({
   const [checkoutInstance, setCheckoutInstance] = useState<any>(null)
 
   const handleClose = (event?: React.MouseEvent<SVGElement>) => {
-    if (onClose && event) {
-      onClose(event)
+    if (onClose) {
+      onClose()
     }
 
     if (checkoutInstance) {
@@ -144,45 +144,47 @@ export const PlanModal = ({
       show={show}
       onClose={handleClose}
     >
-      {team ? (
-        <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg'>
-          {shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
-            <div
-              key={planIndex}
-              className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-300 border-2' : 'border-border-gray'} bg-bg-light`}
-              style={{width: '500px'}}
-            >
-              <div className='flex items-center justify-between gap-3'>
-                <div className='flex items-center'>
-                  <img className='w-8' src='persona-logo-rounded.png' alt=''/>
-                  <div>{plan.name}</div>
+      <div className='w-[50rem] h-[30rem]'>
+        {team ? (
+          <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg'>
+            {shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
+              <div
+                key={planIndex}
+                className={`flex flex-col gap-1 p-6 border rounded-lg ${team.tier === plan.tier ? 'border-gray-300 border-2' : 'border-border-gray'} bg-bg-light`}
+                style={{width: '500px'}}
+              >
+                <div className='flex items-center justify-between gap-3'>
+                  <div className='flex items-center'>
+                    <img className='w-8' src='persona-logo-rounded.png' alt=''/>
+                    <div>{plan.name}</div>
+                  </div>
+                  <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
                 </div>
-                <div className='text-sm'>{_.isNumber(plan.price) ? `$${plan.price} / mo` : plan.price}</div>
-              </div>
-              <div className='pl-10'>
-                {plan.descArr.map((desc, descIndex) =>
-                  <div
-                    key={descIndex}
-                    className='flex items-start text-xs'
-                    style={{marginTop: '5px'}}
-                  >
-                    <div className='mr-2'>•</div>
-                    <div style={{wordWrap: 'break-word'}}>{desc}</div>
-                  </div>,
-                )}
-              </div>
-              <div className='flex justify-end w-full pt-2'>
-                <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
-              </div>
-            </div>,
-          )
-          }
-        </div>
-      ) : (
-        <div className='flex items-center justify-center' style={{height: '100%'}}>
-          <p>Loading...</p>
-        </div>
-      )}
+                <div className='pl-10'>
+                  {plan.descArr.map((desc, descIndex) =>
+                    <div
+                      key={descIndex}
+                      className='flex items-start text-xs'
+                      style={{marginTop: '5px'}}
+                    >
+                      <div className='mr-2'>•</div>
+                      <div style={{wordWrap: 'break-word'}}>{desc}</div>
+                    </div>,
+                  )}
+                </div>
+                <div className='flex justify-end w-full pt-2'>
+                  <GreenButton onClick={plan.onCtaClick} disabled={team.tier === plan.tier}>{team.tier === plan.tier ? 'Current Plan' : (plan.cta || 'Upgrade')}</GreenButton>
+                </div>
+              </div>,
+            )
+            }
+          </div>
+        ) : (
+          <div className='flex items-center justify-center w-full h-full'>
+            <p>Loading...</p>
+          </div>
+        )}
+      </div>
     </CommonModal>
   )
 }

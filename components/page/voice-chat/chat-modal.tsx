@@ -36,8 +36,8 @@ export const ChatModal = ({
   onClose,
 }: Props) => {
   return (
-    <CommonModal show={show}>
-      <div className='relative flex flex-col items-end w-full gap-3 p-6 overflow-auto'>
+    <CommonModal show={show} onClose={onClose}>
+      <div className='relative flex flex-col items-end w-[60rem] gap-3 p-6 overflow-auto'>
         <div className='flex justify-between w-full'>
           <h2 className='text-2xl'>Chat with {personaName}</h2>
           <RedButton onClick={onClose}>End Chat</RedButton>

@@ -1,8 +1,8 @@
 'use client'
 
-import { useZustand } from '../../../lib/store/use-zustand'
-import { Transcript } from './transcript'
-import { TranscriptFilter } from './transcript-filter'
+import {useZustand} from '../../../lib/store/use-zustand'
+import {Transcript} from './transcript'
+import {TranscriptFilter} from './transcript-filter'
 
 
 export const Transcripts = () => {

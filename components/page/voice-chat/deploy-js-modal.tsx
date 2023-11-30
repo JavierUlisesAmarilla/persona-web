@@ -140,7 +140,8 @@ const PersonaClient = (props) => {
       const personaName = "<persona-name>";
       getUserID().then((userId) => {
         personaClient
-        .init(userId, personaName)
+        // John is a "DETAIL" that will be passed to your prompt as ***DETAILS.userName***
+        .init(userId, personaName, {userName: "John"})
         .then(() => {
           personaClient.on("ready", () => {
             props.onReady();

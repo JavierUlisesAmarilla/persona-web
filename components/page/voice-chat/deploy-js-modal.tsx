@@ -21,57 +21,56 @@ export const DeployJsModal = ({
       show={show}
       onClose={onClose}
     >
-      <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
-        <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
-          <div className='p-2'>
-            <strong>1.</strong> To deploy your Persona to a webapp, you’ll need your page to download our Persona web client from our server at&nbsp;
-            <span className='text-blue-500'>
-              https://api.sindarin.tech/PersonaClientPublic?apikey=[public-api-key]
-            </span>
-          </div>
-          <CodeMirror
-            className='p-2'
-            theme='dark'
-            editable={false}
-            extensions={[javascript({jsx: true})]}
-            value={`const script = document.createElement("script");
+      <div className='flex flex-col w-full gap-3 p-6 text-xs'>
+        <div className='p-2'>
+          <strong>1.</strong> To deploy your Persona to a webapp, you’ll need your page to download our Persona web client from our server at&nbsp;
+          <span className='text-blue-500'>
+            https://api.sindarin.tech/PersonaClientPublic?apikey=[public-api-key]
+          </span>
+        </div>
+        <CodeMirror
+          className='p-2'
+          theme='dark'
+          editable={false}
+          extensions={[javascript({jsx: true})]}
+          value={`const script = document.createElement("script");
 script.src = "https://api.sindarin.tech/PersonaClientPublic?apikey=<public-api-key>";`
-            }
-          />
-          <div className='p-2'>
-            <strong>2.</strong> Once the script loads, you must initialize the Persona Client using your public api key
-          </div>
-          <CodeMirror
-            className='p-2'
-            theme='dark'
-            editable={false}
-            extensions={[javascript({jsx: true})]}
-            value={`script.addEventListener("load", async () => {
+          }
+        />
+        <div className='p-2'>
+          <strong>2.</strong> Once the script loads, you must initialize the Persona Client using your public api key
+        </div>
+        <CodeMirror
+          className='p-2'
+          theme='dark'
+          editable={false}
+          extensions={[javascript({jsx: true})]}
+          value={`script.addEventListener("load", async () => {
   console.log("persona client loaded");
   const apiKey = "<public-api-key>";
   const personaClient = new window.PersonaClient(apiKey);`
-            }
-          />
-          <div className='p-2'>
-            <strong>3.</strong> The Persona Client manages all audio streaming internally, so all you need to do is initialize it to begin speaking by calling
-          </div>
-          <CodeMirror
-            className='p-2'
-            theme='dark'
-            editable={false}
-            extensions={[javascript({jsx: true})]}
-            value={`  personaClient.init(userId, personaName)`
-            }
-          />
-          <div className='p-2'>
-            <strong>4.</strong> Below is an example illustrating how the persona in our public AI pitch deck - a React app - is configured
-          </div>
-          <CodeMirror
-            className='p-2'
-            theme='dark'
-            editable={false}
-            extensions={[javascript({jsx: true})]}
-            value={`import { useEffect, useState } from "react";
+          }
+        />
+        <div className='p-2'>
+          <strong>3.</strong> The Persona Client manages all audio streaming internally, so all you need to do is initialize it to begin speaking by calling
+        </div>
+        <CodeMirror
+          className='p-2'
+          theme='dark'
+          editable={false}
+          extensions={[javascript({jsx: true})]}
+          value={`  personaClient.init(userId, personaName)`
+          }
+        />
+        <div className='p-2'>
+          <strong>4.</strong> Below is an example illustrating how the persona in our public AI pitch deck - a React app - is configured
+        </div>
+        <CodeMirror
+          className='p-2'
+          theme='dark'
+          editable={false}
+          extensions={[javascript({jsx: true})]}
+          value={`import { useEffect, useState } from "react";
 
 const pageDescriptions = {
   '1': // description of page 1 contents,
@@ -168,8 +167,7 @@ const PersonaClient = (props) => {
 };
 
 export default PersonaClient`}
-          />
-        </div>
+        />
       </div>
     </CommonModal>
   )

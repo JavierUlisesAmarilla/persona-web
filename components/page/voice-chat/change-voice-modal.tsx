@@ -1,18 +1,18 @@
-/* eslint-disable react/no-unescaped-entities */
+
 'use client'
 
 import {BlueButton, BorderGrayButton, GreenButton} from '@/components/shared/button'
 import React, {useEffect, useState} from 'react'
 
 import {CommonModal} from '@/components/shared/common-modal'
+import {AiFillSound} from 'react-icons/ai'
+import {PlanModal} from '../setting/plan-modal'
 // import {InputText} from '@/components/shared/input-text'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
-import {AiFillSound} from 'react-icons/ai'
 import {updatePersonaVoice} from '../../../lib/persona'
 import {useZustand} from '../../../lib/store/use-zustand'
 import {UserSelect} from '../../shared/user-select'
-import {PlanModal} from '../setting/plan-modal'
 
 
 interface VoiceOption {
@@ -145,7 +145,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
       show={show}
       onClose={onClose}
     >
-      <div className='flex flex-col justify-center gap-3 p-6 text-xs border rounded-lg bg-bg-gray border-border-gray'>
+      <div className='flex flex-col justify-center gap-3 p-6 text-xs border rounded-lg'>
         <div className='text-base font-semibold text-start'>{`Change voice for ${selPersonaName || 'Anonymous'}`}</div>
         <div className='flex items-center gap-3'>
           <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
@@ -217,7 +217,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
         <div className='text-base font-semibold text-start'>Create Custom Voice</div>
         {isTeamFreeTier ? (
           // <div className='flex flex-col items-center justify-center' style={{height: '100%'}}>
-          <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray items-center justify-center'>
+          <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-light border-border-gray'>
             <p>Please upgrade your plan to create custom voices.</p>
             <div className="mt-2">
               <GreenButton onClick={() => setShowPlanModal(true)}>Upgrade Plan</GreenButton>
@@ -228,7 +228,7 @@ export const ChangeVoiceModal: React.FC<Props> = ({
             />
           </div>
         ) : (
-          <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-light border-border-gray items-center justify-center'>
+          <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-light border-border-gray'>
             <p>Please contact us to create a custom voice:</p>
             <div className="mt-2">
               <GreenButton onClick={() => {

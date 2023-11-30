@@ -5,21 +5,21 @@
 'use client'
 
 import {BlueButton, BorderGreenButton, BorderOrangeButton, GreenButton, LightBlueButton} from '@/components/shared/button'
+import {Textarea} from '@/components/shared/textarea'
 
 import {InputText} from '@/components/shared/input-text'
-import {Textarea, HighlightableTextarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {changeLLM} from '@/lib/persona'
 import {useZustand} from '@/lib/store/use-zustand'
 import axios from 'axios'
+import {encode} from 'gpt-tokenizer'
 import {useState} from 'react'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import {Scenario} from './scenario'
-import {encode} from 'gpt-tokenizer'
 
 
 declare global {
@@ -220,7 +220,7 @@ export const VoiceChat = () => {
   }
 
   return (
-    <div className='w-full h-full bg-bg-gray'>
+    <div className='w-full h-full'>
       <div className="flex flex-col w-full gap-3 p-6 rounded-lg">
         <h2 className='text-2xl font-semibold'>Playground</h2>
         <div className='flex flex-wrap items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-light'>

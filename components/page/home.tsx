@@ -2,7 +2,7 @@
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
-import {addTeam, getTeam, getLLMSArr, getPersonaArr, getTranscriptArr} from '../../lib/persona'
+import {addTeam, getLLMSArr, getPersonaArr, getTeam, getTranscriptArr} from '../../lib/persona'
 
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -130,11 +130,11 @@ export const Home = ({session}: {session: any}) => {
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            // })
-            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            })
+            // const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            // newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
         }
 
@@ -148,7 +148,7 @@ export const Home = ({session}: {session: any}) => {
   }, [apiKey])
 
   return (
-    <div className='flex items-center justify-center w-full h-full overflow-auto'>
+    <div className='flex items-center justify-center w-full h-full overflow-auto bg-bg-gray'>
       {session ?
         (status ? (
           <div className='text-2xl font-semibold'>{status}</div>

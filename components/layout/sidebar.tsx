@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 'use client'
 
 import {AiOutlineHome, AiOutlineSetting} from 'react-icons/ai'
@@ -60,7 +62,10 @@ export const Sidebar = () => {
     <div className="flex flex-col justify-between h-full gap-6 p-6 border-r border-border-gray">
       <div className='flex flex-col gap-6'>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div
+            className="flex items-center gap-3 cursor-pointer"
+            onClick={() => setSelMenu('settings')}
+          >
             <Image className='rounded' src='assets/images/sidebar_logo.svg' width={40} height={40} alt='Sindarin'/>
             <div className='flex flex-col text-sm font-medium'>
               <div className='text-text-dark'>{teamNameString}</div>

@@ -27,7 +27,7 @@ export const DeployModal = ({
         show={show}
         onClose={onClose}
       >
-        <div className='flex flex-col items-center justify-center gap-3 p-6'>
+        <div className='flex flex-col items-center justify-center w-full h-full gap-3 p-6'>
           <div className='text-sm'>Deploy to:</div>
           <BlueButton style={{width: '120px'}} onClick={() => setShowTwilioModal(true)}>Phone (Twilio)</BlueButton>
           <BlueButton style={{width: '120px'}} onClick={() => setShowJsModal(true)}>Browser (JS)</BlueButton>

@@ -145,7 +145,7 @@ export const PlanModal = ({
       onClose={handleClose}
     >
       {team ? (
-        <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
+        <div className='flex flex-col items-center justify-center gap-3 p-6 border rounded-lg'>
           {shouldShowCheckout ? <div id="checkout"/> : planArr.map((plan, planIndex) =>
             <div
               key={planIndex}
@@ -179,7 +179,7 @@ export const PlanModal = ({
           }
         </div>
       ) : (
-        <div className='flex justify-center items-center' style={{height: '100%'}}>
+        <div className='flex items-center justify-center' style={{height: '100%'}}>
           <p>Loading...</p>
         </div>
       )}

@@ -91,7 +91,7 @@ export const DeployTwilioModal = ({
       show={show}
       onClose={onClose}
     >
-      <div className='flex flex-col gap-3 w-[50rem] max-h-[34rem] text-xs'>
+      <div className='flex flex-col w-full gap-3 text-xs'>
         <div className='flex flex-col gap-3 p-6 border rounded-lg bg-bg-gray border-border-gray'>
           <div className='text-sm'><strong>INBOUND AND OUTBOUND CALLS:</strong></div>
           <div className='flex flex-col gap-1'>

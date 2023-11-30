@@ -21,7 +21,7 @@ export const CommonModal = ({
         <motion.div
           className='fixed z-50 flex items-center justify-center w-screen h-screen overflow-hidden -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'
           initial={{
-            opacity: 0,
+            opacity: 1,
             width: 0,
             height: 0,
           }}
@@ -36,7 +36,7 @@ export const CommonModal = ({
             height: 0,
           }}
         >
-          <div className={`relative gap-3 p-6 overflow-auto border-2 rounded-lg shadow-2xl border-border-gray bg-bg-light ${className}`}>
+          <div className={`relative overflow-auto border-2 rounded-lg shadow border-border-gray bg-bg-gray w-[80rem] max-w-[90%] h-[50rem] max-h-[90%] ${className}`}>
             {/* Close */}
             {onClose &&
               <AiFillCloseCircle
@@ -44,7 +44,7 @@ export const CommonModal = ({
                 onClick={onClose}
               />
             }
-            <div className='relative flex items-center justify-center w-full h-full overflow-auto'>
+            <div className='relative w-full h-full overflow-auto'>
               {children}
             </div>
           </div>

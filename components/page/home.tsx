@@ -29,12 +29,9 @@ export const Home = ({session}: {session: any}) => {
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
-  console.log('***SIGN HOME RENDERING***')
 
   useEffect(() => {
-    console.log('USE EFFECT RUNNING WITH EMAIL', session?.user?.email);
     (async () => {
-      console.log('USE EFFECT INNER LOOP RUNNING')
       const newCurEmail = session?.user?.email
 
       if (!newCurEmail || status) {
@@ -45,7 +42,6 @@ export const Home = ({session}: {session: any}) => {
 
       // Fetch api key array
       const newApiKeyArr = await getData(newCurEmail)
-      console.log('Home#useEffect: newApiKeyArr: ', newApiKeyArr)
 
       if (!newApiKeyArr?.length && !hasAddedTeam) {
         setHasAddedTeam(true)
@@ -77,8 +73,6 @@ export const Home = ({session}: {session: any}) => {
 
   useEffect(() => {
     (async () => {
-      console.log('Home#useEffect: apiKey: ', apiKey, prevApiKey)
-
       if (prevApiKey === apiKey) {
         return
       }
@@ -96,7 +90,7 @@ export const Home = ({session}: {session: any}) => {
           const newPersonaClient = new window.PersonaClient(apiKey)
 
           newPersonaClient.on('json', ({detail}: any) => {
-            if (Object.keys(detail).length > 0 && !detail.transcription) {
+            if (Object.keys(detail).length > 0 && !detail.transcription && !detail.persona_message && !detail.user_message) {
               setPersonaAction(detail)
             }
           })

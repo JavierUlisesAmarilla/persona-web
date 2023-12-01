@@ -49,7 +49,6 @@ export const MENUS: any = {
 
 export const Sidebar = () => {
   const {selMenu, setSelMenu, team, apiKeyArr, selApiKeyIndex} = useZustand()
-  console.log('team', team)
   const teamString = team && (team.tier === 'free' ? 'Free Tier' :
     team.tier === 'I' ? 'Tier I' :
       team.tier === 'II' ? 'Tier II' :

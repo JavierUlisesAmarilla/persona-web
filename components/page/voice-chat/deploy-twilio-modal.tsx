@@ -78,8 +78,6 @@ export const DeployTwilioModal = ({
   }
 
   const {personaArr, selPersonaIndex, setPersonaTwilioAuthToken, setPersonaTwilioAccountSid, setPersonaPhoneNumber} = useZustand()
-  console.log('current persona', personaArr[selPersonaIndex])
-  console.log('current persona phone number', personaArr[selPersonaIndex]?.phoneNumber)
 
   const formRef = useRef<HTMLFormElement>(null)
   const phoneNumber = personaArr[selPersonaIndex]?.phoneNumber || ''

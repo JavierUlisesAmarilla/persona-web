@@ -30,6 +30,12 @@ declare global {
   }
 }
 
+interface MessageDetail {
+  user_message?: string;
+  assistant_message?: string;
+  // ... other properties
+}
+
 
 export const VoiceChat = () => {
   const {
@@ -61,20 +67,19 @@ export const VoiceChat = () => {
   const [isPromptSynced, setIsPromptSynced] = useState(true)
   const [isActionsSchemaSynced, setIsActionsSchemaSynced] = useState(true)
 
+  const [currentConversationMessages, setCurrentConversationMessages] = useState<MessageDetail[]>([])
+  console.log('currentConversationMessages', currentConversationMessages)
   const apiKey = useApiKey()
 
   const currentPromptText = personaArr[selPersonaIndex]?.currentVoicePrompt || ''
   const stringifiedActionText = JSON.stringify(schemaText, null, 2) || ''
 
-  console.log('CURRENT PROMPT TEXT', currentPromptText)
   const actionsSchemaOccurrences = (currentPromptText.match(/(\*\*\*PERSONA_VOICE_SCHEMA\*\*\*)/g) || []).length
-  console.log('actionsSchemaOccurrences', actionsSchemaOccurrences)
   const isActionsSchemaInPrompt = actionsSchemaOccurrences > 0
   const areScenariosInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
   const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + (encode(stringifiedActionText).length * actionsSchemaOccurrences) : encode(currentPromptText).length
 
   const schemaErrors = validateActionSchema(schemaText)
-  console.log('ERRORS!', schemaErrors)
 
   const onPersona = (e: any) => {
     const newPersonaIndex = parseInt(e.target.value)
@@ -170,6 +175,17 @@ export const VoiceChat = () => {
     }
 
     await personaClient.init('admin', selPersonName)
+
+    if (personaClient.on('json')) {
+      personaClient.off('json')
+    }
+
+    personaClient.on('json', ({detail}: any) => {
+      console.log('CURRENT MESSAGES BEFORE PUSH', detail)
+      if (detail.user_message || detail.persona_message) {
+        setCurrentConversationMessages((prev) => [...prev, detail])
+      }
+    })
     console.log('persona client here', personaClient)
   }
 
@@ -454,7 +470,9 @@ export const VoiceChat = () => {
         onClose={async () => {
           await personaClient.end()
           setShowChatModal(false)
+          setCurrentConversationMessages([])
         }}
+        messages={currentConversationMessages}
       />
       <DeployModal
         show={showDeployModal}

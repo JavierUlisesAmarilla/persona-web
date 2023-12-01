@@ -88,7 +88,6 @@ export const BlueButton = ({
   style?: React.CSSProperties
   disabled?: boolean
 }) => {
-  console.log('the classname is', className)
   return (
     <Button
       className={`bg-bg-btn-blue text-text-light ${className}`}

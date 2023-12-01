@@ -1,7 +1,7 @@
 'use client'
 
 import {signIn} from 'next-auth/react'
-import {useEffect} from 'react'
+// import {useEffect} from 'react'
 import {BlueButton} from '../shared/button'
 import {useSignInModal} from './sign-in-modal'
 import {UserDropdown} from './user-dropdown'
@@ -10,9 +10,7 @@ import {UserDropdown} from './user-dropdown'
 export const Navbar = ({session}: {session: any}) => {
   const {SignInModal} = useSignInModal()
 
-  useEffect(() => {
-    console.log('Navbar#useEffect: session: ', session)
-  }, [session])
+  // useEffect(() => {}, [session])
 
   return (
     <div className='w-full Navbar'>

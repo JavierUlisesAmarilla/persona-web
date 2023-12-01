@@ -451,7 +451,10 @@ export const VoiceChat = () => {
         onState={onState}
         stateState={stateState}
         show={showChatModal}
-        onClose={() => setShowChatModal(false)}
+        onClose={async () => {
+          await personaClient.end()
+          setShowChatModal(false)
+        }}
       />
       <DeployModal
         show={showDeployModal}

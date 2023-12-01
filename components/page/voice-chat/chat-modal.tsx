@@ -1,9 +1,10 @@
 'use client'
 
-import { BlueButton, RedButton } from '@/components/shared/button'
-import { CommonModal } from '@/components/shared/common-modal'
-import { Textarea } from '@/components/shared/textarea'
-import React, { useEffect, useRef } from 'react'
+import {BlueButton, RedButton} from '@/components/shared/button'
+import {CommonModal} from '@/components/shared/common-modal'
+import {Textarea} from '@/components/shared/textarea'
+import React, {useEffect, useRef} from 'react'
+
 
 interface Props {
   personaName: string
@@ -37,7 +38,7 @@ export const ChatModal = ({
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'})
   }
 
   useEffect(() => {
@@ -45,8 +46,6 @@ export const ChatModal = ({
   }, [messages])
 
   // Adjust the combinedHeight based on the actual heights and margins/paddings of your "Actions" and "Current State" boxes
-  const combinedHeight = 'calc(2 * 22rem)'; // Example calculation
-
   return (
     <CommonModal show={show} onClose={onClose}>
       <div className='flex flex-col w-[60rem] max-w-full'>
@@ -79,8 +78,7 @@ export const ChatModal = ({
               </div>
             </div>
           </div>
-          {/* <div className='flex flex-col w-2/3 gap-4 p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray' style={{ height: combinedHeight, overflowY: 'auto' }}> */}
-          <div className='flex flex-col w-2/3 gap-4 p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-120 max-h-[44.25rem]' style={{ overflowY: 'auto' }}>
+          <div className='flex flex-col w-2/3 gap-4 p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-120 max-h-[44.25rem]' style={{overflowY: 'auto'}}>
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -93,7 +91,7 @@ export const ChatModal = ({
                 </div>
               </div>
             ))}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef}/>
           </div>
         </div>
       </div>

@@ -50,7 +50,7 @@ export const ChatModal = ({
     <CommonModal show={show} onClose={onClose}>
       <div className='flex flex-col w-[60rem] max-w-full'>
         <div className='flex justify-between items-center p-6'>
-          <h2 className='text-2xl'>Chat with {personaName}</h2>
+          <h2 className='text-2xl'>Speak with {personaName}</h2>
           <RedButton onClick={onClose}>End Chat</RedButton>
         </div>
         <div className='flex gap-4 p-6'>

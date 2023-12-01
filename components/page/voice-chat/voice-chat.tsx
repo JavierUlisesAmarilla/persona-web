@@ -46,6 +46,7 @@ export const VoiceChat = () => {
     LLMSArray,
     setPersonaLLM,
     personaAction,
+    setPersonaAction,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -176,14 +177,14 @@ export const VoiceChat = () => {
 
     await personaClient.init('admin', selPersonName)
 
-    if (personaClient.on('json')) {
-      personaClient.off('json')
-    }
+    personaClient.removeAllListeners('json')
 
     personaClient.on('json', ({detail}: any) => {
       console.log('CURRENT MESSAGES BEFORE PUSH', detail)
       if (detail.user_message || detail.persona_message) {
         setCurrentConversationMessages((prev) => [...prev, detail])
+      } else if (Object.keys(detail).length > 0 && !detail.transcription && !detail.persona_message && !detail.user_message) {
+        setPersonaAction(detail)
       }
     })
     console.log('persona client here', personaClient)

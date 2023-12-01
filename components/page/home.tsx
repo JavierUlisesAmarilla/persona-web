@@ -20,7 +20,6 @@ export const Home = ({session}: {session: any}) => {
     setCurEmail,
     status, setStatus,
     setApiKeyArr,
-    setPersonaAction,
     setPersonaClient,
     setPersonaArr,
     setLLMSArray,
@@ -88,12 +87,6 @@ export const Home = ({session}: {session: any}) => {
       script.addEventListener('load', () => {
         if (window.PersonaClient) {
           const newPersonaClient = new window.PersonaClient(apiKey)
-
-          newPersonaClient.on('json', ({detail}: any) => {
-            if (Object.keys(detail).length > 0 && !detail.transcription && !detail.persona_message && !detail.user_message) {
-              setPersonaAction(detail)
-            }
-          })
 
           setPersonaClient(newPersonaClient)
         }

@@ -30,6 +30,8 @@ declare global {
   }
 }
 
+let jsonListener: any = null;
+
 interface MessageDetail {
   user_message?: string;
   assistant_message?: string;
@@ -177,16 +179,18 @@ export const VoiceChat = () => {
 
     await personaClient.init('admin', selPersonName)
 
-    personaClient.removeAllListeners('json')
-
-    personaClient.on('json', ({detail}: any) => {
-      console.log('CURRENT MESSAGES BEFORE PUSH', detail)
-      if (detail.user_message || detail.persona_message) {
-        setCurrentConversationMessages((prev) => [...prev, detail])
-      } else if (Object.keys(detail).length > 0 && !detail.transcription && !detail.persona_message && !detail.user_message) {
-        setPersonaAction(detail)
+    // Check if jsonListener is already listening to avoid duplicate listeners
+    if (!jsonListener) {
+      jsonListener = ({detail}: any) => {
+        console.log('CURRENT MESSAGES BEFORE PUSH', detail)
+        if (detail.user_message || detail.persona_message) {
+          setCurrentConversationMessages((prev) => [...prev, detail])
+        } else if (Object.keys(detail).length > 0 && !detail.transcription && !detail.persona_message && !detail.user_message) {
+          setPersonaAction(detail)
+        }
       }
-    })
+      personaClient.on('json', jsonListener)
+    }
     console.log('persona client here', personaClient)
   }
 

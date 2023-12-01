@@ -30,7 +30,7 @@ declare global {
   }
 }
 
-let jsonListener: any = null;
+let jsonListener: any = null
 
 interface MessageDetail {
   user_message?: string;

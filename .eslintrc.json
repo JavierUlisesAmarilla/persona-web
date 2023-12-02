@@ -70,10 +70,10 @@
       "consistent-as-needed"
     ],
     "react/prop-types": "off",
-    // "semi": [
-    //   "error",
-    //   "never"
-    // ],
+    "semi": [
+      "error",
+      "never"
+    ],
     "arrow-spacing": [
       "error",
       {

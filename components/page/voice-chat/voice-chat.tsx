@@ -35,6 +35,7 @@ let jsonListener: any = null
 interface MessageDetail {
   user_message?: string;
   assistant_message?: string;
+  system?: string;
   // ... other properties
 }
 
@@ -71,7 +72,8 @@ export const VoiceChat = () => {
   const [isActionsSchemaSynced, setIsActionsSchemaSynced] = useState(true)
 
   const [currentConversationMessages, setCurrentConversationMessages] = useState<MessageDetail[]>([])
-  console.log('currentConversationMessages', currentConversationMessages)
+  const [currentConversationId, setCurrentConversationId] = useState('')
+
   const apiKey = useApiKey()
 
   const currentPromptText = personaArr[selPersonaIndex]?.currentVoicePrompt || ''
@@ -178,6 +180,7 @@ export const VoiceChat = () => {
     }
 
     await personaClient.init('admin', selPersonName)
+    setCurrentConversationId(personaClient.conversationId)
 
     // Check if jsonListener is already listening to avoid duplicate listeners
     if (!jsonListener) {
@@ -472,9 +475,20 @@ export const VoiceChat = () => {
         onState={onState}
         stateState={stateState}
         show={showChatModal}
+        onPause={async () => {
+          await personaClient.end()
+          // add a system message to the messages array
+          setCurrentConversationMessages((prev) => [...prev, {system: 'Paused.'}])
+        }}
+        onResume={async () => {
+          await personaClient.resume(currentConversationId)
+          // add a system message to the messages array
+          setCurrentConversationMessages((prev) => [...prev, {system: 'Resumed.'}])
+        }}
         onClose={async () => {
           await personaClient.end()
           setShowChatModal(false)
+          setCurrentConversationId('')
           setCurrentConversationMessages([])
         }}
         messages={currentConversationMessages}

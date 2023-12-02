@@ -119,7 +119,7 @@ export const ChatModal = ({
                   className={`flex ${message.persona_message ? 'flex-col items-start' : 'flex-col items-end'}`}
                 >
                   <div
-                    className={`w-auto px-3 py-2 border text-sm ${message.persona_message ? 'rounded-bl-none bg-bg-gray' : 'rounded-br-none bg-bg-blue'} max-w-3/4 border-border-gray rounded-xl`}
+                    className={`w-auto px-3 py-2 border text-sm ${message.persona_message ? 'rounded-bl-none bg-bg-gray' : 'rounded-br-none bg-bg-blue text-white'} max-w-3/4 border-border-gray rounded-xl`}
                   >
                     {message.persona_message || message.user_message}
                   </div>

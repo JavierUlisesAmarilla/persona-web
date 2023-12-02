@@ -54,10 +54,10 @@
         "count": 2
       }
     ],
-    // "max-len": [
-    //   "error",
-    //   200
-    // ],
+    "max-len": [
+      "error",
+      300
+    ],
     // "no-irregular-whitespace": [
     //   "error"
     // ],

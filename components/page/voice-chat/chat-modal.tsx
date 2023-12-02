@@ -62,12 +62,16 @@ export const ChatModal = ({
               <BorderGreenButton onClick={() => {
                 onResume()
                 setIsPaused(false)
-              }}>Resume</BorderGreenButton>
+              }}
+              >Resume
+              </BorderGreenButton>
             ) : (
               <BorderOrangeButton onClick={() => {
                 onPause()
                 setIsPaused(true)
-              }}>Pause</BorderOrangeButton>
+              }}
+              >Pause
+              </BorderOrangeButton>
             )}
             <RedButton onClick={onClose}>End Chat</RedButton>
           </div>

@@ -2,7 +2,6 @@
 /* eslint-disable jsdoc/require-returns */
 'use client'
 
-import {InputText} from '@/components/shared/input-text'
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
@@ -31,33 +30,36 @@ export default function PlanSection({apiKeyIndex, data}: any) {
     <div className="flex flex-col w-full px-6 border border-gray-200 rounded-lg bg-bg-light">
       <div className='flex justify-between w-full py-6 border-b border-b-border-gray'>
         <div className='text-base font-medium whitespace-nowrap'>Tier</div>
-        <InputText
+        {/* <InputText
           classNames='w-fit'
           value={team?.tier || 'free'}
           placeholder="Tier"
           // onChange={onApiKeyChange}
           disabled={true}
-        />
+        /> */}
+        <div className='px-3 py-1 text-xs border border-gray-200 rounded'>{team?.tier || 'free'}</div>
       </div>
       <div className='flex justify-between w-full py-6 border-b border-b-border-gray'>
         <div className='text-base font-medium whitespace-nowrap'>Messages used this month</div>
-        <InputText
+        {/* <InputText
           classNames={`w-fit ${isOver90Percent ? 'text-red-500 border-red-500' : ''}`}
           value={messagesUsedString}
           placeholder="Messages used this month"
           // onChange={onApiKeyChange}
           disabled={true}
-        />
+        /> */}
+        <div className='px-3 py-1 text-xs border border-gray-200 rounded'>{messagesUsedString}</div>
       </div>
       <div className='flex justify-between w-full py-6'>
         <div className='text-base font-medium whitespace-nowrap'>Monthly messages reset at</div>
-        <InputText
+        {/* <InputText
           classNames='w-fit'
           value={nextMessageReset}
           placeholder="Messages used this month"
           // onChange={onApiKeyChange}
           disabled={true}
-        />
+        /> */}
+        <div className='px-3 py-1 text-xs border border-gray-200 rounded'>{nextMessageReset}</div>
       </div>
     </div>
   )

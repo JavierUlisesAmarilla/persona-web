@@ -1,6 +1,6 @@
 'use client'
 
-import React, {ChangeEventHandler} from 'react'
+import {ChangeEventHandler} from 'react'
 
 
 export const InputText = ({

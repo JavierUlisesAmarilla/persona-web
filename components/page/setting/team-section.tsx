@@ -110,29 +110,32 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
           </>
         }
       </div>
-      {!!(Array.isArray(data?.emailArr) && data.emailArr.length) &&
-        <div className="flex flex-wrap items-center w-full gap-2">
-          {data?.emailArr?.map((emailObj: any, index: number) =>
-            <div
-              key={index}
-              className="flex items-center gap-1 p-1 border border-gray-200 rounded-md"
-            >
-              <InputText
-                value={emailObj.name}
-                placeholder="Email"
-                onChange={(event) => onEmailChange(index, event.target.value)}
-                disabled={!isAdmin && (!isManager || curEmail === emailObj.name)}
-              />
-              {(isAdmin || (isManager && curEmail !== emailObj.name)) &&
-                <AiOutlineCloseCircle
-                  className="text-xl cursor-pointer text-text-gray hover:text-text-dark"
-                  onClick={() => onEmailRemove(index)}
+      <div className="flex items-center justify-between w-full gap-4">
+        <div className='font-medium whitespace-nowrap'>Team Members:</div>
+        {!!(Array.isArray(data?.emailArr) && data.emailArr.length) &&
+          <div className="flex flex-wrap items-center justify-end w-full gap-2">
+            {data.emailArr.reverse().map((emailObj: any, index: number) =>
+              <div
+                key={index}
+                className="flex items-center gap-1 p-1 border border-gray-200 rounded-md"
+              >
+                <InputText
+                  value={emailObj.name}
+                  placeholder="Email"
+                  onChange={(event) => onEmailChange(index, event.target.value)}
+                  disabled={!isAdmin && (!isManager || curEmail === emailObj.name)}
                 />
-              }
-            </div>,
-          )}
-        </div>
-      }
+                {(isAdmin || (isManager && curEmail !== emailObj.name)) &&
+                  <AiOutlineCloseCircle
+                    className="text-xl cursor-pointer text-text-gray hover:text-text-dark"
+                    onClick={() => onEmailRemove(index)}
+                  />
+                }
+              </div>,
+            )}
+          </div>
+        }
+      </div>
     </div>
   )
 }

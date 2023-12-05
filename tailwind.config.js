@@ -30,6 +30,7 @@ module.exports = {
         'bg-gray': '#F9FAFB',
         'bg-green': '#00C48C',
         'bg-blue': '#1570EF',
+        'bg-dark-blue': '#292950',
         'bg-dark': '#000000',
         'text-light': '#FFFFFF',
         'text-gray': '#98A2B3',
@@ -45,6 +46,7 @@ module.exports = {
         'border-gray': '#EAECF0',
         'border-green': '#00C48C',
         'border-orange': '#FFA500',
+        'border-dark-blue': '#344054',
       },
       fontFamily: {
         display: ['var(--font-sf)', 'system-ui', 'sans-serif'],

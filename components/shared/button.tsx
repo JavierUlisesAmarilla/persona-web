@@ -167,3 +167,20 @@ export const BorderOrangeButton = ({
     </Button>
   )
 }
+
+export const DarkBlueButton = ({
+  onClick,
+  children,
+}: {
+  onClick?: MouseEventHandler<HTMLDivElement>
+  children?: ReactNode
+}) => {
+  return (
+    <Button
+      className='text-white border bg-bg-dark-blue border-border-dark-blue'
+      onClick={onClick}
+    >
+      {children}
+    </Button>
+  )
+}

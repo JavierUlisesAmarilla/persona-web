@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+
 'use client'
 
-import {BlueButton, BorderGreenButton, BorderOrangeButton, GreenButton, LightBlueButton} from '@/components/shared/button'
-import {Textarea} from '@/components/shared/textarea'
+import {AiFillPlusCircle, AiOutlinePhone} from 'react-icons/ai'
+import {BorderGrayButton, DarkBlueButton} from '../../shared/button'
 
-import {InputText} from '@/components/shared/input-text'
+import {BlueButton} from '@/components/shared/button'
+import {Textarea} from '@/components/shared/textarea'
 import {UserSelect} from '@/components/shared/user-select'
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -16,12 +16,12 @@ import {useZustand} from '@/lib/store/use-zustand'
 import {validateActionSchema} from '@/lib/utils'
 import axios from 'axios'
 import {encode} from 'gpt-tokenizer'
+import _ from 'lodash'
 import {useState} from 'react'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
 import {Scenario} from './scenario'
-import _ from 'lodash'
 
 
 declare global {
@@ -251,127 +251,87 @@ export const VoiceChat = () => {
   return (
     <div className='w-full h-full'>
       <div className="flex flex-col w-full gap-3 p-6 rounded-lg">
-        <h2 className='text-2xl font-semibold'>Playground</h2>
-        <div className='flex flex-wrap items-center justify-between w-full gap-3 p-6 border rounded-lg bg-bg-light'>
-          {/* <div className='flex items-center gap-2'> */}
-          <div className='flex flex-wrap gap-2'>
-            <div className='flex flex-col items-start gap-2'>
-              <UserSelect onChange={onPersona}>
-                {personaArr.map((persona, index) => (
-                  <option key={index} value={index}>{persona.name}</option>
+        <div className='flex items-end justify-between'>
+          <h2 className='text-2xl font-semibold'>Playground</h2>
+          <BlueButton className='items-center gap-2'>
+            <div className='text-sm'>Create New Persona</div>
+            <AiFillPlusCircle className='text-base'/>
+          </BlueButton>
+        </div>
+        <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-dark-blue'>
+          <div className='flex flex-wrap items-center justify-between w-full'>
+            <div className='flex gap-3'>
+              <div className='flex flex-col items-start gap-2'>
+                <UserSelect
+                  className='text-white bg-bg-dark-blue border-border-dark-blue'
+                  onChange={onPersona}
+                >
+                  {personaArr.map((persona, index) => (
+                    <option key={index} value={index}>{persona.name}</option>
+                  ))}
+                </UserSelect>
+
+              </div>
+              <UserSelect
+                className='text-white bg-bg-dark-blue border-border-dark-blue'
+                value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'}
+                onChange={onLLMChange}
+              >
+                {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
+                {LLMSArray.map((llm, index) => (
+                  <option key={index} value={index}>{llm}</option>
                 ))}
               </UserSelect>
-              <BorderGreenButton onClick={() => {
-                //
-              }}
+              <DarkBlueButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</DarkBlueButton>
+              {/* <div
+                className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
+                onClick={async () => {
+                  await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
+                  setCopyStatus('Copied.')
+                  setTimeout(() => setCopyStatus(''), 2000)
+                }}
               >
-                + Add New Persona
-              </BorderGreenButton>
+                <span className='mr-2'>{personaArr[selPersonaIndex]?._id}</span>
+                <img
+                  className="w-4 h-4"
+                  src="/copy-to-clipboard.svg"
+                  alt="Copy to clipboard"
+                />
+              </div>
+              <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div> */}
             </div>
-            <UserSelect value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'} onChange={onLLMChange}>
-              {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
-              {LLMSArray.map((llm, index) => (
-                <option key={index} value={index}>{llm}</option>
-              ))}
-            </UserSelect>
-            <BorderOrangeButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</BorderOrangeButton>
-            <div
-              className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
-              onClick={async () => {
-                await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
-                setCopyStatus('Copied.')
-                setTimeout(() => setCopyStatus(''), 2000)
-              }}
-            >
-              <span className='mr-2'>{personaArr[selPersonaIndex]?._id}</span>
-              <img
-                className="w-4 h-4"
-                src="/copy-to-clipboard.svg"
-                alt="Copy to clipboard"
-              />
+            <div className='flex gap-3'>
+              <BlueButton
+                className='flex items-center gap-1'
+                onClick={onNewChat}
+              >
+                <AiOutlinePhone className='text-sm text-white'/>
+                <div>Start Chat</div>
+              </BlueButton>
+              <DarkBlueButton onClick={onDeploy}>Deploy</DarkBlueButton>
             </div>
-            <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
           </div>
-          <div className='flex flex-col justify-between gap-3'>
-            <GreenButton onClick={onNewChat}>Start Chat</GreenButton>
-            <div className='ml-auto'>
-              <LightBlueButton onClick={onDeploy}>Deploy</LightBlueButton>
+          <div className='flex items-center justify-between w-full gap-6'>
+            <div className='flex-grow gap-2 p-4 border border-border-dark-blue rounded-xl'>
+              <div className='text-xs text-gray-400'>Initial Message</div>
+              <div className='text-base text-white'>{personaArr[selPersonaIndex]?.initialMessage || ''}</div>
+            </div>
+            <div className='flex-grow gap-2 p-4 border border-border-dark-blue rounded-xl'>
+              <div className='text-xs text-gray-400'>Rate Limit Message</div>
+              <div className='text-base text-white'>{personaArr[selPersonaIndex]?.rateLimitMessage || ''}</div>
             </div>
           </div>
         </div>
         {personaArr[selPersonaIndex] &&
           <>
-            <div className='flex gap-3 p-6 border rounded-lg bg-bg-light'>
-              {/* <div className='flex flex-col w-full gap-3'>
-                <div className='flex items-center w-full gap-3'>
-                  <InputText
-                    value={userInput}
-                    placeholder='Enter user text here'
-                    onChange={(e) => setUserInput(e.target.value)}
-                  />
-                  <BlueButton onClick={onUser}>Submit</BlueButton>
-                  <div className='w-32'/>
-                </div>
-                <div className='flex items-center w-full gap-3'>
-                  <InputText
-                    value={assistantInput}
-                    placeholder='Enter assistant text here'
-                    onChange={(e) => setAssistantInput(e.target.value)}
-                  />
-                  <BlueButton onClick={onAssistant}>Submit</BlueButton>
-                  <div className='w-32'/>
-                </div>
-              </div> */}
-              <div className='flex flex-col w-full gap-3'>
-                <div className='flex items-center w-full gap-3'>
-                  <InputText
-                    classNames='w-full'
-                    value={personaArr[selPersonaIndex]?.initialMessage || ''}
-                    placeholder='Enter initial message here'
-                    onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
-                  />
-                  <BlueButton onClick={onInitialization}>Submit</BlueButton>
-                  {/* <div className='w-32'>{initialMsgState}</div> */}
-                </div>
-                <div className='flex items-center w-full gap-3'>
-                  <InputText
-                    classNames='w-full'
-                    value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
-                    placeholder='Enter rate limit message here'
-                    onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
-                  />
-                  <BlueButton onClick={onRateLimit}>Submit</BlueButton>
-                  {/* <div className='w-32'>{rateLimitMsgState}</div> */}
-                </div>
-              </div>
-            </div>
-            {/* <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-gray'>
-              <div className='text-sm'>For guidance on prompt engineering techniques for your Persona, see:</div>
-              <a
-                className='text-sm text-blue-500 hover:text-blue-900 w-fit'
-                href="https://www.promptingguide.ai/introduction"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Prompt Engineering Guide 1
-              </a>
-              <a
-                className='text-sm text-blue-500 hover:text-blue-900 w-fit'
-                href="https://github.com/brexhq/prompt-engineering"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Prompt Engineering Guide 2
-              </a>
-            </div> */}
             <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-light'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
-                  <div className='text-sm'>Prompt</div>
-                  <BlueButton disabled={isPromptSynced} onClick={onPrompt}>Update prompt</BlueButton>
+                  <div className='text-base font-semibold'>Prompt</div>
+                  <BorderGrayButton onClick={onPrompt}>Update</BorderGrayButton>
                 </div>
                 <Textarea
-                // <HighlightableTextarea
+                  // <HighlightableTextarea
                   className='h-[550px]'
                   value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                   placeholder='Enter the prompt here'
@@ -390,8 +350,8 @@ export const VoiceChat = () => {
                     <span className={
                       `${totalPromptTokens < 1000 ? 'text-green-500' :
                         totalPromptTokens < 3000 ? 'text-yellow-500' :
-                        totalPromptTokens <= 4000 ? 'text-orange-500' :
-                        'text-red-500'}`
+                          totalPromptTokens <= 4000 ? 'text-orange-500' :
+                            'text-red-500'}`
                     }
                     >
                       {totalPromptTokens}
@@ -402,8 +362,8 @@ export const VoiceChat = () => {
               </div>
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
-                  <div className='text-sm'>Actions Schema</div>
-                  <BlueButton disabled={isActionsSchemaSynced || schemaErrors!.length > 0} onClick={onSchema}>Update Actions Schema</BlueButton>
+                  <div className='text-base font-semibold'>Actions Schema</div>
+                  <BorderGrayButton onClick={onSchema}>Update</BorderGrayButton>
                 </div>
                 <Textarea
                   className={`h-[550px] ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
@@ -418,7 +378,7 @@ export const VoiceChat = () => {
                   <div className='w-full text-right'>
                     {schemaErrors!.length > 0 ?
                       schemaErrors!.map((error, index) => (
-                        <div key={index} className='text-red-500 text-sm'>
+                        <div key={index} className='text-sm text-red-500'>
                           <div>{(error as any).instancePath || (error as any).dataPath ? `${((error as any).instancePath || (error as any).dataPath).replace('.properties', '')}:` : 'Error:'}</div>
                           <div>{_.capitalize(error.message)}</div>
                         </div>

@@ -3,7 +3,7 @@
 
 'use client'
 
-import {AiFillPlusCircle, AiOutlinePhone} from 'react-icons/ai'
+import {AiFillPlusCircle, AiOutlineDelete, AiOutlinePhone} from 'react-icons/ai'
 import {BorderGrayButton, DarkBlueButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
@@ -331,7 +331,6 @@ export const VoiceChat = () => {
                   <BorderGrayButton onClick={onPrompt}>Update</BorderGrayButton>
                 </div>
                 <Textarea
-                  // <HighlightableTextarea
                   className='h-[550px]'
                   value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
                   placeholder='Enter the prompt here'
@@ -403,12 +402,19 @@ export const VoiceChat = () => {
               </div>
             </div> */}
             <div className='flex flex-col w-full gap-3'>
-              <h2 className='text-2xl font-semibold'>Scenarios</h2>
-              <div className='flex w-full gap-3'>
-                <BlueButton onClick={onNewScenario}>Add new scenario</BlueButton>
+              <div className='flex items-end justify-between'>
                 <div className='flex items-center gap-3'>
-                  <BlueButton onClick={onSaveScenarios}>Save scenarios</BlueButton>
+                  <h2 className='text-2xl font-semibold'>All Scenarios</h2>
+                  <div className='px-2 border rounded text-text-gray border-border-gray bg-bg-light'>{personaArr[selPersonaIndex]?.scenarios?.length}</div>
+                  <AiOutlineDelete className='text-2xl border rounded cursor-pointer text-text-gray border-border-gray bg-bg-light'/>
+                </div>
+                <div className='flex items-center gap-3'>
                   <div>{saveScenarioState}</div>
+                  <BorderGrayButton onClick={onSaveScenarios}>Save</BorderGrayButton>
+                  <AiFillPlusCircle
+                    className='text-3xl cursor-pointer text-text-blue'
+                    onClick={onNewScenario}
+                  />
                 </div>
               </div>
               <div className='flex flex-col w-full gap-3'>

@@ -316,7 +316,7 @@ export const VoiceChat = () => {
               <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
                 <div className='flex items-end justify-between'>
                   <div className='text-xs text-gray-400'>Initial Message</div>
-                  <BlueButton>Save</BlueButton>
+                  <BlueButton onClick={onInitialization}>Save</BlueButton>
                 </div>
                 <InputText
                   classNames='w-full bg-transparent text-white border-0'
@@ -329,7 +329,7 @@ export const VoiceChat = () => {
               <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
                 <div className='flex items-end justify-between'>
                   <div className='text-xs text-gray-400'>Rate Limit Message</div>
-                  <BlueButton>Save</BlueButton>
+                  <BlueButton onClick={onRateLimit}>Save</BlueButton>
                 </div>
                 <InputText
                   classNames='w-full bg-transparent text-white border-0'

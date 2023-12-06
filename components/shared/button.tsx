@@ -90,7 +90,7 @@ export const BlueButton = ({
 }) => {
   return (
     <Button
-      className={`${disabled ? ' bg-bg-light text-text-dark border border-border-gray' : 'bg-bg-btn-blue text-text-light'} ${className}`}
+      className={`bg-bg-btn-blue text-text-light ${className}`}
       onClick={onClick}
       style={style}
       disabled={disabled}

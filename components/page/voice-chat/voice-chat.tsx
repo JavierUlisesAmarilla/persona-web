@@ -1,9 +1,12 @@
+
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
 
 
 'use client'
 
-import {AiFillPlusCircle, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone} from 'react-icons/ai'
+import {AiFillPlusCircle, AiOutlineCopy, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone} from 'react-icons/ai'
 import {BorderGrayButton, DarkBlueButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
@@ -285,22 +288,18 @@ export const VoiceChat = () => {
                   ))}
                 </UserSelect>
                 <DarkBlueButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</DarkBlueButton>
-                {/* <div
-                className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
-                onClick={async () => {
-                  await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
-                  setCopyStatus('Copied.')
-                  setTimeout(() => setCopyStatus(''), 2000)
-                }}
-              >
-                <span className='mr-2'>{personaArr[selPersonaIndex]?._id}</span>
-                <img
-                  className="w-4 h-4"
-                  src="/copy-to-clipboard.svg"
-                  alt="Copy to clipboard"
-                />
-              </div>
-              <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div> */}
+                <div
+                  className='flex items-center justify-between h-6 px-3 py-2 text-sm text-white rounded cursor-pointer bg-bg-dark-blue'
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
+                    setCopyStatus('Copied.')
+                    setTimeout(() => setCopyStatus(''), 2000)
+                  }}
+                >
+                  <span className='mr-2'>{personaArr[selPersonaIndex]?._id}</span>
+                  <AiOutlineCopy className='w-4 h-4'/>
+                </div>
+                <div className={`flex fade-out transition-opacity duration-2000 text-sm text-white ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
               </div>
               <div className='flex gap-3'>
                 <BlueButton
@@ -315,7 +314,10 @@ export const VoiceChat = () => {
             </div>
             <div className='flex items-center justify-between w-full gap-6'>
               <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
-                <div className='text-xs text-gray-400'>Initial Message</div>
+                <div className='flex items-end justify-between'>
+                  <div className='text-xs text-gray-400'>Initial Message</div>
+                  <BlueButton>Save</BlueButton>
+                </div>
                 <InputText
                   classNames='w-full bg-transparent text-white border-0'
                   style={{padding: 0}}
@@ -325,7 +327,10 @@ export const VoiceChat = () => {
                 />
               </div>
               <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
-                <div className='text-xs text-gray-400'>Rate Limit Message</div>
+                <div className='flex items-end justify-between'>
+                  <div className='text-xs text-gray-400'>Rate Limit Message</div>
+                  <BlueButton>Save</BlueButton>
+                </div>
                 <InputText
                   classNames='w-full bg-transparent text-white border-0'
                   style={{padding: 0}}
@@ -356,58 +361,66 @@ export const VoiceChat = () => {
                     }}
                   />
                   <div className='flex flex-wrap items-center w-full gap-1 px-4 py-3'>
-                    <BlueButton disabled>
+                    <BorderGrayButton>
                       <div className='flex items-center gap-1'>
-                        <div className='text-sm'>Voice</div>
-                        <AiOutlineInfoCircle className='text-base'/>
+                        {isActionsSchemaInPrompt ?
+                          <>
+                            <div className='text-sm text-text-dark'>Schema</div>
+                            <AiOutlineInfoCircle className='text-base text-green-500'/>
+                          </> :
+                          <>
+                            <div className='text-sm'>Voice</div>
+                            <AiOutlineInfoCircle className='text-base'/>
+                          </>
+                        }
                       </div>
-                    </BlueButton>
-                    <BlueButton disabled>
+                    </BorderGrayButton>
+                    <BorderGrayButton>
                       <div className='flex items-center gap-1'>
                         <div className='text-sm'>Current Date / Time</div>
                         <AiOutlineInfoCircle className='text-base'/>
                       </div>
-                    </BlueButton>
-                    <BlueButton disabled>
+                    </BorderGrayButton>
+                    <BorderGrayButton>
                       <div className='flex items-center gap-1'>
                         <div className='text-sm'>Details</div>
                         <AiOutlineInfoCircle className='text-base'/>
                       </div>
-                    </BlueButton>
-                    <BlueButton disabled>
+                    </BorderGrayButton>
+                    <BorderGrayButton>
                       <div className='flex items-center gap-1'>
                         <div className='text-sm'>Scenarios List</div>
                         <AiOutlineInfoCircle className='text-base'/>
                       </div>
-                    </BlueButton>
+                    </BorderGrayButton>
+                    {/* <div className='flex items-center justify-between w-full gap-3'>
+                      <div>
+                        <div className='text-sm text-right'>Actions Schema {isActionsSchemaInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
+                        <div>{promptState}</div>
+                      </div>
+                      <div className='text-sm text-right'>
+                        Tokens:{' '}
+                        <span className={
+                          `${totalPromptTokens < 1000 ? 'text-green-500' :
+                            totalPromptTokens < 3000 ? 'text-yellow-500' :
+                              totalPromptTokens <= 4000 ? 'text-orange-500' :
+                                'text-red-500'}`
+                        }
+                        >
+                          {totalPromptTokens}
+                        </span>
+                      </div>
+                    </div>
+                    <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div> */}
                   </div>
                 </div>
-                {/* <div className='flex items-center justify-between w-full gap-3'>
-                  <div>
-                    <div className='text-sm text-right'>Actions Schema {isActionsSchemaInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
-                    <div>{promptState}</div>
-                  </div>
-                  <div className='text-sm text-right'>
-                    Tokens:{' '}
-                    <span className={
-                      `${totalPromptTokens < 1000 ? 'text-green-500' :
-                        totalPromptTokens < 3000 ? 'text-yellow-500' :
-                          totalPromptTokens <= 4000 ? 'text-orange-500' :
-                            'text-red-500'}`
-                    }
-                    >
-                      {totalPromptTokens}
-                    </span>
-                  </div>
-                </div>
-                <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div> */}
               </div>
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
                   <div className='text-base font-semibold'>Actions Schema</div>
                   <BlueButton disabled={isActionsSchemaSynced || schemaErrors!.length > 0} onClick={onSchema}>Update</BlueButton>
                 </div>
-                <div className='flex flex-col w-full border rounded-b-lg bg-bg-light border-border-gray'>
+                <div className='flex flex-col flex-grow w-full border rounded-b-lg bg-bg-light border-border-gray'>
                   <Textarea
                     className={`h-[550px] border-0 border-b ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
                     value={schemaText}
@@ -426,7 +439,12 @@ export const VoiceChat = () => {
                             <div>{_.capitalize(error.message)}</div>
                           </div>
                         )) :
-                        <div className='text-sm'>Valid <span className='text-green-500'>✔</span></div>
+                        <BorderGrayButton>
+                          <div className='flex items-center gap-1'>
+                            <div className='text-sm text-text-dark'>Valid</div>
+                            <AiOutlineInfoCircle className='text-base text-green-500'/>
+                          </div>
+                        </BorderGrayButton>
                       }
                     </div>
                     <div className='text-right'>{schemaState}</div>

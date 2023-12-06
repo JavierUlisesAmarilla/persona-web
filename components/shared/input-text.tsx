@@ -10,6 +10,7 @@ export const InputText = ({
   onChange,
   disabled,
   classNames = '',
+  style = {},
 }: {
   defaultValue?: string
   value?: string
@@ -17,16 +18,18 @@ export const InputText = ({
   onChange?: ChangeEventHandler<HTMLInputElement>
   disabled?: boolean
   classNames?: string
+  style?: any
 }) => {
   return (
     <input
-      className={`px-3 py-1 text-xs border-gray-200 rounded ${classNames}`}
+      className={`px-3 py-1 border-gray-200 rounded ${classNames}`}
       type="text"
       defaultValue={defaultValue}
       value={value}
       placeholder={placeholder}
       onChange={onChange}
       disabled={disabled}
+      style={style}
     />
   )
 }

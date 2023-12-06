@@ -59,6 +59,7 @@ export const ApiKeyAssign = () => {
         <div className='text-2xl font-semibold'>Team</div>
         {apiKeyArr.length > 1 &&
           <UserSelect
+            className='text-xs border-gray-200'
             value={selApiKeyIndex}
             onChange={onTeamChange}
           >

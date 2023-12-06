@@ -89,6 +89,7 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
       <div className="flex items-center justify-between w-full gap-4">
         <div className='font-medium whitespace-nowrap'>Team Name:</div>
         <InputText
+          classNames='text-xs'
           value={data?.name}
           placeholder="Team Name"
           onChange={onNameChange}
@@ -99,6 +100,7 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
           <>
             <div className='font-medium whitespace-nowrap'>Manager:</div>
             <UserSelect
+              className='text-xs border-gray-200'
               value={data?.manager}
               onChange={onManagerChange}
             >
@@ -120,6 +122,7 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
                 className="flex items-center gap-1 p-1 border border-gray-200 rounded-md"
               >
                 <InputText
+                  classNames='text-xs'
                   value={emailObj.name}
                   placeholder="Email"
                   onChange={(event) => onEmailChange(index, event.target.value)}

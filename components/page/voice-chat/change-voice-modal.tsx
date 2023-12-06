@@ -150,7 +150,10 @@ export const ChangeVoiceModal: React.FC<Props> = ({
         <div className='flex items-center gap-3'>
           <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
             <div>Gender:</div>
-            <UserSelect value={selectedGender} onChange={(e) => setSelectedGender(e.target.value)}>
+            <UserSelect
+              className='text-xs border-gray-200'
+              value={selectedGender} onChange={(e) => setSelectedGender(e.target.value)}
+            >
               <option value="-">-</option>
               {uniqueGenders.map(({gender, count}) => (
                 gender !== null ? <option key={gender} value={gender}>{`${gender} (${count})`}</option> : null
@@ -159,7 +162,10 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           </div>
           <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
             <div>Age:</div>
-            <UserSelect value={selectedAge} onChange={(e) => setSelectedAge(e.target.value)}>
+            <UserSelect
+              className='text-xs border-gray-200'
+              value={selectedAge} onChange={(e) => setSelectedAge(e.target.value)}
+            >
               <option value="-">-</option>
               {uniqueAges.map(({age, count}) => (
                 age !== null ? <option key={age} value={age}>{`${age} (${count})`}</option> : null
@@ -168,7 +174,10 @@ export const ChangeVoiceModal: React.FC<Props> = ({
           </div>
           <div className='flex items-center gap-1 p-2 font-medium border rounded-lg border-border-gray'>
             <div>Accent:</div>
-            <UserSelect value={selectedAccent} onChange={(e) => setSelectedAccent(e.target.value)}>
+            <UserSelect
+              className='text-xs border-gray-200'
+              value={selectedAccent} onChange={(e) => setSelectedAccent(e.target.value)}
+            >
               <option value="-">-</option>
               {uniqueAccents.map(({accent, count}) => (
                 accent !== null ? <option key={accent} value={accent}>{`${accent} (${count})`}</option> : null

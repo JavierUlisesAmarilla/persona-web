@@ -3,7 +3,7 @@
 
 'use client'
 
-import {AiFillPlusCircle, AiOutlineDelete, AiOutlinePhone} from 'react-icons/ai'
+import {AiFillPlusCircle, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone} from 'react-icons/ai'
 import {BorderGrayButton, DarkBlueButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
@@ -18,6 +18,7 @@ import axios from 'axios'
 import {encode} from 'gpt-tokenizer'
 import _ from 'lodash'
 import {useState} from 'react'
+import {InputText} from '../../shared/input-text'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
@@ -250,40 +251,41 @@ export const VoiceChat = () => {
 
   return (
     <div className='w-full h-full'>
-      <div className="flex flex-col w-full gap-3 p-6 rounded-lg">
-        <div className='flex items-end justify-between'>
-          <h2 className='text-2xl font-semibold'>Playground</h2>
-          <BlueButton className='items-center gap-2'>
-            <div className='text-sm'>Create New Persona</div>
-            <AiFillPlusCircle className='text-base'/>
-          </BlueButton>
-        </div>
-        <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-bg-dark-blue'>
-          <div className='flex flex-wrap items-center justify-between w-full'>
-            <div className='flex gap-3'>
-              <div className='flex flex-col items-start gap-2'>
+      <div className="flex flex-col w-full gap-6 p-6 rounded-lg">
+        <div className='flex flex-col w-full gap-3'>
+          <div className='flex items-end justify-between'>
+            <h2 className='text-2xl font-semibold'>Playground</h2>
+            <BlueButton className='items-center gap-1'>
+              <div>Create New Persona</div>
+              <AiFillPlusCircle className='text-lg'/>
+            </BlueButton>
+          </div>
+          <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-[#1D1D41]'>
+            <div className='flex flex-wrap items-center justify-between w-full'>
+              <div className='flex items-center gap-3'>
+                <div className='flex flex-col items-start gap-2'>
+                  <UserSelect
+                    className='text-base text-white outline-none bg-bg-dark-blue border-border-dark-blue w-fit'
+                    onChange={onPersona}
+                  >
+                    {personaArr.map((persona, index) => (
+                      <option key={index} value={index}>{persona.name}</option>
+                    ))}
+                  </UserSelect>
+
+                </div>
                 <UserSelect
-                  className='text-white bg-bg-dark-blue border-border-dark-blue'
-                  onChange={onPersona}
+                  className='text-xs text-white bg-bg-dark-blue border-border-dark-blue'
+                  value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'}
+                  onChange={onLLMChange}
                 >
-                  {personaArr.map((persona, index) => (
-                    <option key={index} value={index}>{persona.name}</option>
+                  {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
+                  {LLMSArray.map((llm, index) => (
+                    <option key={index} value={index}>{llm}</option>
                   ))}
                 </UserSelect>
-
-              </div>
-              <UserSelect
-                className='text-white bg-bg-dark-blue border-border-dark-blue'
-                value={LLMSArray.indexOf(personaArr[selPersonaIndex]?.llm).toString() || '0'}
-                onChange={onLLMChange}
-              >
-                {/* <UserSelect value={personaArr[selPersonaIndex]?.llm} onChange={onLLMChange}> */}
-                {LLMSArray.map((llm, index) => (
-                  <option key={index} value={index}>{llm}</option>
-                ))}
-              </UserSelect>
-              <DarkBlueButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</DarkBlueButton>
-              {/* <div
+                <DarkBlueButton onClick={() => setShowChangeVoiceModal(true)}>Change Voice</DarkBlueButton>
+                {/* <div
                 className='flex items-center justify-between h-6 px-3 py-2 text-sm text-gray-500 bg-white rounded cursor-pointer'
                 onClick={async () => {
                   await navigator.clipboard.writeText(personaArr[selPersonaIndex]?._id)
@@ -299,47 +301,88 @@ export const VoiceChat = () => {
                 />
               </div>
               <div className={`flex fade-out transition-opacity duration-2000 text-sm text-gray-500 ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div> */}
+              </div>
+              <div className='flex gap-3'>
+                <BlueButton
+                  className='flex items-center gap-1'
+                  onClick={onNewChat}
+                >
+                  <AiOutlinePhone className='text-base text-white rotate-90'/>
+                  <div>Start Chat</div>
+                </BlueButton>
+                <DarkBlueButton onClick={onDeploy}>Deploy</DarkBlueButton>
+              </div>
             </div>
-            <div className='flex gap-3'>
-              <BlueButton
-                className='flex items-center gap-1'
-                onClick={onNewChat}
-              >
-                <AiOutlinePhone className='text-sm text-white'/>
-                <div>Start Chat</div>
-              </BlueButton>
-              <DarkBlueButton onClick={onDeploy}>Deploy</DarkBlueButton>
-            </div>
-          </div>
-          <div className='flex items-center justify-between w-full gap-6'>
-            <div className='flex-grow gap-2 p-4 border border-border-dark-blue rounded-xl'>
-              <div className='text-xs text-gray-400'>Initial Message</div>
-              <div className='text-base text-white'>{personaArr[selPersonaIndex]?.initialMessage || ''}</div>
-            </div>
-            <div className='flex-grow gap-2 p-4 border border-border-dark-blue rounded-xl'>
-              <div className='text-xs text-gray-400'>Rate Limit Message</div>
-              <div className='text-base text-white'>{personaArr[selPersonaIndex]?.rateLimitMessage || ''}</div>
+            <div className='flex items-center justify-between w-full gap-6'>
+              <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
+                <div className='text-xs text-gray-400'>Initial Message</div>
+                <InputText
+                  classNames='w-full bg-transparent text-white border-0'
+                  style={{padding: 0}}
+                  value={personaArr[selPersonaIndex]?.initialMessage || ''}
+                  placeholder='Enter initial message here'
+                  onChange={(e) => setScenarioInitMsg(selPersonaIndex, e.target.value)}
+                />
+              </div>
+              <div className='flex-grow gap-2 p-4 border rounded-lg border-border-dark-blue bg-bg-dark-blue'>
+                <div className='text-xs text-gray-400'>Rate Limit Message</div>
+                <InputText
+                  classNames='w-full bg-transparent text-white border-0'
+                  style={{padding: 0}}
+                  value={personaArr[selPersonaIndex]?.rateLimitMessage || ''}
+                  placeholder='Enter rate limit message here'
+                  onChange={(e) => setScenarioRateLimit(selPersonaIndex, e.target.value)}
+                />
+              </div>
             </div>
           </div>
         </div>
         {personaArr[selPersonaIndex] &&
           <>
-            <div className='flex w-full gap-3 p-6 border rounded-lg bg-bg-light'>
+            <div className='flex w-full gap-3'>
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
                   <div className='text-base font-semibold'>Prompt</div>
-                  <BorderGrayButton onClick={onPrompt}>Update</BorderGrayButton>
+                  <BlueButton disabled={isPromptSynced} onClick={onPrompt}>Update</BlueButton>
                 </div>
-                <Textarea
-                  className='h-[550px]'
-                  value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
-                  placeholder='Enter the prompt here'
-                  onChange={(e) => {
-                    setIsPromptSynced(false)
-                    setScenarioPrompt(selPersonaIndex, e.target.value)
-                  }}
-                />
-                <div className='flex items-center justify-between w-full gap-3'>
+                <div className='flex flex-col w-full border rounded-b-lg bg-bg-light border-border-gray'>
+                  <Textarea
+                    className='h-[550px] border-0 border-b'
+                    value={personaArr[selPersonaIndex]?.currentVoicePrompt || ''}
+                    placeholder='Enter the prompt here'
+                    onChange={(e) => {
+                      setIsPromptSynced(false)
+                      setScenarioPrompt(selPersonaIndex, e.target.value)
+                    }}
+                  />
+                  <div className='flex flex-wrap items-center w-full gap-1 px-4 py-3'>
+                    <BlueButton disabled>
+                      <div className='flex items-center gap-1'>
+                        <div className='text-sm'>Voice</div>
+                        <AiOutlineInfoCircle className='text-base'/>
+                      </div>
+                    </BlueButton>
+                    <BlueButton disabled>
+                      <div className='flex items-center gap-1'>
+                        <div className='text-sm'>Current Date / Time</div>
+                        <AiOutlineInfoCircle className='text-base'/>
+                      </div>
+                    </BlueButton>
+                    <BlueButton disabled>
+                      <div className='flex items-center gap-1'>
+                        <div className='text-sm'>Details</div>
+                        <AiOutlineInfoCircle className='text-base'/>
+                      </div>
+                    </BlueButton>
+                    <BlueButton disabled>
+                      <div className='flex items-center gap-1'>
+                        <div className='text-sm'>Scenarios List</div>
+                        <AiOutlineInfoCircle className='text-base'/>
+                      </div>
+                    </BlueButton>
+                  </div>
+                </div>
+                {/* <div className='flex items-center justify-between w-full gap-3'>
                   <div>
                     <div className='text-sm text-right'>Actions Schema {isActionsSchemaInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
                     <div>{promptState}</div>
@@ -357,35 +400,37 @@ export const VoiceChat = () => {
                     </span>
                   </div>
                 </div>
-                <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
+                <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div> */}
               </div>
               <div className='flex flex-col w-full gap-3'>
                 <div className='flex items-center justify-between w-full gap-3'>
                   <div className='text-base font-semibold'>Actions Schema</div>
-                  <BorderGrayButton onClick={onSchema}>Update</BorderGrayButton>
+                  <BlueButton disabled={isActionsSchemaSynced || schemaErrors!.length > 0} onClick={onSchema}>Update</BlueButton>
                 </div>
-                <Textarea
-                  className={`h-[550px] ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
-                  value={schemaText}
-                  placeholder='Enter the actions schema here'
-                  onChange={(e) => {
-                    setIsActionsSchemaSynced(false)
-                    setSchemaText(e.target.value)
-                  }}
-                />
-                <div className='flex items-center justify-end gap-3'>
-                  <div className='w-full text-right'>
-                    {schemaErrors!.length > 0 ?
-                      schemaErrors!.map((error, index) => (
-                        <div key={index} className='text-sm text-red-500'>
-                          <div>{(error as any).instancePath || (error as any).dataPath ? `${((error as any).instancePath || (error as any).dataPath).replace('.properties', '')}:` : 'Error:'}</div>
-                          <div>{_.capitalize(error.message)}</div>
-                        </div>
-                      )) :
-                      <div className='text-sm'>Valid <span className='text-green-500'>✔</span></div>
-                    }
+                <div className='flex flex-col w-full border rounded-b-lg bg-bg-light border-border-gray'>
+                  <Textarea
+                    className={`h-[550px] border-0 border-b ${!isActionsSchemaInPrompt ? 'text-gray-500' : ''}`}
+                    value={schemaText}
+                    placeholder='Enter the actions schema here'
+                    onChange={(e) => {
+                      setIsActionsSchemaSynced(false)
+                      setSchemaText(e.target.value)
+                    }}
+                  />
+                  <div className='flex items-center justify-end gap-3 px-4 py-3'>
+                    <div className='w-full text-right'>
+                      {schemaErrors!.length > 0 ?
+                        schemaErrors!.map((error, index) => (
+                          <div key={index} className='text-sm text-red-500'>
+                            <div>{(error as any).instancePath || (error as any).dataPath ? `${((error as any).instancePath || (error as any).dataPath).replace('.properties', '')}:` : 'Error:'}</div>
+                            <div>{_.capitalize(error.message)}</div>
+                          </div>
+                        )) :
+                        <div className='text-sm'>Valid <span className='text-green-500'>✔</span></div>
+                      }
+                    </div>
+                    <div className='text-right'>{schemaState}</div>
                   </div>
-                  <div className='text-right'>{schemaState}</div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable max-len */
+
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
@@ -112,6 +112,7 @@ export const DeployTwilioModal = ({
               <div className='p-2'><strong>3.</strong> Enter the phone number here (Including the “+” at the beginning):</div>
               <div className='flex gap-3 p-2'>
                 <InputText
+                  classNames='text-xs'
                   value={phoneNumber}
                   onChange={(e) => setPersonaPhoneNumber(selPersonaIndex, e.target.value)}
                 />
@@ -131,6 +132,7 @@ export const DeployTwilioModal = ({
               <div className='p-2'><strong>4.</strong> Under Account &gt; API keys & tokens &gt; Auth Tokens, find your Account SID and paste it here:</div>
               <div className='flex gap-3 p-2'>
                 <InputText
+                  classNames='text-xs'
                   value={accountSid}
                   onChange={(e) => setPersonaTwilioAccountSid(selPersonaIndex, e.target.value)}
                 />
@@ -143,6 +145,7 @@ export const DeployTwilioModal = ({
               <div className='p-2'><strong>5.</strong> Below that, find your Auth Token and paste it here:</div>
               <div className='flex gap-3 p-2'>
                 <InputText
+                  classNames='text-xs'
                   value={authToken}
                   onChange={(e) => setPersonaTwilioAuthToken(selPersonaIndex, e.target.value)}
                 />

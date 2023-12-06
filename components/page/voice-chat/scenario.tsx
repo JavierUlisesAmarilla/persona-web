@@ -19,6 +19,7 @@ export const Scenario = ({scenario, scenarioIndex}: Props) => {
       <div className='flex flex-col w-full gap-3'>
         <div>Context</div>
         <InputText
+          classNames='text-xs'
           defaultValue={scenario?.context}
           onChange={(e) => setScenarioContext(selPersonaIndex, scenarioIndex, e.target.value)}
         />
@@ -37,6 +38,7 @@ export const Scenario = ({scenario, scenarioIndex}: Props) => {
         </div>
         {scenario?.personaSays?.map((personaSay: any, personaSayIndex: number) =>
           <InputText
+            classNames='text-xs'
             key={personaSayIndex}
             defaultValue={personaSay}
             onChange={(e) => setScenarioPersonaSay(selPersonaIndex, scenarioIndex, personaSayIndex, e.target.value)}
@@ -57,6 +59,7 @@ export const Scenario = ({scenario, scenarioIndex}: Props) => {
         </div>
         {scenario?.userSays?.map((userSay: any, userSayIndex: number) =>
           <InputText
+            classNames='text-xs'
             key={userSayIndex}
             defaultValue={userSay}
             onChange={(e) => setScenarioUserSay(selPersonaIndex, scenarioIndex, userSayIndex, e.target.value)}
@@ -66,6 +69,7 @@ export const Scenario = ({scenario, scenarioIndex}: Props) => {
       <div className='flex flex-col w-full gap-3'>
         <div>The persona should respond by</div>
         <InputText
+          classNames='text-xs'
           defaultValue={scenario?.responseGuidelines}
           onChange={(e) => setScenarioResponse(selPersonaIndex, scenarioIndex, e.target.value)}
         />

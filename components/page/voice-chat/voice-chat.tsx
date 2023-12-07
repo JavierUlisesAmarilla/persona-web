@@ -6,8 +6,8 @@
 
 'use client'
 
-import {AiFillPlusCircle, AiOutlineCopy, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone} from 'react-icons/ai'
-import {BorderGrayButton, DarkBlueButton} from '../../shared/button'
+import {AiFillPlusCircle, AiOutlineCopy, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
+import {BorderGrayButton, DarkBlueButton, BorderLightGrayButton, BorderBlackButton, BackgroundLightGrayButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
 import {Textarea} from '@/components/shared/textarea'
@@ -87,7 +87,11 @@ export const VoiceChat = () => {
 
   const actionsSchemaOccurrences = (currentPromptText.match(/(\*\*\*PERSONA_VOICE_SCHEMA\*\*\*)/g) || []).length
   const isActionsSchemaInPrompt = actionsSchemaOccurrences > 0
-  const areScenariosInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
+  const isScenariosListInPrompt = currentPromptText.includes('***SCENARIOS_LIST***')
+  const isCurrentDateTimeInPrompt = currentPromptText.includes('***CURRENT_DATETIME***')
+  // details can be any string like ***DETAILS.[some string]***
+  const isDetailsInPrompt = /\*\*\*DETAILS\..+\*\*\*/g.test(currentPromptText)
+
   const totalPromptTokens = isActionsSchemaInPrompt ? encode(currentPromptText).length + (encode(stringifiedActionText).length * actionsSchemaOccurrences) : encode(currentPromptText).length
 
   const schemaErrors = validateActionSchema(schemaText)
@@ -270,6 +274,22 @@ export const VoiceChat = () => {
     }
   }
 
+  const insertAtCursor = (text: string) => {
+    const textarea = document.getElementsByTagName('textarea')[0]
+    const scrollPos = textarea.scrollTop
+    let caretPos = textarea.selectionStart
+    const front = (personaArr[selPersonaIndex]?.currentVoicePrompt || '').substring(0, caretPos)
+    const back = (personaArr[selPersonaIndex]?.currentVoicePrompt || '').substring(textarea.selectionEnd, textarea.value.length)
+    const newValue = front + text + back
+    caretPos = newValue.length // Move the cursor to the end of the newly pasted string
+    textarea.selectionStart = caretPos
+    textarea.selectionEnd = caretPos
+    textarea.focus()
+    textarea.scrollTop = scrollPos
+    setIsPromptSynced(false)
+    setScenarioPrompt(selPersonaIndex, newValue) // Update the scenario prompt
+  }
+
   return (
     <div className='w-full h-full'>
       <div className="flex flex-col w-full gap-6 p-6 rounded-lg">
@@ -417,47 +437,69 @@ export const VoiceChat = () => {
                       setScenarioPrompt(selPersonaIndex, e.target.value)
                     }}
                   />
-                  <div className='flex flex-wrap items-center w-full gap-1 px-4 py-3'>
-                    <BorderGrayButton>
+                  <div className='flex flex-wrap items-center justify-between w-full gap-1 px-4 py-3'>
+                    <div className='flex flex-wrap items-center gap-1'>
+                      <BorderLightGrayButton onClick={() => insertAtCursor('***PERSONA_VOICE_SCHEMA***')}>
+                        <div className='flex items-center gap-1'>
+                          {isActionsSchemaInPrompt ?
+                            <>
+                              <div className='text-sm text-text-dark'>Actions</div>
+                              <AiOutlineCheckCircle className='text-base text-green-500'/>
+                            </> :
+                            <>
+                              <div className='text-sm text-text-gray'>Actions</div>
+                              <AiOutlineCloseCircle className='text-base text-gray-400'/>
+                            </>
+                          }
+                        </div>
+                      </BorderLightGrayButton>
+                      <BorderLightGrayButton onClick={() => insertAtCursor('***CURRENT_DATETIME***')}>
+                        <div className='flex items-center gap-1'>
+                          {isCurrentDateTimeInPrompt ?
+                            <>
+                              <div className='text-sm text-text-dark'>Current Date / Time</div>
+                              <AiOutlineCheckCircle className='text-base text-green-500'/>
+                            </> :
+                            <>
+                              <div className='text-sm text-text-gray'>Current Date / Time</div>
+                              <AiOutlineCloseCircle className='text-base text-gray-400'/>
+                            </>
+                          }
+                        </div>
+                      </BorderLightGrayButton>
+                      <BorderLightGrayButton onClick={() => insertAtCursor('***DETAILS.[detail]***')}>
+                        <div className='flex items-center gap-1'>
+                          {isDetailsInPrompt ?
+                            <>
+                              <div className='text-sm text-text-dark'>Details</div>
+                              <AiOutlineCheckCircle className='text-base text-green-500'/>
+                            </> :
+                            <>
+                              <div className='text-sm text-text-gray'>Details</div>
+                              <AiOutlineCloseCircle className='text-base text-gray-400'/>
+                            </>
+                          }
+                        </div>
+                      </BorderLightGrayButton>
+                      <BorderLightGrayButton onClick={() => insertAtCursor('***SCENARIOS_LIST***')}>
+                        <div className='flex items-center gap-1'>
+                          {isScenariosListInPrompt ?
+                            <>
+                              <div className='text-sm text-text-dark'>Scenarios List</div>
+                              <AiOutlineCheckCircle className='text-base text-green-500'/>
+                            </> :
+                            <>
+                              <div className='text-sm text-text-gray'>Scenarios List</div>
+                              <AiOutlineCloseCircle className='text-base text-gray-400'/>
+                            </>
+                          }
+                        </div>
+                      </BorderLightGrayButton>
+                    </div>
+                    <BackgroundLightGrayButton>
                       <div className='flex items-center gap-1'>
-                        {isActionsSchemaInPrompt ?
-                          <>
-                            <div className='text-sm text-text-dark'>Schema</div>
-                            <AiOutlineInfoCircle className='text-base text-green-500'/>
-                          </> :
-                          <>
-                            <div className='text-sm'>Voice</div>
-                            <AiOutlineInfoCircle className='text-base'/>
-                          </>
-                        }
-                      </div>
-                    </BorderGrayButton>
-                    <BorderGrayButton>
-                      <div className='flex items-center gap-1'>
-                        <div className='text-sm'>Current Date / Time</div>
-                        <AiOutlineInfoCircle className='text-base'/>
-                      </div>
-                    </BorderGrayButton>
-                    <BorderGrayButton>
-                      <div className='flex items-center gap-1'>
-                        <div className='text-sm'>Details</div>
-                        <AiOutlineInfoCircle className='text-base'/>
-                      </div>
-                    </BorderGrayButton>
-                    <BorderGrayButton>
-                      <div className='flex items-center gap-1'>
-                        <div className='text-sm'>Scenarios List</div>
-                        <AiOutlineInfoCircle className='text-base'/>
-                      </div>
-                    </BorderGrayButton>
-                    {/* <div className='flex items-center justify-between w-full gap-3'>
-                      <div>
-                        <div className='text-sm text-right'>Actions Schema {isActionsSchemaInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div>
-                        <div>{promptState}</div>
-                      </div>
-                      <div className='text-sm text-right'>
-                        Tokens:{' '}
-                        <span className={
+                        <div className='text-sm text-text-dark'>Total Tokens</div>
+                        <div className={
                           `${totalPromptTokens < 1000 ? 'text-green-500' :
                             totalPromptTokens < 3000 ? 'text-yellow-500' :
                               totalPromptTokens <= 4000 ? 'text-orange-500' :
@@ -465,10 +507,9 @@ export const VoiceChat = () => {
                         }
                         >
                           {totalPromptTokens}
-                        </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className='text-sm'>Scenarios {areScenariosInPrompt ? <span className='text-green-500'>✔</span> : <span className='text-red-500'>✖</span>}</div> */}
+                    </BackgroundLightGrayButton>
                   </div>
                 </div>
               </div>
@@ -487,8 +528,8 @@ export const VoiceChat = () => {
                       setSchemaText(e.target.value)
                     }}
                   />
-                  <div className='flex items-center justify-end gap-3 px-4 py-3'>
-                    <div className='w-full text-right'>
+                  <div className='flex items-center justify-end px-4 py-3'>
+                    <div className='flex w-full justify-end'>
                       {schemaErrors!.length > 0 ?
                         schemaErrors!.map((error, index) => (
                           <div key={index} className='text-sm text-red-500'>
@@ -496,12 +537,12 @@ export const VoiceChat = () => {
                             <div>{_.capitalize(error.message)}</div>
                           </div>
                         )) :
-                        <BorderGrayButton>
+                        <BackgroundLightGrayButton>
                           <div className='flex items-center gap-1'>
                             <div className='text-sm text-text-dark'>Valid</div>
-                            <AiOutlineInfoCircle className='text-base text-green-500'/>
+                            <AiOutlineCheckCircle className='text-base text-green-500'/>
                           </div>
-                        </BorderGrayButton>
+                        </BackgroundLightGrayButton>
                       }
                     </div>
                     <div className='text-right'>{schemaState}</div>

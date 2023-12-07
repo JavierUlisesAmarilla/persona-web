@@ -154,13 +154,15 @@ export const BorderGrayButton = ({
 export const BorderLightGrayButton = ({
   onClick,
   children,
+  className,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>
   children?: ReactNode
+  className?: string
 }) => {
   return (
     <Button
-      className='bg-white border-2'
+      className={`bg-white border-2 ${className}`}
       onClick={onClick}
     >
       {children}

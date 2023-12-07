@@ -439,57 +439,69 @@ export const VoiceChat = () => {
                   />
                   <div className='flex flex-wrap items-center justify-between w-full gap-1 px-4 py-3'>
                     <div className='flex flex-wrap items-center gap-1'>
-                      <BorderLightGrayButton onClick={() => insertAtCursor('***PERSONA_VOICE_SCHEMA***')}>
+                      <BorderLightGrayButton
+                        onClick={() => insertAtCursor('***PERSONA_VOICE_SCHEMA***')}
+                        className='py-1 px-1'
+                      >
                         <div className='flex items-center gap-1'>
                           {isActionsSchemaInPrompt ?
                             <>
-                              <div className='text-sm text-text-dark'>Actions</div>
+                              <div className='text-xs text-text-dark'>Actions</div>
                               <AiOutlineCheckCircle className='text-base text-green-500'/>
                             </> :
                             <>
-                              <div className='text-sm text-text-gray'>Actions</div>
+                              <div className='text-xs text-text-gray'>Actions</div>
                               <AiOutlineCloseCircle className='text-base text-gray-400'/>
                             </>
                           }
                         </div>
                       </BorderLightGrayButton>
-                      <BorderLightGrayButton onClick={() => insertAtCursor('***CURRENT_DATETIME***')}>
+                      <BorderLightGrayButton
+                        onClick={() => insertAtCursor('***CURRENT_DATETIME***')}
+                        className='py-1 px-1'
+                      >
                         <div className='flex items-center gap-1'>
                           {isCurrentDateTimeInPrompt ?
                             <>
-                              <div className='text-sm text-text-dark'>Current Date / Time</div>
+                              <div className='text-xs text-text-dark'>Current Date / Time</div>
                               <AiOutlineCheckCircle className='text-base text-green-500'/>
                             </> :
                             <>
-                              <div className='text-sm text-text-gray'>Current Date / Time</div>
+                              <div className='text-xs text-text-gray'>Current Date / Time</div>
                               <AiOutlineCloseCircle className='text-base text-gray-400'/>
                             </>
                           }
                         </div>
                       </BorderLightGrayButton>
-                      <BorderLightGrayButton onClick={() => insertAtCursor('***DETAILS.[detail]***')}>
+                      <BorderLightGrayButton
+                        onClick={() => insertAtCursor('***DETAILS.[detail]***')}
+                        className='py-1 px-1'
+                      >
                         <div className='flex items-center gap-1'>
                           {isDetailsInPrompt ?
                             <>
-                              <div className='text-sm text-text-dark'>Details</div>
+                              <div className='text-xs text-text-dark'>Details</div>
                               <AiOutlineCheckCircle className='text-base text-green-500'/>
                             </> :
                             <>
-                              <div className='text-sm text-text-gray'>Details</div>
+                              <div className='text-xs text-text-gray'>Details</div>
                               <AiOutlineCloseCircle className='text-base text-gray-400'/>
                             </>
                           }
                         </div>
                       </BorderLightGrayButton>
-                      <BorderLightGrayButton onClick={() => insertAtCursor('***SCENARIOS_LIST***')}>
+                      <BorderLightGrayButton
+                        onClick={() => insertAtCursor('***SCENARIOS_LIST***')}
+                        className='py-1 px-1'
+                      >
                         <div className='flex items-center gap-1'>
                           {isScenariosListInPrompt ?
                             <>
-                              <div className='text-sm text-text-dark'>Scenarios List</div>
+                              <div className='text-xs text-text-dark'>Scenarios List</div>
                               <AiOutlineCheckCircle className='text-base text-green-500'/>
                             </> :
                             <>
-                              <div className='text-sm text-text-gray'>Scenarios List</div>
+                              <div className='text-xs text-text-gray'>Scenarios List</div>
                               <AiOutlineCloseCircle className='text-base text-gray-400'/>
                             </>
                           }
@@ -498,7 +510,7 @@ export const VoiceChat = () => {
                     </div>
                     <BackgroundLightGrayButton>
                       <div className='flex items-center gap-1'>
-                        <div className='text-sm text-text-dark'>Total Tokens</div>
+                        <div className='text-xs text-text-dark'>Tokens</div>
                         <div className={
                           `${totalPromptTokens < 1000 ? 'text-green-500' :
                             totalPromptTokens < 3000 ? 'text-yellow-500' :
@@ -539,7 +551,7 @@ export const VoiceChat = () => {
                         )) :
                         <BackgroundLightGrayButton>
                           <div className='flex items-center gap-1'>
-                            <div className='text-sm text-text-dark'>Valid</div>
+                            <div className='text-xs text-text-dark'>Valid</div>
                             <AiOutlineCheckCircle className='text-base text-green-500'/>
                           </div>
                         </BackgroundLightGrayButton>

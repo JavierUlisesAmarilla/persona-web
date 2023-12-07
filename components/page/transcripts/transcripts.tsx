@@ -12,7 +12,7 @@ export const Transcripts = () => {
     <div className='flex flex-col w-full h-full gap-3 p-6 Transcripts'>
       <div className='text-2xl font-semibold'>Transcripts</div>
       <TranscriptFilter/>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-row flex-wrap gap-3 ml-auto">
         {filteredTranscriptArr.map((transcript, index) =>
           <Transcript
             key={index}

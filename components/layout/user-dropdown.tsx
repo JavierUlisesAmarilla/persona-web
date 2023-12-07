@@ -63,8 +63,8 @@ export const UserDropdown = ({session}: {session: Session}) => {
           <Image
             alt={email}
             src={image || `https://avatars.dicebear.com/api/micah/${email}.svg`}
-            width={32}
-            height={32}
+            width={40}
+            height={40}
           />
         </button>
       </Popover>

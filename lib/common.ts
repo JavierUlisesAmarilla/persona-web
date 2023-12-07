@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {ADMIN_EMAIL, WITHOUT_SIGN} from './constants'
 
 import {authOptions} from '@/app/api/auth/[...nextauth]/route'
@@ -10,7 +9,7 @@ export const getServerSessionMiddle = async () => {
     {
       user: {
         name: 'Meta Developer',
-        email: 'metadev26@gmail.com',
+        email: 'metadev27@gmail.com',
         image: 'https://lh3.googleusercontent.com/a/ACg8ocJMdpkHkgnXJ5NrfyxKrtTPB09njAcnQFJ7_RDERRjL=s96-c',
       },
     } :

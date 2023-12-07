@@ -44,10 +44,13 @@ export const Home = ({session}: {session: any}) => {
 
       // Fetch api key array
       const newApiKeyArr = await getData(newCurEmail)
+      console.log('Home#useEffect: newApiKeyArr: ', newApiKeyArr)
 
       if (!newApiKeyArr?.length && !hasAddedTeam) {
         setHasAddedTeam(true)
         const token = await addTeam(newCurEmail)
+        console.log('Home#useEffect: token: ', token)
+
         if (!token) {
           return
         }
@@ -80,6 +83,7 @@ export const Home = ({session}: {session: any}) => {
         return
       }
 
+      console.log('Home#useEffect: apiKey: ', apiKey)
       prevApiKey = apiKey
 
       // Set persona client

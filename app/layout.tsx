@@ -37,15 +37,15 @@ export default function Layout({
     <html className='w-full h-full' lang="en">
       <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
         <Suspense fallback="">
-          <div className='h-16'>
+          <div className='border-b h-14 border-b-border-gray'>
             {/* @ts-expect-error Server Component */}
             <Nav/>
           </div>
-          <div className='h-[100%-4rem] flex flex-grow overflow-auto'>
-            <div className='h-full overflow-auto w-80'>
+          <div className='h-[100%-3.5rem] flex flex-grow overflow-auto'>
+            <div className='h-full overflow-auto border-r w-60 border-border-gray'>
               <Sidebar/>
             </div>
-            <main className="w-[calc(100%-20rem)] h-full overflow-auto">
+            <main className="w-[calc(100%-15rem)] h-full overflow-auto">
               {children}
             </main>
           </div>

@@ -1,10 +1,10 @@
 'use client'
 
-import {signIn} from 'next-auth/react'
-// import {useEffect} from 'react'
 import {BlueButton} from '../shared/button'
-import {useSignInModal} from './sign-in-modal'
 import {UserDropdown} from './user-dropdown'
+// import {useEffect} from 'react'
+import {signIn} from 'next-auth/react'
+import {useSignInModal} from './sign-in-modal'
 
 
 export const Navbar = ({session}: {session: any}) => {
@@ -13,9 +13,9 @@ export const Navbar = ({session}: {session: any}) => {
   // useEffect(() => {}, [session])
 
   return (
-    <div className='w-full Navbar'>
+    <div className='w-full h-full Navbar'>
       <SignInModal/>
-      <div className='flex items-center justify-between w-full px-6 py-3 border-b border-b-border-gray'>
+      <div className='flex items-center justify-between w-full h-full px-6'>
         <div className='text-2xl font-semibold'>Persona</div>
         <div>
           {session ? (

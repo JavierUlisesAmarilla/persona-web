@@ -8,6 +8,7 @@ import {ObjectId} from 'mongodb'
 
 export const GET = async (request: NextRequest) => {
   try {
+    console.log('================================================== mongodb#GET')
     const id = request.nextUrl.searchParams.get('id')
     const email = request.nextUrl.searchParams.get('email')
     const canAccess = await emailCanAccess(email)

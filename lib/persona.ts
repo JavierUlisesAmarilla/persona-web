@@ -68,7 +68,10 @@ export const changeLLM = async (personaId: string, apiKey: string, llm: any) => 
 
 export const addTeam = async (name: string) => {
   try {
-    const res = await axios.post(`${DEPLOY_URL}/api/persona/teams/new`, {name})
+    const apiUrl = `${DEPLOY_URL}/api/persona/teams/new`
+    console.log('persona#addTeam: apiUrl: ', apiUrl)
+    const res = await axios.post(apiUrl, {name})
+    console.log('persona#addTeam: res: ', res)
 
     if (res?.data?.success) {
       return res.data.token

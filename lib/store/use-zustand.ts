@@ -183,7 +183,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
   selMenu: 'playground',
-  setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
+  setSelMenu: (selMenu) => set((state) => ({...state, selMenu})),
 
   apiKeyArr: [],
   setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),

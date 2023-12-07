@@ -277,15 +277,17 @@ export const VoiceChat = () => {
   const insertAtCursor = (text: string) => {
     const textarea = document.getElementsByTagName('textarea')[0]
     const scrollPos = textarea.scrollTop
-    let caretPos = textarea.selectionStart
+    const caretPos = textarea.selectionStart
     const front = (personaArr[selPersonaIndex]?.currentVoicePrompt || '').substring(0, caretPos)
     const back = (personaArr[selPersonaIndex]?.currentVoicePrompt || '').substring(textarea.selectionEnd, textarea.value.length)
     const newValue = front + text + back
-    caretPos = newValue.length // Move the cursor to the end of the newly pasted string
-    textarea.selectionStart = caretPos
-    textarea.selectionEnd = caretPos
+
+    textarea.value = newValue // Update the textarea value
+    textarea.setSelectionRange(caretPos, caretPos + text.length) // Highlight the newly inserted text
     textarea.focus()
+
     textarea.scrollTop = scrollPos
+
     setIsPromptSynced(false)
     setScenarioPrompt(selPersonaIndex, newValue) // Update the scenario prompt
   }

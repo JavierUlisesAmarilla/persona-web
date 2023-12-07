@@ -25,6 +25,9 @@ export const Home = ({session}: {session: any}) => {
     setLLMSArray,
     setTranscriptArr,
     setTeam,
+    setCanSeeSettings,
+    setCanSeePlayground,
+    setCanSeeTranscripts,
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
@@ -37,7 +40,7 @@ export const Home = ({session}: {session: any}) => {
         return
       }
 
-      setStatus('Loading...')
+      setStatus('Fetching settings data...')
 
       // Fetch api key array
       const newApiKeyArr = await getData(newCurEmail)
@@ -66,6 +69,7 @@ export const Home = ({session}: {session: any}) => {
 
       setCurEmail(newCurEmail)
       setApiKeyArr(newApiKeyArr)
+      setCanSeeSettings(true)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user?.email])
@@ -76,7 +80,6 @@ export const Home = ({session}: {session: any}) => {
         return
       }
 
-      setStatus('Loading...')
       prevApiKey = apiKey
 
       // Set persona client
@@ -92,8 +95,11 @@ export const Home = ({session}: {session: any}) => {
         }
       })
 
+      setStatus('Fetching persona data...')
       const newPersonaArr = await getPersonaArr(apiKey)
+      setStatus('Fetching LLMS data...')
       const llmsArr = await getLLMSArr(apiKey)
+
       const fetchTeam = async () => {
         try {
           if (apiKey) {
@@ -105,11 +111,13 @@ export const Home = ({session}: {session: any}) => {
         }
       }
 
-      fetchTeam()
+      setStatus('Fetching team data...')
+      await fetchTeam()
 
       if (Array.isArray(newPersonaArr) && Array.isArray(llmsArr)) {
         setPersonaArr(newPersonaArr)
         setLLMSArray(llmsArr)
+        setCanSeePlayground(true)
         const newTranscriptArr: Array<any> = []
 
         for (let i = 0; i < newPersonaArr.length; i++) {
@@ -117,16 +125,18 @@ export const Home = ({session}: {session: any}) => {
           const personaName = newPersonaArr[i].name
 
           if (personaId && personaName) {
-            getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-              newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            })
-            // const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            // newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
+            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
+            // })
+            setStatus('Fetching transcripts...')
+            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
+            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
         }
 
         setTranscriptArr(newTranscriptArr)
         setStatus('')
+        setCanSeeTranscripts(true)
       } else {
         setStatus('Something went wrong.')
       }
@@ -136,17 +146,14 @@ export const Home = ({session}: {session: any}) => {
 
   return (
     <div className='flex items-center justify-center w-full h-full overflow-auto bg-bg-gray'>
-      {session ?
-        (status ? (
-          <div className='text-2xl font-semibold'>{status}</div>
-        ) : (
-          <>
-            {MENUS[selMenu]?.menuComp}
-            <Alert/>
-          </>
-        )) : (
-          <div>Please log in.</div>
-        )}
+      {session ? (
+        <>
+          {MENUS[selMenu]?.menuComp}
+          <Alert/>
+        </>
+      ) : (
+        <div>Please log in.</div>
+      )}
     </div>
   )
 }

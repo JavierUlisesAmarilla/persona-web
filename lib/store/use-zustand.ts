@@ -3,21 +3,29 @@ import {create} from 'zustand'
 
 interface ZustandState {
   personaClient: any
+  setPersonaClient: (personaClient: any) => void
+
   team: any,
   setTeam: (team: any) => void
-  setPersonaClient: (personaClient: any) => void
+
   personaAction: any
   setPersonaAction: (personaAction: any) => void
+
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
+
   LLMSArray: Array<string>
   setLLMSArray: (LLMSArray: Array<any>) => void
+
   transcriptArr: Array<any>
   setTranscriptArr: (transcriptArr: Array<any>) => void
+
   filteredTranscriptArr: Array<any>
   setFilteredTranscriptArr: (filteredTranscriptArr: Array<any>) => void
+
   personaLLMSelected: string
   setPersonaLLM: (personaIndex: number, llmSelected: string) => void
+
   selPersonaIndex: number
   setSelPersonaIndex: (selPersonaIndex: number) => void
   setScenarioInitMsg: (personaIndex: number, phoneNumber: string) => void
@@ -50,23 +58,39 @@ interface ZustandState {
 
   alertMsg: string
   setAlertMsg: (alertMsg: string) => void
+
+  canSeeSettings: boolean
+  setCanSeeSettings: (canSeeSettings: boolean) => void
+
+  canSeePlayground: boolean
+  setCanSeePlayground: (canSeePlayground: boolean) => void
+
+  canSeeTranscripts: boolean
+  setCanSeeTranscripts: (canSeeTranscripts: boolean) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
   personaClient: null,
+  setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
+
   team: null,
   setTeam: (team) => set((state) => ({...state, team})),
-  setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
+
   personaAction: {},
   setPersonaAction: (personaAction) => set((state) => ({...state, personaAction})),
+
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
+
   LLMSArray: [],
   setLLMSArray: (LLMSArray) => set((state) => ({...state, LLMSArray})),
+
   transcriptArr: [],
   setTranscriptArr: (transcriptArr) => set((state) => ({...state, transcriptArr})),
+
   filteredTranscriptArr: [],
   setFilteredTranscriptArr: (filteredTranscriptArr) => set((state) => ({...state, filteredTranscriptArr})),
+
   personaLLMSelected: '',
   setPersonaLLM: (personaIndex, llmSelected) => set((state) => {
     const personaArr = get().personaArr
@@ -74,6 +98,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
     personaArr[personaIndex].llm = llmSelected
     return {...state, personaArr}
   }),
+
   selPersonaIndex: 0,
   setSelPersonaIndex: (selPersonaIndex) => set((state) => ({...state, selPersonaIndex})),
   setScenarioInitMsg: (personaIndex, text) => set((state) => {
@@ -171,4 +196,13 @@ export const useZustand = create<ZustandState>((set, get) => ({
 
   alertMsg: '',
   setAlertMsg: (alertMsg) => set((state) => ({...state, alertMsg})),
+
+  canSeeSettings: false,
+  setCanSeeSettings: (canSeeSettings) => set((state) => ({...state, canSeeSettings})),
+
+  canSeePlayground: false,
+  setCanSeePlayground: (canSeePlayground) => set((state) => ({...state, canSeePlayground})),
+
+  canSeeTranscripts: false,
+  setCanSeeTranscripts: (canSeeTranscripts) => set((state) => ({...state, canSeeTranscripts})),
 }))

@@ -6,8 +6,8 @@
 
 'use client'
 
-import {AiFillPlusCircle, AiOutlineCopy, AiOutlineDelete, AiOutlineInfoCircle, AiOutlinePhone, AiOutlineCheckCircle, AiOutlineCloseCircle} from 'react-icons/ai'
-import {BorderGrayButton, DarkBlueButton, BorderLightGrayButton, BorderBlackButton, BackgroundLightGrayButton} from '../../shared/button'
+import {AiFillPlusCircle, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineCopy, AiOutlineDelete, AiOutlinePhone} from 'react-icons/ai'
+import {BackgroundLightGrayButton, BorderGrayButton, BorderLightGrayButton, DarkBlueButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
 import {Textarea} from '@/components/shared/textarea'
@@ -54,6 +54,7 @@ export const VoiceChat = () => {
     setPersonaLLM,
     personaAction,
     setPersonaAction,
+    canSeePlayground, status,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -292,7 +293,7 @@ export const VoiceChat = () => {
     setScenarioPrompt(selPersonaIndex, newValue) // Update the scenario prompt
   }
 
-  return (
+  return canSeePlayground ? (
     <div className='w-full h-full'>
       <div className="flex flex-col w-full gap-6 p-6 rounded-lg">
         <div className='flex flex-col w-full gap-3'>
@@ -443,7 +444,7 @@ export const VoiceChat = () => {
                     <div className='flex flex-wrap items-center gap-1'>
                       <BorderLightGrayButton
                         onClick={() => insertAtCursor('***PERSONA_VOICE_SCHEMA***')}
-                        className='py-1 px-1'
+                        className='px-1 py-1'
                       >
                         <div className='flex items-center gap-1'>
                           {isActionsSchemaInPrompt ?
@@ -460,7 +461,7 @@ export const VoiceChat = () => {
                       </BorderLightGrayButton>
                       <BorderLightGrayButton
                         onClick={() => insertAtCursor('***CURRENT_DATETIME***')}
-                        className='py-1 px-1'
+                        className='px-1 py-1'
                       >
                         <div className='flex items-center gap-1'>
                           {isCurrentDateTimeInPrompt ?
@@ -477,7 +478,7 @@ export const VoiceChat = () => {
                       </BorderLightGrayButton>
                       <BorderLightGrayButton
                         onClick={() => insertAtCursor('***DETAILS.[detail]***')}
-                        className='py-1 px-1'
+                        className='px-1 py-1'
                       >
                         <div className='flex items-center gap-1'>
                           {isDetailsInPrompt ?
@@ -494,7 +495,7 @@ export const VoiceChat = () => {
                       </BorderLightGrayButton>
                       <BorderLightGrayButton
                         onClick={() => insertAtCursor('***SCENARIOS_LIST***')}
-                        className='py-1 px-1'
+                        className='px-1 py-1'
                       >
                         <div className='flex items-center gap-1'>
                           {isScenariosListInPrompt ?
@@ -543,7 +544,7 @@ export const VoiceChat = () => {
                     }}
                   />
                   <div className='flex items-center justify-end px-4 py-3'>
-                    <div className='flex w-full justify-end'>
+                    <div className='flex justify-end w-full'>
                       {schemaErrors!.length > 0 ?
                         schemaErrors!.map((error, index) => (
                           <div key={index} className='text-sm text-red-500'>
@@ -643,5 +644,7 @@ export const VoiceChat = () => {
         onClose={() => setShowChangeVoiceModal(false)}
       />
     </div>
+  ) : (
+    <div className='text-2xl font-semibold'>{status}</div>
   )
 }

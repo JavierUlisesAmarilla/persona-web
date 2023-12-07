@@ -23,6 +23,6 @@ export const Transcripts = () => {
       </div>
     </div>
   ) : (
-    <div className='text-2xl font-semibold'>{status}</div>
+    <div className='z-10 text-2xl font-semibold'>{status}</div>
   )
 }

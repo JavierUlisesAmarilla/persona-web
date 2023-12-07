@@ -131,12 +131,12 @@ export const Home = ({session}: {session: any}) => {
             setStatus('Fetching transcripts...')
             const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
             newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            setTranscriptArr(newTranscriptArr)
           }
         }
 
-        setStatus('')
+        setTranscriptArr(newTranscriptArr)
         setCanSeeTranscripts(true)
+        setStatus('')
       } else {
         setStatus('Something went wrong.')
       }

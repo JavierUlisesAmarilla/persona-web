@@ -81,6 +81,7 @@
         "after": true
       }
     ],
+    "jsx-a11y/label-has-associated-control": "off",
     "space-infix-ops": [
       "error"
     ],

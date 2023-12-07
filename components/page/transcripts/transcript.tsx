@@ -22,6 +22,14 @@ export const Transcript = ({data, classNames}: {data: any, classNames?: string})
         </div>
       </div>
       {data?.messages?.length &&
+        <div className='flex items-center gap-3 justify-end'>
+          <div className="w-full">Messages Count: </div>
+          <div className="">
+            <div className='px-2 py-1 border bg-bg-light border-border-gray text-right w-fit'>{Math.floor(data?.messages?.length / 2)}</div>
+          </div>
+        </div>
+      }
+      {data?.messages?.length &&
         <div className='flex flex-col gap-3'>
           <div>Messages: </div>
           <div className='flex flex-col gap-3 p-3 overflow-auto border rounded-lg bg-bg-light border-border-gray h-60'>

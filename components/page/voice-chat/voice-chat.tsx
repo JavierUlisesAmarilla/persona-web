@@ -500,11 +500,11 @@ export const VoiceChat = () => {
                         <div className='flex items-center gap-1'>
                           {isScenariosListInPrompt ?
                             <>
-                              <div className='text-xs text-text-dark'>Scenarios List</div>
+                              <div className='text-xs text-text-dark'>Scenarios</div>
                               <AiOutlineCheckCircle className='text-base text-green-500'/>
                             </> :
                             <>
-                              <div className='text-xs text-text-gray'>Scenarios List</div>
+                              <div className='text-xs text-text-gray'>Scenarios</div>
                               <AiOutlineCloseCircle className='text-base text-gray-400'/>
                             </>
                           }

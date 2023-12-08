@@ -1,6 +1,5 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable jsdoc/require-jsdoc */
-
 import './globals.css'
 
 import React, {Suspense} from 'react'
@@ -41,7 +40,7 @@ export default function Layout({
             {/* @ts-expect-error Server Component */}
             <Nav/>
           </div>
-          <div className='h-[100%-3.5rem] flex overflow-auto'>
+          <div className='flex h-full overflow-auto'>
             <div className='h-full overflow-auto border-r w-60 border-border-gray'>
               <Sidebar/>
             </div>

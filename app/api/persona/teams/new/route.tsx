@@ -8,7 +8,7 @@ export const POST = async (request: Request) => {
   try {
     console.log('================================================== persona#teams#new#POST')
     const postData = await request.json()
-    const apiUrl = `${SINDARIN_API_URL}/api/teams/new?apikey=${MASTER_API_KEY}`
+    const apiUrl = `${SINDARIN_API_URL}/api/teams/new/?apikey=${MASTER_API_KEY}`
     console.log('apiUrl: ', apiUrl)
     const res = await axios.post(apiUrl, postData)
     console.log('res: ', res)

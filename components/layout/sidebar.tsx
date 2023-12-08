@@ -69,7 +69,7 @@ export const Sidebar = () => {
           >
             <Image className='rounded' src='assets/images/sidebar_logo.svg' width={40} height={40} alt='Sindarin'/>
             <div className='flex flex-col text-sm font-medium'>
-              <div className='text-text-dark'>{teamNameString}</div>
+              <div className='break-all text-text-dark'>{teamNameString}</div>
               <div className='text-text-gray'>{teamString}</div>
             </div>
           </div>

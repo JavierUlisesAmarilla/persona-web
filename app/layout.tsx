@@ -41,7 +41,7 @@ export default function Layout({
             {/* @ts-expect-error Server Component */}
             <Nav/>
           </div>
-          <div className='h-[100%-3.5rem] flex flex-grow overflow-auto'>
+          <div className='h-[100%-3.5rem] flex overflow-auto'>
             <div className='h-full overflow-auto border-r w-60 border-border-gray'>
               <Sidebar/>
             </div>

@@ -304,7 +304,7 @@ export const VoiceChat = () => {
         <div className='flex flex-col w-full gap-3'>
           <div className='flex items-end justify-between'>
             <h2 className='text-2xl font-semibold'>Playground</h2>
-            <BlueButton className='items-center gap-1'>
+            <BlueButton disabled className='items-center gap-1'>
               <div>Create New Persona</div>
               <AiFillPlusCircle className='text-lg'/>
             </BlueButton>

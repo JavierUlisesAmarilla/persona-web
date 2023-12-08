@@ -20,7 +20,7 @@ import {validateActionSchema} from '@/lib/utils'
 import axios from 'axios'
 import {encode} from 'gpt-tokenizer'
 import _ from 'lodash'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {InputText} from '../../shared/input-text'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
@@ -68,6 +68,11 @@ export const VoiceChat = () => {
   const [userInput, setUserInput] = useState('')
   const [assistantInput, setAssistantInput] = useState('')
   const [schemaText, setSchemaText] = useState(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
+
+  useEffect(() => {
+    setSchemaText(JSON.stringify(personaArr[selPersonaIndex]?.currentVoiceSchema, null, 2) || '')
+  }, [personaArr, selPersonaIndex])
+
   const [stateText, setStateText] = useState('')
 
   const [showChatModal, setShowChatModal] = useState(false)

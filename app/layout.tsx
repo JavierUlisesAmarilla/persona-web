@@ -17,12 +17,11 @@ export const metadata = {
     'Persona enables you to add conversational speech AI to your product in minutes.',
   twitter: {
     card: 'summary_large_image',
-    title: 'Persona on Twitter',
+    title: 'Persona',
     description:
-      'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
-    creator: '@steventey',
+      'Persona enables you to add conversational speech AI to your product in minutes.',
   },
-  metadataBase: new URL('https://precedent.dev'),
+  metadataBase: new URL('https://sindarin.tech/'),
   themeColor: '#FFF',
 }
 

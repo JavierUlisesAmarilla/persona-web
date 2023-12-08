@@ -16,7 +16,7 @@ export const Navbar = ({session}: {session: any}) => {
     <div className='w-full h-full Navbar'>
       <SignInModal/>
       <div className='flex items-center justify-between w-full h-full px-6'>
-        <div className='text-2xl font-semibold'>Persona</div>
+        <div className='text-2xl font-semibold'>Persona [BETA]</div>
         <div>
           {session ? (
             <UserDropdown session={session}/>

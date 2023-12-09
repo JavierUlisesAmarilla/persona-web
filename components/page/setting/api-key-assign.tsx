@@ -15,7 +15,7 @@ import {TeamSection} from './team-section'
 
 export const ApiKeyAssign = () => {
   const [showPlanModal, setShowPlanModal] = useState(false)
-  const {apiKeyArr, setApiKeyArr, status, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
+  const {apiKeyArr, setApiKeyArr, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || (apiKeyArr[selApiKeyIndex]?.manager === curEmail)
 
@@ -68,12 +68,9 @@ export const ApiKeyAssign = () => {
             ))}
           </UserSelect>
         }
-        {status ?
-          <div className='text-text-gray'>{status}</div> : isAdmin &&
-          <BlueButton onClick={onAddTeam}>Add Team</BlueButton>
-        }
+        <BlueButton onClick={onAddTeam}>Add Team</BlueButton>
       </div>
-      {!status && apiKeyArr[selApiKeyIndex] &&
+      {apiKeyArr[selApiKeyIndex] &&
         <TeamSection
           apiKeyIndex={selApiKeyIndex}
           data={apiKeyArr[selApiKeyIndex]}
@@ -82,13 +79,10 @@ export const ApiKeyAssign = () => {
       <div className='flex items-center gap-3'>
         <div className='text-2xl font-semibold'>Credentials</div>
         <div className="flex items-center justify-end w-full gap-3">
-          {status ?
-          <div className='text-text-gray'>{status}</div> : isAdmin &&
           <BlueButton onClick={onAddTeam}>Add Credential</BlueButton>
-          }
         </div>
       </div>
-      {!status && apiKeyArr[selApiKeyIndex] &&
+      {apiKeyArr[selApiKeyIndex] &&
         <CredentialSection
           apiKeyIndex={selApiKeyIndex}
           data={apiKeyArr[selApiKeyIndex]}
@@ -97,12 +91,11 @@ export const ApiKeyAssign = () => {
 
       <div className="flex items-center justify-between w-full gap-3">
         <div className='text-2xl font-semibold'>Plan</div>
-        {status ?
-          <div className='text-text-gray'>{status}</div> : isManager &&
+        {isManager &&
           <BlueButton onClick={() => setShowPlanModal(true)}>Update Plan</BlueButton>
         }
       </div>
-      {!status && apiKeyArr[selApiKeyIndex] &&
+      {apiKeyArr[selApiKeyIndex] &&
         <PlanSection
           apiKeyIndex={selApiKeyIndex}
           data={apiKeyArr[selApiKeyIndex]}

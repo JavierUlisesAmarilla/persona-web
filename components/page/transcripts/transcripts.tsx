@@ -6,7 +6,7 @@ import {TranscriptFilter} from './transcript-filter'
 
 
 export const Transcripts = () => {
-  const {filteredTranscriptArr, canSeeTranscripts, status} = useZustand()
+  const {filteredTranscriptArr, canSeeTranscripts, loadingStatus} = useZustand()
 
   return canSeeTranscripts ? (
     <div className='flex flex-col w-full h-full gap-3 p-6 Transcripts'>
@@ -23,6 +23,6 @@ export const Transcripts = () => {
       </div>
     </div>
   ) : (
-    <div className='z-10 text-2xl font-semibold'>{status}</div>
+    <div className='z-10 text-2xl font-semibold'>{loadingStatus}</div>
   )
 }

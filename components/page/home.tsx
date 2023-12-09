@@ -18,7 +18,7 @@ export const Home = ({session}: {session: any}) => {
   const {
     selMenu,
     setCurEmail,
-    status, setStatus,
+    loadingStatus, setLoadingStatus,
     setApiKeyArr,
     setPersonaClient,
     setPersonaArr,
@@ -36,11 +36,11 @@ export const Home = ({session}: {session: any}) => {
     (async () => {
       const newCurEmail = session?.user?.email
 
-      if (!newCurEmail || status) {
+      if (!newCurEmail || loadingStatus) {
         return
       }
 
-      setStatus('Fetching settings data...')
+      setLoadingStatus('Fetching settings data...')
 
       // Fetch api key array
       const newApiKeyArr = await getData(newCurEmail)
@@ -99,9 +99,9 @@ export const Home = ({session}: {session: any}) => {
         }
       })
 
-      setStatus('Fetching persona data...')
+      setLoadingStatus('Fetching persona data...')
       const newPersonaArr = await getPersonaArr(apiKey)
-      setStatus('Fetching LLMS data...')
+      setLoadingStatus('Fetching LLMS data...')
       const llmsArr = await getLLMSArr(apiKey)
 
       const fetchTeam = async () => {
@@ -115,7 +115,7 @@ export const Home = ({session}: {session: any}) => {
         }
       }
 
-      setStatus('Fetching team data...')
+      setLoadingStatus('Fetching team data...')
       await fetchTeam()
 
       if (Array.isArray(newPersonaArr) && Array.isArray(llmsArr)) {
@@ -132,7 +132,7 @@ export const Home = ({session}: {session: any}) => {
             // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
             //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
             // })
-            setStatus('Fetching transcripts...')
+            setLoadingStatus('Fetching transcripts...')
             const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
             newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
           }
@@ -140,9 +140,9 @@ export const Home = ({session}: {session: any}) => {
 
         setTranscriptArr(newTranscriptArr)
         setCanSeeTranscripts(true)
-        setStatus('')
+        setLoadingStatus('')
       } else {
-        setStatus('Something went wrong.')
+        setLoadingStatus('Something went wrong.')
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps

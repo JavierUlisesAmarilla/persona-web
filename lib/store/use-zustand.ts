@@ -53,8 +53,8 @@ interface ZustandState {
   selApiKeyIndex: number
   setSelApiKeyIndex: (selApiKeyIndex: number) => void
 
-  status: string
-  setStatus: (status: string) => void
+  loadingStatus: string
+  setLoadingStatus: (loadingStatus: string) => void
 
   alertMsg: string
   setAlertMsg: (alertMsg: string) => void
@@ -191,8 +191,8 @@ export const useZustand = create<ZustandState>((set, get) => ({
   selApiKeyIndex: 0,
   setSelApiKeyIndex: (selApiKeyIndex) => set((state) => ({...state, selApiKeyIndex})),
 
-  status: '',
-  setStatus: (status) => set((state) => ({...state, status})),
+  loadingStatus: '',
+  setLoadingStatus: (loadingStatus) => set((state) => ({...state, loadingStatus})),
 
   alertMsg: '',
   setAlertMsg: (alertMsg) => set((state) => ({...state, alertMsg})),

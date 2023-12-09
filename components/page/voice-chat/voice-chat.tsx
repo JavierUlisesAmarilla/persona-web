@@ -6,6 +6,7 @@
 
 'use client'
 
+import {useEffect, useState} from 'react'
 import {AiFillPlusCircle, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineCopy, AiOutlineDelete, AiOutlinePhone} from 'react-icons/ai'
 import {BackgroundLightGrayButton, BorderGrayButton, BorderLightGrayButton, DarkBlueButton} from '../../shared/button'
 
@@ -20,7 +21,6 @@ import {validateActionSchema} from '@/lib/utils'
 import axios from 'axios'
 import {encode} from 'gpt-tokenizer'
 import _ from 'lodash'
-import {useState, useEffect} from 'react'
 import {InputText} from '../../shared/input-text'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
@@ -54,7 +54,7 @@ export const VoiceChat = () => {
     setPersonaLLM,
     personaAction,
     setPersonaAction,
-    canSeePlayground, status,
+    canSeePlayground, loadingStatus,
   } = useZustand()
 
   const [initialMsgState, setInitialMsgState] = useState('')
@@ -650,6 +650,6 @@ export const VoiceChat = () => {
       />
     </div>
   ) : (
-    <div className='z-10 text-2xl font-semibold'>{status}</div>
+    <div className='z-10 text-2xl font-semibold'>{loadingStatus}</div>
   )
 }

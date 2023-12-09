@@ -3,7 +3,7 @@
 import {BlueButton} from '../shared/button'
 import {UserDropdown} from './user-dropdown'
 // import {useEffect} from 'react'
-import {signIn} from 'next-auth/react'
+import Link from 'next/link'
 import {useSignInModal} from './sign-in-modal'
 
 
@@ -21,14 +21,11 @@ export const Navbar = ({session}: {session: any}) => {
           {session ? (
             <UserDropdown session={session}/>
           ) : (
-            <BlueButton
-              onClick={(e) => {
-                e.preventDefault()
-                signIn()
-              }}
-            >
-              Sign In
-            </BlueButton>
+            <Link passHref href='/auth/sign-in' legacyBehavior>
+              <BlueButton >
+                Sign In
+              </BlueButton>
+            </Link>
           )}
         </div>
       </div>

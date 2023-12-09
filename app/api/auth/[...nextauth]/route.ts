@@ -1,5 +1,5 @@
-import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
 /* eslint-disable new-cap */
+import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
 import NextAuth, {NextAuthOptions} from 'next-auth'
 
 import {prisma} from '@/lib/prisma'
@@ -21,6 +21,9 @@ export const authOptions: NextAuthOptions = {
       issuer: AUTH0_ISSUER,
     }),
   ],
+  pages: {
+    signIn: '/auth/sign-in',
+  },
 }
 
 const handler = NextAuth(authOptions)

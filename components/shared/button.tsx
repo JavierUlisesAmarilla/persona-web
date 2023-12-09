@@ -100,6 +100,7 @@ export const BlueButton = ({
   )
 }
 
+
 export const LightBlueButton = ({
   onClick,
   children,
@@ -116,6 +117,7 @@ export const LightBlueButton = ({
     </Button>
   )
 }
+
 
 export const BorderGreenButton = ({
   onClick,
@@ -134,6 +136,7 @@ export const BorderGreenButton = ({
   )
 }
 
+
 export const BorderGrayButton = ({
   onClick,
   children,
@@ -150,6 +153,7 @@ export const BorderGrayButton = ({
     </Button>
   )
 }
+
 
 export const BorderLightGrayButton = ({
   onClick,
@@ -170,6 +174,7 @@ export const BorderLightGrayButton = ({
   )
 }
 
+
 export const BackgroundLightGrayButton = ({
   onClick,
   children,
@@ -179,13 +184,14 @@ export const BackgroundLightGrayButton = ({
 }) => {
   return (
     <Button
-      className='bg-bg-light-gray border-none'
+      className='border-none bg-bg-light-gray'
       onClick={onClick}
     >
       {children}
     </Button>
   )
 }
+
 
 export const BorderBlackButton = ({
   onClick,
@@ -204,6 +210,7 @@ export const BorderBlackButton = ({
   )
 }
 
+
 export const BorderOrangeButton = ({
   onClick,
   children,
@@ -220,6 +227,7 @@ export const BorderOrangeButton = ({
     </Button>
   )
 }
+
 
 export const DarkBlueButton = ({
   onClick,

@@ -2,7 +2,6 @@ import 'tailwindcss/tailwind.css'
 
 import type {
   GetServerSidePropsContext,
-  InferGetServerSidePropsType,
 } from 'next'
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */

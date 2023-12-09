@@ -68,8 +68,8 @@ export const Sidebar = () => {
             onClick={() => setSelMenu('settings')}
           >
             <Image className='rounded' src='assets/images/sidebar_logo.svg' width={40} height={40} alt='Sindarin'/>
-            <div className='flex flex-col text-sm font-medium'>
-              <div className='break-all text-text-dark'>{teamNameString}</div>
+            <div className='flex flex-col overflow-hidden text-sm font-medium'>
+              <div className='overflow-hidden overflow-ellipsis text-text-dark'>{teamNameString}</div>
               <div className='text-text-gray'>{teamString}</div>
             </div>
           </div>

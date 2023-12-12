@@ -69,7 +69,7 @@ export const ApiKeyAssign = () => {
             ))}
           </UserSelect>
         }
-        <BlueButton onClick={onAddTeam}>Add Team</BlueButton>
+        {apiKeyArr.length > 1 && <BlueButton onClick={onAddTeam}>Add Team</BlueButton>}
       </div>
       {apiKeyArr[selApiKeyIndex] &&
         <TeamSection

@@ -63,3 +63,8 @@ export const emailCanAccess = async (email: string | null = null) => {
 export const isFunction = (functionToCheck: any) => {
   return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'
 }
+
+
+export const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}

@@ -2,12 +2,13 @@
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
-import {addTeam, getLLMSArr, getPersonaArr, getTeam, getTranscriptArr} from '../../lib/persona'
 import {getCustomDateFromStr} from '../../lib/common'
+import {addTeam, getLLMSArr, getPersonaArr, getTeam, getTranscriptArr} from '../../lib/persona'
 
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
+import {useIsMobile} from '../../lib/hooks/use-is-mobile'
 import {MENUS} from '../layout/sidebar'
 import {Alert} from '../shared/alert'
 
@@ -33,6 +34,7 @@ export const Home = ({session}: {session: any}) => {
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     (async () => {
@@ -148,7 +150,7 @@ export const Home = ({session}: {session: any}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey])
 
-  return (
+  return !isMobile ? (
     <div className='flex items-center justify-center w-full h-full overflow-auto bg-bg-gray'>
       {session ? (
         <>
@@ -159,5 +161,7 @@ export const Home = ({session}: {session: any}) => {
         <div>Please log in.</div>
       )}
     </div>
+  ) : (
+    <div className='fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center p-6 text-2xl font-semibold break-all bg-bg-black text-text-light'>The Persona webapp is not available on mobile. Please login on Desktop.</div>
   )
 }

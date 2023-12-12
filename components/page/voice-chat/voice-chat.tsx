@@ -7,7 +7,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {AiFillPlusCircle, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineCopy, AiOutlineDelete, AiOutlinePhone} from 'react-icons/ai'
+import {AiFillPlusCircle, AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineCopy, AiOutlineDelete, AiOutlinePhone, AiOutlineSetting} from 'react-icons/ai'
 import {BackgroundLightGrayButton, BorderGrayButton, BorderLightGrayButton, DarkBlueButton} from '../../shared/button'
 
 import {BlueButton} from '@/components/shared/button'
@@ -25,6 +25,7 @@ import {InputText} from '../../shared/input-text'
 import {ChangeVoiceModal} from './change-voice-modal'
 import {ChatModal} from './chat-modal'
 import {DeployModal} from './deploy-modal'
+import {DeploySettingModal} from './deploy-setting-modal'
 import {Scenario} from './scenario'
 
 
@@ -78,6 +79,7 @@ export const VoiceChat = () => {
   const [showChatModal, setShowChatModal] = useState(false)
   const [showDeployModal, setShowDeployModal] = useState(false)
   const [showChangeVoiceModal, setShowChangeVoiceModal] = useState(false)
+  const [showDeploySettingModal, setShowDeploySettingModal] = useState(false)
   const [isPromptSynced, setIsPromptSynced] = useState(true)
   const [isActionsSchemaSynced, setIsActionsSchemaSynced] = useState(true)
 
@@ -233,6 +235,10 @@ export const VoiceChat = () => {
     setShowDeployModal(true)
   }
 
+  const onDeploySetting = () => {
+    setShowDeploySettingModal(true)
+  }
+
   const onSchema = async () => {
     try {
       setIsActionsSchemaSynced(true)
@@ -347,7 +353,7 @@ export const VoiceChat = () => {
                 </div>
                 <div className={`flex fade-out transition-opacity duration-2000 text-sm text-white ${copyStatus ? 'opacity-0' : 'opacity-100'}`}>{copyStatus}</div>
               </div>
-              <div className='flex gap-3'>
+              <div className='flex items-center gap-3'>
                 <BlueButton
                   className='flex items-center gap-1'
                   onClick={onNewChat}
@@ -356,6 +362,10 @@ export const VoiceChat = () => {
                   <div>Start Chat</div>
                 </BlueButton>
                 <DarkBlueButton onClick={onDeploy}>Deploy</DarkBlueButton>
+                <AiOutlineSetting
+                  className='text-2xl cursor-pointer text-text-light hover:text-text-gray'
+                  onClick={onDeploySetting}
+                />
               </div>
             </div>
             <div className='flex items-center justify-between w-full gap-6'>
@@ -647,6 +657,10 @@ export const VoiceChat = () => {
       <ChangeVoiceModal
         show={showChangeVoiceModal}
         onClose={() => setShowChangeVoiceModal(false)}
+      />
+      <DeploySettingModal
+        show={showDeploySettingModal}
+        onClose={() => setShowDeploySettingModal(false)}
       />
     </div>
   ) : (

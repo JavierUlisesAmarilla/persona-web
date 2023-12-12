@@ -1,15 +1,13 @@
-import React from 'react'
-import Home from '@/components/page/home'
-import SignHome from '@/components/page/sign-home'
-import {getServerSession} from 'next-auth/next'
-import {authOptions} from '@/app/api/auth/[...nextauth]/route'
-import {WITHOUT_SIGN} from '@/lib/constants'
+/* eslint-disable require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+
+import {Home} from '@/components/page/home'
+import {getServerSessionMiddle} from '@/lib/common'
 
 
-/**
- *
- */
 export default async function Page() {
-  const session = await getServerSession(authOptions)
-  return session || WITHOUT_SIGN ? <SignHome session={session}/> : <Home/>
+  console.log('*** RENDERING PAGE ***')
+  const session = await getServerSessionMiddle()
+  return <Home session={session}/>
 }

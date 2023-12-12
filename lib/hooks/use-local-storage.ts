@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 
 
-const useLocalStorage = <T>(
+export const useLocalStorage = <T>(
   key: string,
   initialValue: T,
 ): [T, (value: T) => void] => {
@@ -23,5 +23,3 @@ const useLocalStorage = <T>(
   }
   return [storedValue, setValue]
 }
-
-export default useLocalStorage

@@ -56,14 +56,14 @@
     ],
     "max-len": [
       "error",
-      200
+      300
     ],
-    "no-irregular-whitespace": [
-      "error"
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
+    // "no-irregular-whitespace": [
+    //   "error"
+    // ],
+    // "no-trailing-spaces": [
+    //   "error"
+    // ],
     "prefer-rest-params": "off",
     "quote-props": [
       "error",
@@ -81,6 +81,7 @@
         "after": true
       }
     ],
+    "jsx-a11y/label-has-associated-control": "off",
     "space-infix-ops": [
       "error"
     ],
@@ -136,10 +137,10 @@
     ],
     "block-spacing": "error",
     "brace-style": "error",
-    "comma-style": [
-      "error",
-      "last"
-    ],
+    // "comma-style": [
+    //   "error",
+    //   "last"
+    // ],
     "eol-last": [
       "error",
       "always"
@@ -176,7 +177,9 @@
     "linebreak-style": [
       "error",
       "unix"
-    ]
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off"
   },
   "settings": {
     "react": {

@@ -1,10 +1,11 @@
 /* eslint-disable new-cap */
-import NextAuth, {NextAuthOptions} from 'next-auth'
-import {PrismaAdapter} from '@next-auth/prisma-adapter'
-import prisma from '@/lib/prisma'
-import GoogleProvider from 'next-auth/providers/google'
-import Auth0Provider from 'next-auth/providers/auth0'
 import {AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_ISSUER, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from '@/lib/constants'
+import NextAuth, {NextAuthOptions} from 'next-auth'
+
+import {prisma} from '@/lib/prisma'
+import {PrismaAdapter} from '@next-auth/prisma-adapter'
+import Auth0Provider from 'next-auth/providers/auth0'
+import GoogleProvider from 'next-auth/providers/google'
 
 
 export const authOptions: NextAuthOptions = {
@@ -20,6 +21,9 @@ export const authOptions: NextAuthOptions = {
       issuer: AUTH0_ISSUER,
     }),
   ],
+  pages: {
+    signIn: '/auth/sign-in',
+  },
 }
 
 const handler = NextAuth(authOptions)

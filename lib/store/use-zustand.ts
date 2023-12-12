@@ -4,11 +4,35 @@ import {create} from 'zustand'
 interface ZustandState {
   personaClient: any
   setPersonaClient: (personaClient: any) => void
+
+  team: any,
+  setTeam: (team: any) => void
+
+  personaAction: any
+  setPersonaAction: (personaAction: any) => void
+
   personaArr: Array<any>
   setPersonaArr: (personaArr: Array<any>) => void
+
+  LLMSArray: Array<string>
+  setLLMSArray: (LLMSArray: Array<any>) => void
+
+  transcriptArr: Array<any>
+  setTranscriptArr: (transcriptArr: Array<any>) => void
+
+  filteredTranscriptArr: Array<any>
+  setFilteredTranscriptArr: (filteredTranscriptArr: Array<any>) => void
+
+  personaLLMSelected: string
+  setPersonaLLM: (personaIndex: number, llmSelected: string) => void
+
   selPersonaIndex: number
   setSelPersonaIndex: (selPersonaIndex: number) => void
-  setScenarioInitMsg: (personaIndex: number, text: string) => void
+  setScenarioInitMsg: (personaIndex: number, phoneNumber: string) => void
+  setPersonaPhoneNumber: (personaIndex: number, text: string) => void
+  setPersonaTwilioAuthToken: (personaIndex: number, authToken: string) => void
+  setPersonaTwilioAccountSid: (personaIndex: number, accountSid: string) => void
+  setPersonaVoiceId: (personaIndex: number, voiceId: string) => void
   setScenarioRateLimit: (personaIndex: number, text: string) => void
   setScenarioPrompt: (personaIndex: number, text: string) => void
   setScenarioContext: (personaIndex: number, scenarioIndex: number, text: string) => void
@@ -26,23 +50,85 @@ interface ZustandState {
   apiKeyArr: Array<any>
   setApiKeyArr: (apiKeyArr: Array<any>) => void
 
-  status: string
-  setStatus: (status: string) => void
+  selApiKeyIndex: number
+  setSelApiKeyIndex: (selApiKeyIndex: number) => void
 
-  isUser: boolean
-  setIsUser: (isUser: boolean) => void
+  loadingStatus: string
+  setLoadingStatus: (loadingStatus: string) => void
+
+  alertMsg: string
+  setAlertMsg: (alertMsg: string) => void
+
+  canSeeSettings: boolean
+  setCanSeeSettings: (canSeeSettings: boolean) => void
+
+  canSeePlayground: boolean
+  setCanSeePlayground: (canSeePlayground: boolean) => void
+
+  canSeeTranscripts: boolean
+  setCanSeeTranscripts: (canSeeTranscripts: boolean) => void
+
+  transcriptStats: any
+  setTranscriptStats: (transcriptStats: any) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
   personaClient: null,
   setPersonaClient: (personaClient) => set((state) => ({...state, personaClient})),
+
+  team: null,
+  setTeam: (team) => set((state) => ({...state, team})),
+
+  personaAction: {},
+  setPersonaAction: (personaAction) => set((state) => ({...state, personaAction})),
+
   personaArr: [],
   setPersonaArr: (personaArr) => set((state) => ({...state, personaArr})),
+
+  LLMSArray: [],
+  setLLMSArray: (LLMSArray) => set((state) => ({...state, LLMSArray})),
+
+  transcriptArr: [],
+  setTranscriptArr: (transcriptArr) => set((state) => ({...state, transcriptArr})),
+
+  filteredTranscriptArr: [],
+  setFilteredTranscriptArr: (filteredTranscriptArr) => set((state) => ({...state, filteredTranscriptArr})),
+
+  personaLLMSelected: '',
+  setPersonaLLM: (personaIndex, llmSelected) => set((state) => {
+    const personaArr = get().personaArr
+    console.log('setting persona', personaArr[personaIndex], 'to llm', llmSelected)
+    personaArr[personaIndex].llm = llmSelected
+    return {...state, personaArr}
+  }),
+
   selPersonaIndex: 0,
   setSelPersonaIndex: (selPersonaIndex) => set((state) => ({...state, selPersonaIndex})),
   setScenarioInitMsg: (personaIndex, text) => set((state) => {
     const personaArr = get().personaArr
     personaArr[personaIndex].initialMessage = text
+    return {...state, personaArr}
+  }),
+  setPersonaTwilioAuthToken: (personaIndex, authToken) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
+    personaArr[personaIndex].twilio.authToken = authToken
+    return {...state, personaArr}
+  }),
+  setPersonaTwilioAccountSid: (personaIndex, accountSid) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].twilio = personaArr[personaIndex].twilio || {}
+    personaArr[personaIndex].twilio.authToken = accountSid
+    return {...state, personaArr}
+  }),
+  setPersonaPhoneNumber: (personaIndex, phoneNumber) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].phoneNumber = phoneNumber
+    return {...state, personaArr}
+  }),
+  setPersonaVoiceId: (personaIndex, voiceId) => set((state) => {
+    const personaArr = get().personaArr
+    personaArr[personaIndex].voiceId = voiceId
     return {...state, personaArr}
   }),
   setScenarioRateLimit: (personaIndex, text) => set((state) => {
@@ -99,15 +185,30 @@ export const useZustand = create<ZustandState>((set, get) => ({
   curEmail: '',
   setCurEmail: (curEmail) => set((state) => ({...state, curEmail})),
 
-  selMenu: '',
-  setSelMenu: (selMenu) => set((state) => ({...state, selMenu, status: ''})),
+  selMenu: 'playground',
+  setSelMenu: (selMenu) => set((state) => ({...state, selMenu})),
 
   apiKeyArr: [],
   setApiKeyArr: (apiKeyArr) => set((state) => ({...state, apiKeyArr})),
 
-  status: '',
-  setStatus: (status) => set((state) => ({...state, status})),
+  selApiKeyIndex: 0,
+  setSelApiKeyIndex: (selApiKeyIndex) => set((state) => ({...state, selApiKeyIndex})),
 
-  isUser: false,
-  setIsUser: (isUser) => set((state) => ({...state, isUser})),
+  loadingStatus: '',
+  setLoadingStatus: (loadingStatus) => set((state) => ({...state, loadingStatus})),
+
+  alertMsg: '',
+  setAlertMsg: (alertMsg) => set((state) => ({...state, alertMsg})),
+
+  canSeeSettings: false,
+  setCanSeeSettings: (canSeeSettings) => set((state) => ({...state, canSeeSettings})),
+
+  canSeePlayground: false,
+  setCanSeePlayground: (canSeePlayground) => set((state) => ({...state, canSeePlayground})),
+
+  canSeeTranscripts: false,
+  setCanSeeTranscripts: (canSeeTranscripts) => set((state) => ({...state, canSeeTranscripts})),
+
+  transcriptStats: {},
+  setTranscriptStats: (transcriptStats) => set((state) => ({...state, transcriptStats})),
 }))

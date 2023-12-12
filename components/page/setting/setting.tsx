@@ -1,17 +1,17 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React from 'react'
-import ApiKeyAssign from './api-key-assign'
+import {useZustand} from '../../../lib/store/use-zustand'
+import {ApiKeyAssign} from './api-key-assign'
 
 
-/**
- *
- */
-export default function Setting() {
-  return (
-    <div className="z-10 flex flex-col w-full px-4">
+export const Setting = () => {
+  const {canSeeSettings, loadingStatus} = useZustand()
+
+  return canSeeSettings ? (
+    <div className="z-10 flex flex-col w-full h-full">
       <ApiKeyAssign/>
     </div>
+  ) : (
+    <div className='z-10 text-2xl font-semibold'>{loadingStatus}</div>
   )
 }

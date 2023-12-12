@@ -1,16 +1,14 @@
-/* eslint-disable jsdoc/require-returns */
 'use client'
 
-import React, {Dispatch, SetStateAction, ReactNode} from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
-import useWindowSize from '@/lib/hooks/use-window-size'
-import Leaflet from './leaflet'
+
+import {Dispatch, ReactNode, SetStateAction} from 'react'
+
+import {useWindowSize} from '@/lib/hooks/use-window-size'
+import {Leaflet} from './leaflet'
 
 
-/**
- *
- */
-export default function Popover({
+export const Popover = ({
   children,
   content,
   align = 'center',
@@ -22,7 +20,7 @@ export default function Popover({
   align?: 'center' | 'start' | 'end';
   openPopover: boolean;
   setOpenPopover: Dispatch<SetStateAction<boolean>>;
-}) {
+}) => {
   const {isMobile, isDesktop} = useWindowSize()
   if (!isMobile && !isDesktop) {
     return <>{children}</>
@@ -44,7 +42,7 @@ export default function Popover({
           <PopoverPrimitive.Content
             sideOffset={4}
             align={align}
-            className="z-20 items-center bg-white border border-gray-200 rounded-md animate-slide-up-fade drop-shadow-lg"
+            className="z-20 items-center border rounded-md bg-bg-light border-border-gray animate-slide-up-fade drop-shadow-lg"
           >
             {content}
           </PopoverPrimitive.Content>

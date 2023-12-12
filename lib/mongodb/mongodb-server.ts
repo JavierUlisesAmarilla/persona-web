@@ -16,22 +16,24 @@ export const connectToDatabase = async () => {
     }
   }
 
-  // Connect to cluster
-  const client = new MongoClient(MONGODB_URI, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-  })
-  console.log('Before db connection')
-  await client.connect()
-  console.log('After db connection')
-  const db = client.db(DB_NAME)
+  if (MONGODB_URI) {
+    // Connect to cluster
+    const client = new MongoClient(MONGODB_URI, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    })
+    console.log('Before db connection')
+    await client.connect()
+    console.log('After db connection')
+    const db = client.db(DB_NAME)
 
-  // Set cache
-  cachedClient = client
-  cachedDb = db
+    // Set cache
+    cachedClient = client
+    cachedDb = db
+  }
 
   return {
     client: cachedClient,

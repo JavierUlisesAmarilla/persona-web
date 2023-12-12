@@ -1,50 +1,54 @@
-/* eslint-disable jsdoc/require-returns */
-import React from 'react'
+/* eslint-disable require-jsdoc */
+/* eslint-disable jsdoc/require-jsdoc */
 import './globals.css'
+
+import React, {Suspense} from 'react'
+import {inter, sfPro} from './fonts'
+
+import {Nav} from '@/components/layout/nav'
+import {Sidebar} from '@/components/layout/sidebar'
 import {Analytics} from '@vercel/analytics/react'
 import cx from 'classnames'
-import {sfPro, inter} from './fonts'
-import Nav from '@/components/layout/nav'
-import Footer from '@/components/layout/footer'
-import {Suspense} from 'react'
 
 
 export const metadata = {
-  title: 'Precedent - Building blocks for your Next.js project',
+  title: 'Persona - Conversational speech AI.',
   description:
-    'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
+    'Persona enables you to add conversational speech AI to your product in minutes.',
   twitter: {
     card: 'summary_large_image',
-    title: 'Precedent - Building blocks for your Next.js project',
+    title: 'Persona',
     description:
-      'Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.',
-    creator: '@steventey',
+      'Persona enables you to add conversational speech AI to your product in minutes.',
   },
-  metadataBase: new URL('https://precedent.dev'),
+  metadataBase: new URL('https://sindarin.tech/'),
   themeColor: '#FFF',
 }
 
-/**
- *
- */
-export default function RootLayout({
+
+export default function Layout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cx(sfPro.variable, inter.variable)}>
-        <div className="fixed w-full h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-100"/>
-        <Suspense fallback="...">
-          {/* @ts-expect-error Server Component */}
-          <Nav/>
+    <html className='w-full h-full' lang="en">
+      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
+        <Suspense fallback="">
+          <div className='border-b h-14 border-b-border-gray'>
+            {/* @ts-expect-error Server Component */}
+            <Nav/>
+          </div>
+          <div className='flex h-full overflow-auto'>
+            <div className='h-full overflow-auto border-r w-60 border-border-gray'>
+              <Sidebar/>
+            </div>
+            <main className="w-[calc(100%-15rem)] h-full overflow-auto">
+              {children}
+            </main>
+          </div>
+          <Analytics/>
         </Suspense>
-        <main className="flex flex-col items-center w-full min-h-screen py-20">
-          {children}
-        </main>
-        <Footer/>
-        <Analytics/>
       </body>
     </html>
   )

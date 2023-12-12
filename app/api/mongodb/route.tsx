@@ -1,36 +1,58 @@
-import {ObjectId} from 'mongodb'
-import {NextResponse} from 'next/server'
-import {NextRequest} from 'next/server'
+import {NextRequest, NextResponse} from 'next/server'
+
+import {emailCanAccess} from '@/lib/common'
+import {ADMIN_EMAIL} from '@/lib/constants'
 import {connectToDatabase} from '@/lib/mongodb/mongodb-server'
+import {ObjectId} from 'mongodb'
 
 
 export const GET = async (request: NextRequest) => {
   try {
+    console.log('================================================== mongodb#GET')
     const id = request.nextUrl.searchParams.get('id')
-    console.log('api#mongodb#get: id: ', id)
-    const {db} = await connectToDatabase()
-    let res = {}
+    const email = request.nextUrl.searchParams.get('email')
+    const canAccess = await emailCanAccess(email)
 
-    if (id) {
-      res = await db.collection('main').findOne({_id: new ObjectId(id)})
-    } else {
-      res = await db.collection('main').find({}).toArray()
+    if (!canAccess) {
+      const message = 'You can\'t access this API'
+      console.log('api#mongodb#GET: message: ', message)
+      return NextResponse.json({message})
     }
 
+    const {db} = await connectToDatabase()
+    let res = {}
+    const where: any = {}
+
+    if (id) {
+      where._id = new ObjectId(id)
+    }
+
+    // allow admin to see all data
+    if (email && email !== ADMIN_EMAIL) {
+      where['emailArr.name'] = email
+    }
+
+    res = await db.collection('main').find(where).toArray()
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#GET: message: ', message)
+    return NextResponse.json({message})
   }
 }
 
 
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   try {
+    const email = request.nextUrl.searchParams.get('email')
+    const canAccess = await emailCanAccess(email)
+    if (!canAccess) {
+      const message = 'You can\'t access this API'
+      console.log('api#mongodb#POST: message: ', message)
+      return NextResponse.json({message})
+    }
+
     const postData = await request.json()
-    console.log('api#mongodb#save: postData: ', postData)
     const id = postData._id
     const {db} = await connectToDatabase()
     let res = {}
@@ -44,18 +66,25 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#POST: message: ', message)
+    return NextResponse.json({message})
   }
 }
 
 
 export const DELETE = async (request: NextRequest) => {
   try {
+    const email = request.nextUrl.searchParams.get('email')
+    const canAccess = await emailCanAccess(email)
+
+    if (!canAccess) {
+      const message = 'You can\'t access this API'
+      console.log('api#mongodb#DELETE: message: ', message)
+      return NextResponse.json({message})
+    }
+
     const id = request.nextUrl.searchParams.get('id')
-    console.log('api#mongodb#remove: id: ', id)
 
     if (!id) {
       return
@@ -65,9 +94,8 @@ export const DELETE = async (request: NextRequest) => {
     const res = await db.collection('main').deleteOne({_id: new ObjectId(id)})
     return NextResponse.json(res)
   } catch (error: any) {
-    return NextResponse.json({
-      message: new Error(error).message,
-      success: false,
-    })
+    const message = new Error(error).message
+    console.log('api#mongodb#DELETE: message: ', message)
+    return NextResponse.json({message})
   }
 }

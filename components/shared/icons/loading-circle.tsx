@@ -1,12 +1,5 @@
 /* eslint-disable max-len */
-/* eslint-disable jsdoc/require-returns */
-import React from 'react'
-
-
-/**
- *
- */
-export default function LoadingCircle() {
+export const LoadingCircle = () => {
   return (
     <svg
       aria-hidden="true"

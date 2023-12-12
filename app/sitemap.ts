@@ -1,6 +1,5 @@
+import {prisma} from '@/lib/prisma'
 import {MetadataRoute} from 'next'
-import prisma from '@/lib/prisma'
-
 
 /**
  *

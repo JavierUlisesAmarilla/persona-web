@@ -2,17 +2,13 @@ import axios from 'axios'
 import {DEPLOY_URL} from '../constants'
 
 
-export const saveData = async (data: any) => {
+export const saveData = async (data: any, email: string) => {
   try {
-    console.log('mongodb#saveData: data: ', data)
-
     if (!data) {
       return
     }
 
-    // const res = await axios.post(`${DEPLOY_URL}/api/mongodb/save`, data)
-    const res = await axios.post(`${DEPLOY_URL}/api/mongodb`, data)
-    console.log('mongodb#saveData: res: ', res)
+    const res = await axios.post(`${DEPLOY_URL}/api/mongodb?email=${email}`, data)
     return res
   } catch (e) {
     console.log('mongodb#saveData: e: ', e)
@@ -20,47 +16,26 @@ export const saveData = async (data: any) => {
 }
 
 
-export const getData = async (id: string) => {
+export const getData = async (email: string) => {
   try {
-    console.log('mongodb#getData: id: ', id)
-
-    if (!id) {
+    if (!email) {
       return
     }
 
-    // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get?id=${id}`)
-    const res = await axios.get(`${DEPLOY_URL}/api/mongodb?id=${id}`)
-    console.log('mongodb#getData: res: ', res)
+    const res = await axios.get(`${DEPLOY_URL}/api/mongodb?email=${email}`)
     return res?.data
   } catch (e) {
     console.log('mongodb#getData: e: ', e)
   }
 }
 
-
-export const getAllData = async () => {
+export const removeData = async (id: string, email: string) => {
   try {
-    // const res = await axios.get(`${DEPLOY_URL}/api/mongodb/get`)
-    const res = await axios.get(`${DEPLOY_URL}/api/mongodb`)
-    console.log('mongodb#getAllData: res: ', res)
-    return res?.data
-  } catch (e) {
-    console.log('mongodb#getAllData: e: ', e)
-  }
-}
-
-
-export const removeData = async (id: string) => {
-  try {
-    console.log('mongodb#removeData: id: ', id)
-
     if (!id) {
       return
     }
 
-    // const res = await axios.delete(`${DEPLOY_URL}/api/mongodb/remove?id=${id}`)
-    const res = await axios.delete(`${DEPLOY_URL}/api/mongodb?id=${id}`)
-    console.log('mongodb#removeData: res: ', res)
+    const res = await axios.delete(`${DEPLOY_URL}/api/mongodb?id=${id}&email=${email}`)
     return res
   } catch (e) {
     console.log('mongodb#removeData: e: ', e)

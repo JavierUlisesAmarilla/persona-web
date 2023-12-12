@@ -1,12 +1,5 @@
 /* eslint-disable max-len */
-/* eslint-disable jsdoc/require-returns */
-import React from 'react'
-
-
-/**
- *
- */
-export default function Github({className}: { className?: string }) {
+export const Github = ({className}: {className?: string}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

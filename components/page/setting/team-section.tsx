@@ -81,7 +81,7 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
       {isManager &&
         <div className="flex items-center justify-end w-full gap-4">
           <div className='text-blue-500'>{localStatus}</div>
-          <BlueButton onClick={onAddEmail}>Add Email</BlueButton>
+          <BlueButton onClick={onAddEmail}>Add Team Member Email</BlueButton>
           <BlueButton onClick={onSave}>Save</BlueButton>
           <BlueButton onClick={onRemove}>Remove</BlueButton>
         </div>

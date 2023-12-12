@@ -18,6 +18,7 @@ export const ApiKeyAssign = () => {
   const {apiKeyArr, setApiKeyArr, curEmail, setTeam, selApiKeyIndex, setSelApiKeyIndex} = useZustand()
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || (apiKeyArr[selApiKeyIndex]?.manager === curEmail)
+  console.log('apiKeyArr: ', apiKeyArr)
 
   const onTeamChange = (e: any) => {
     setSelApiKeyIndex(e.target.value)

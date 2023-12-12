@@ -67,6 +67,9 @@ interface ZustandState {
 
   canSeeTranscripts: boolean
   setCanSeeTranscripts: (canSeeTranscripts: boolean) => void
+
+  transcriptStats: any
+  setTranscriptStats: (transcriptStats: any) => void
 }
 
 export const useZustand = create<ZustandState>((set, get) => ({
@@ -205,4 +208,7 @@ export const useZustand = create<ZustandState>((set, get) => ({
 
   canSeeTranscripts: false,
   setCanSeeTranscripts: (canSeeTranscripts) => set((state) => ({...state, canSeeTranscripts})),
+
+  transcriptStats: {},
+  setTranscriptStats: (transcriptStats) => set((state) => ({...state, transcriptStats})),
 }))

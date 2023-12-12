@@ -2,7 +2,6 @@ import {DEPLOY_URL, SINDARIN_API_URL, USE_SAMPLE_DATA} from './constants'
 import {SAMPLE_LLMS_ARR, SAMPLE_PERSONA_ARR, SAMPLE_TRANSCRIPT_ARR} from './sample-data'
 
 import axios from 'axios'
-import {getCustomDateFromStr} from './common'
 
 
 export const getPersonaArr = async (apiKey: string) => {
@@ -29,15 +28,11 @@ export const getLLMSArr = async (apiKey: string) => {
 }
 
 
-export const getTranscriptArr = async (apiKey: string, personaId: string) => {
+export const getTranscriptArr = async (apiKey: string, personaIds: string, userIds: string, start: string, end: string) => {
   try {
-    const transcriptArr = USE_SAMPLE_DATA ? SAMPLE_TRANSCRIPT_ARR : (await axios.get(`${SINDARIN_API_URL}/api/personas/${personaId}/transcripts?apikey=${apiKey}`))?.data
-    transcriptArr.forEach((val: any) => {
-      val.createdAt = getCustomDateFromStr(val.createdAt)
-      return val
-    })
-    console.log('persona#getTranscriptArr: transcriptArr: ', transcriptArr)
-    return transcriptArr
+    const response = USE_SAMPLE_DATA ? SAMPLE_TRANSCRIPT_ARR : (await axios.get(`${SINDARIN_API_URL}/api/transcripts?apikey=${apiKey}&start=${start}&end=${end}&personaIds=${personaIds}&userIds=${userIds}`))?.data
+    console.log('persona#getTranscriptArr: transcriptArr: ', response)
+    return response
   } catch (e) {
     console.log('persona#getTranscriptArr: e: ', e)
   }

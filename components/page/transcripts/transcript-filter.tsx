@@ -1,49 +1,50 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {getCustomDateFromDate, getNextCustomDateFromDate, getUniqueArr} from '../../../lib/common'
+import {getCustomDateFromDate, getCustomDateFromStr, getNextCustomDateFromDate} from '../../../lib/common'
+import {getTranscriptArr} from '../../../lib/persona'
 
 import {Calendar} from 'primereact/calendar'
 import {MultiSelect} from 'primereact/multiselect'
 import {Nullable} from 'primereact/ts-helpers'
-import {useZustand} from '../../../lib/store/use-zustand'
+import {useZustand} from '@/lib/store/use-zustand'
+import {useApiKey} from '@/lib/hooks/use-api-key'
 
 
 export const TranscriptFilter = () => {
-  const {transcriptArr, setFilteredTranscriptArr} = useZustand()
+  const apiKey = useApiKey()
+  const {setFilteredTranscriptArr, transcriptStats, personaArr} = useZustand()
   const [selectedPersonaNameOptionArr, setSelectedPersonaNameOptionArr] = useState([])
-  const [selectedUserIdOptionArr, setSelectedUserIdOptionArr] = useState([])
+  const {users} = transcriptStats
+  const userIdOptionArr = users.map((userid: string) => ({name: userid}))
+
+  const [selectedUserIdOptionArr, setSelectedUserIdOptionArr] = useState<string[]>([])
   const [dateArr, setDateArr] = useState<Nullable<(Date | null)[]>>([])
 
-  const personaNameOptionArr = getUniqueArr(transcriptArr.map(((transcript) => transcript.personaName))).map((personaName) => ({name: personaName}))
-  const userIdOptionArr = getUniqueArr(transcriptArr.map(((transcript) => transcript.userId))).map((userId) => ({name: userId}))
+  const personaNameOptionArr = personaArr.map((persona) => ({name: persona.name}))
 
   useEffect(() => {
-    const selectedPersonaNameArr = selectedPersonaNameOptionArr.map((val: any) => val.name)
-    const selectedUserIdArr = selectedUserIdOptionArr.map((val: any) => val.name)
-    const newFilteredTranscriptArr = transcriptArr.filter((transcript) => {
-      const personaName = !selectedPersonaNameArr.length || selectedPersonaNameArr.indexOf(transcript.personaName) > -1
-      const userId = !selectedUserIdArr.length || selectedUserIdArr.indexOf(transcript.userId) > -1
-      const date = !dateArr || !Array.isArray(dateArr) || (
-        (!dateArr[0] || transcript.createdAt >= getCustomDateFromDate(dateArr[0])) &&
-        (!dateArr[1] || transcript.createdAt < getNextCustomDateFromDate(dateArr[1]))
-      )
-
-      // if (dateArr && Array.isArray(dateArr)) {
-      //   if (dateArr[0]) {
-      //     console.log('TranscriptFilter#useEffect: dateArr[0]: ', getCustomDateFromDate(dateArr[0]), ',', transcript.createdAt, getCustomDateFromDate(dateArr[0]) <= transcript.createdAt)
-      //   }
-
-      //   if (dateArr[1]) {
-      //     console.log('TranscriptFilter#useEffect: dateArr[1]: ', transcript.createdAt, ',', getNextCustomDateFromDate(dateArr[1]), transcript.createdAt < getNextCustomDateFromDate(dateArr[1]))
-      //   }
-      // }
-
-      return personaName && userId && date
-    })
-    setFilteredTranscriptArr(newFilteredTranscriptArr)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, transcriptArr])
+    const fetchTranscriptArr = async () => {
+      // const personaIds = selectedPersonaNameOptionArr.map((val: any) => val.name).join(',')
+      // get the ids of the selected personas given their names
+      const personaIds = selectedPersonaNameOptionArr.map((i: any) => {
+        const persona = personaArr.find((p: any) => p.name === i.name)
+        return persona?._id
+      }).join(',')
+      const userIds = selectedUserIdOptionArr.map((i: any) => i.name).join(',')
+      const start = dateArr && dateArr[0] ? getCustomDateFromDate(dateArr[0]) : ''
+      const end = dateArr && dateArr[1] ? getNextCustomDateFromDate(dateArr[1]) : ''
+      const {transcripts} = await getTranscriptArr(apiKey, personaIds, userIds, start, end)
+      transcripts.forEach((transcript: any) => {
+        const persona = personaArr.find((p: any) => p._id === transcript.personaId)
+        transcript.personaName = persona?.name
+        transcript.personaId = persona?.personaId
+        transcript.createdAt = getCustomDateFromStr(transcript.createdAt)
+      })
+      setFilteredTranscriptArr(transcripts)
+    }
+    fetchTranscriptArr()
+  }, [dateArr, selectedPersonaNameOptionArr, selectedUserIdOptionArr, setFilteredTranscriptArr, apiKey, personaArr])
 
   return (
     <div className='flex flex-wrap items-center gap-3 p-6 border rounded-lg bg-bg-light'>

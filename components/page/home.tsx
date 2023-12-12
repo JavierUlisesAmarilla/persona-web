@@ -3,6 +3,7 @@
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
 import {addTeam, getLLMSArr, getPersonaArr, getTeam, getTranscriptArr} from '../../lib/persona'
+import {getCustomDateFromStr} from '../../lib/common'
 
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
@@ -28,6 +29,7 @@ export const Home = ({session}: {session: any}) => {
     setCanSeeSettings,
     setCanSeePlayground,
     setCanSeeTranscripts,
+    setTranscriptStats,
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
@@ -122,22 +124,20 @@ export const Home = ({session}: {session: any}) => {
         setPersonaArr(newPersonaArr)
         setLLMSArray(llmsArr)
         setCanSeePlayground(true)
-        const newTranscriptArr: Array<any> = []
-
-        for (let i = 0; i < newPersonaArr.length; i++) {
-          const personaId = newPersonaArr[i]._id
-          const personaName = newPersonaArr[i].name
-
-          if (personaId && personaName) {
-            // getTranscriptArr(apiKey, personaId).then((additionalTranscriptArr) => {
-            //   newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-            // })
-            setLoadingStatus('Fetching transcripts...')
-            const additionalTranscriptArr = await getTranscriptArr(apiKey, personaId)
-            newTranscriptArr.push(...additionalTranscriptArr.map((t: any) => ({...t, personaId, personaName})))
-          }
-        }
-
+        const personaIds = newPersonaArr.filter((p: any) => !!p._id && !!p.name).map((p: any) => p._id).join(',')
+        setLoadingStatus('Fetching transcripts...')
+        const end = new Date().toISOString()
+        const start = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString()
+        const {transcripts: newTranscriptArr, summary} = await getTranscriptArr(apiKey, personaIds, '', start, end)
+        console.log('summary', summary)
+        // Attach persona id and name to each transcript
+        newTranscriptArr.forEach((transcript: any) => {
+          const persona = newPersonaArr.find((p: any) => p._id === transcript.personaId)
+          transcript.personaName = persona?.name
+          transcript.personaId = persona?.personaId
+          transcript.createdAt = getCustomDateFromStr(transcript.createdAt)
+        })
+        setTranscriptStats(summary)
         setTranscriptArr(newTranscriptArr)
         setCanSeeTranscripts(true)
         setLoadingStatus('')

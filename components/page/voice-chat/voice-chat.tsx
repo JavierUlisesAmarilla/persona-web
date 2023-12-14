@@ -317,7 +317,7 @@ export const VoiceChat = () => {
           </div>
           <div className='flex flex-col w-full gap-3 p-6 border rounded-lg bg-[#1D1D41]'>
             <div className='flex flex-wrap items-center justify-between w-full'>
-              <div className='flex items-center gap-3'>
+              <div className='flex flex-wrap items-center gap-3'>
                 <div className='flex flex-col items-start gap-2'>
                   <UserSelect
                     className='text-base text-white outline-none bg-bg-dark-blue border-border-dark-blue w-fit'

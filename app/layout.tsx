@@ -12,7 +12,7 @@ import cx from 'classnames'
 
 
 export const metadata = {
-  title: 'Persona - Conversational speech AI.',
+  title: 'Persona - Conversational speech AI',
   description:
     'Persona enables you to add conversational speech AI to your product in minutes.',
   twitter: {
@@ -25,25 +25,26 @@ export const metadata = {
   themeColor: '#FFF',
 }
 
-
-export default function Layout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function Layout({children}: { children: React.ReactNode }) {
   return (
-    <html className='w-full h-full' lang="en">
-      <body className={cx(inter.variable, sfPro.variable, 'bg-bg-light text-text-dark w-full h-full flex flex-col')}>
+    <html className="h-full w-full" lang="en">
+      <body
+        className={cx(
+            inter.variable,
+            sfPro.variable,
+            'flex h-full w-full flex-col bg-bg-light text-text-dark',
+        )}
+      >
         <Suspense fallback="">
-          <div className='border-b h-14 border-b-border-gray'>
+          <div className="h-14 border-b border-b-border-gray">
             {/* @ts-expect-error Server Component */}
             <Nav/>
           </div>
-          <div className='flex h-full overflow-auto'>
-            <div className='h-full overflow-auto border-r w-60 border-border-gray'>
+          <div className="flex h-full overflow-auto">
+            <div className="h-full w-60 overflow-auto border-r border-border-gray">
               <Sidebar/>
             </div>
-            <main className="w-[calc(100%-15rem)] h-full overflow-auto">
+            <main className="h-full w-[calc(100%-15rem)] overflow-auto">
               {children}
             </main>
           </div>

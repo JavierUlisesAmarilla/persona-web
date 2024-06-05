@@ -2,24 +2,31 @@
 
 import {getData, saveData} from '@/lib/mongodb/mongodb-client'
 import {useEffect, useState} from 'react'
-import {addTeam, getLLMSArr, getPersonaArr, getTeam, getTranscriptArr} from '../../lib/persona'
-import {getCustomDateFromStr} from '../../lib/common'
+import {
+  addTeam,
+  getLLMSArr,
+  getPersonaArr,
+  getTeam,
+  getTranscriptArr,
+} from '../../lib/persona'
 
 import {SINDARIN_API_URL} from '@/lib/constants'
 import {useApiKey} from '@/lib/hooks/use-api-key'
 import {useZustand} from '@/lib/store/use-zustand'
+import {getCustomDateFromStr} from '../../lib/common'
+import {useWindowSize} from '../../lib/hooks/use-window-size'
 import {MENUS} from '../layout/sidebar'
 import {Alert} from '../shared/alert'
 
 
 let prevApiKey: string
 
-
-export const Home = ({session}: {session: any}) => {
+export const Home = ({session}: { session: any }) => {
   const {
     selMenu,
     setCurEmail,
-    loadingStatus, setLoadingStatus,
+    loadingStatus,
+    setLoadingStatus,
     setApiKeyArr,
     setPersonaClient,
     setPersonaArr,
@@ -33,6 +40,7 @@ export const Home = ({session}: {session: any}) => {
   } = useZustand()
   const [hasAddedTeam, setHasAddedTeam] = useState(false)
   const apiKey = useApiKey()
+  const {isMobile} = useWindowSize()
 
   useEffect(() => {
     (async () => {
@@ -59,9 +67,11 @@ export const Home = ({session}: {session: any}) => {
 
         const newTeam = {
           name: newCurEmail,
-          emailArr: [{
-            name: newCurEmail,
-          }],
+          emailArr: [
+            {
+              name: newCurEmail,
+            },
+          ],
           manager: newCurEmail,
           apiKey: token,
         }
@@ -90,7 +100,9 @@ export const Home = ({session}: {session: any}) => {
 
       // Set persona client
       const script = document.createElement('script')
-      script.src = SINDARIN_API_URL!.includes('localhost') ? `${SINDARIN_API_URL}/PersonaClient?apikey=${apiKey}` : `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
+      script.src = SINDARIN_API_URL!.includes('localhost') ?
+        `${SINDARIN_API_URL}/PersonaClient?apikey=${apiKey}` :
+        `${SINDARIN_API_URL}/PersonaClientPublic?apikey=${apiKey}`
       document.head.appendChild(script)
 
       script.addEventListener('load', () => {
@@ -124,15 +136,23 @@ export const Home = ({session}: {session: any}) => {
         setPersonaArr(newPersonaArr)
         setLLMSArray(llmsArr)
         setCanSeePlayground(true)
-        const personaIds = newPersonaArr.filter((p: any) => !!p._id && !!p.name).map((p: any) => p._id).join(',')
+        const personaIds = newPersonaArr
+            .filter((p: any) => !!p._id && !!p.name)
+            .map((p: any) => p._id)
+            .join(',')
         setLoadingStatus('Fetching transcripts...')
         const end = new Date().toISOString()
-        const start = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString()
-        const {transcripts: newTranscriptArr, summary} = await getTranscriptArr(apiKey, personaIds, '', start, end)
+        const start = new Date(
+            new Date().setMonth(new Date().getMonth() - 1),
+        ).toISOString()
+        const {transcripts: newTranscriptArr, summary} =
+          await getTranscriptArr(apiKey, personaIds, '', start, end)
         console.log('summary', summary)
         // Attach persona id and name to each transcript
-        newTranscriptArr.forEach((transcript: any) => {
-          const persona = newPersonaArr.find((p: any) => p._id === transcript.personaId)
+        newTranscriptArr?.forEach((transcript: any) => {
+          const persona = newPersonaArr.find(
+              (p: any) => p._id === transcript.personaId,
+          )
           transcript.personaName = persona?.name
           transcript.personaId = persona?.personaId
           transcript.createdAt = getCustomDateFromStr(transcript.createdAt)
@@ -148,8 +168,8 @@ export const Home = ({session}: {session: any}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey])
 
-  return (
-    <div className='flex items-center justify-center w-full h-full overflow-auto bg-bg-gray'>
+  return !isMobile ? (
+    <div className="flex h-full w-full items-center justify-center overflow-auto bg-bg-gray">
       {session ? (
         <>
           {MENUS[selMenu]?.menuComp}
@@ -158,6 +178,10 @@ export const Home = ({session}: {session: any}) => {
       ) : (
         <div>Please log in.</div>
       )}
+    </div>
+  ) : (
+    <div className="fixed bottom-0 left-0 right-0 top-0 z-50 flex items-center justify-center break-all bg-bg-black p-6 text-2xl font-semibold text-text-light">
+      The Persona Playground is optimized for desktop.
     </div>
   )
 }

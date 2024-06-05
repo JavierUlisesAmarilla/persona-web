@@ -7,13 +7,11 @@ import {InputText} from '@/components/shared/input-text'
 import {UserSelect} from '@/components/shared/user-select'
 import {ADMIN_EMAIL} from '@/lib/constants'
 import {useZustand} from '@/lib/store/use-zustand'
-import {useState} from 'react'
 import {AiOutlineCloseCircle} from 'react-icons/ai'
 
 
 export const TeamSection = ({apiKeyIndex, data}: any) => {
   const {apiKeyArr, setApiKeyArr, curEmail} = useZustand()
-  const [localStatus, setLocalStatus] = useState('')
   const isAdmin = curEmail === ADMIN_EMAIL
   const isManager = isAdmin || curEmail === apiKeyArr.find((apiKeyObj) => apiKeyObj.emailArr.find((emailObj: any) => emailObj.name === curEmail))?.manager
 
@@ -36,7 +34,6 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
   }
 
   const onSave = async () => {
-    setLocalStatus('Saving...')
     const res = await saveData(data, curEmail)
 
     if (res?.data?.insertedId) {
@@ -44,15 +41,11 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
       newApiKeyArr[apiKeyIndex]._id = res.data.insertedId
       setApiKeyArr(newApiKeyArr)
     }
-
-    setLocalStatus('Success')
   }
 
   const onRemove = async () => {
     if (apiKeyArr[apiKeyIndex]?._id) {
-      setLocalStatus('Removing...')
       await removeData(apiKeyArr[apiKeyIndex]._id, curEmail)
-      setLocalStatus('Success')
     }
 
     setApiKeyArr(apiKeyArr.filter((apiKeyObj, index) => index !== apiKeyIndex))
@@ -80,7 +73,6 @@ export const TeamSection = ({apiKeyIndex, data}: any) => {
     <div className="flex flex-col w-full gap-3 p-6 border border-gray-200 rounded-lg bg-bg-light">
       {isManager &&
         <div className="flex items-center justify-end w-full gap-4">
-          <div className='text-blue-500'>{localStatus}</div>
           <BlueButton onClick={onAddEmail}>Add Team Member Email</BlueButton>
           <BlueButton onClick={onSave}>Save</BlueButton>
           <BlueButton onClick={onRemove}>Remove</BlueButton>

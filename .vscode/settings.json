@@ -1,0 +1,11 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": false
+    },
+    "eslint.validate": [
+        "javascript",
+        "typescript"
+    ],
+    "editor.inlineSuggest.showToolbar": "always",
+}

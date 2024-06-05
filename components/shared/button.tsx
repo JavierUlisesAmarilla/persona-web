@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 'use client'
 
-import React, {MouseEventHandler, ReactNode} from 'react'
+import React, {MouseEventHandler, ReactNode, useEffect, useState} from 'react'
+import {AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineLoading} from 'react-icons/ai'
 
 
 export const Button = ({
@@ -18,18 +19,45 @@ export const Button = ({
   style?: React.CSSProperties
   disabled?: boolean
 }) => {
-  const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-    if (!disabled && onClick) {
-      onClick(event)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isCompleted, setIsCompleted] = useState(false)
+  const [isFailed, setIsFailed] = useState(false)
+
+  const handleClick: MouseEventHandler<HTMLDivElement> = async (event) => {
+    try {
+      if (!disabled && onClick && !isSaving) {
+        setIsSaving(true)
+        await onClick(event)
+        setIsSaving(false)
+        setIsCompleted(true)
+      }
+    } catch (e) {
+      setIsFailed(true)
+      console.log('Button#handleClick: e: ', e)
     }
   }
 
+  const onReset = () => {
+    setIsSaving(false)
+    setIsCompleted(false)
+    setIsFailed(false)
+  }
+
+  useEffect(() => {
+    if ((isCompleted || isFailed) && !isSaving) {
+      setTimeout(onReset, 3000)
+    }
+  }, [isCompleted, isFailed, isSaving])
+
   return (
     <div
-      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit h-fit whitespace-nowrap ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      className={`px-3 py-1 text-xs rounded cursor-pointer hover:text-text-gray w-fit h-fit whitespace-nowrap flex items-center gap-1 ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
       onClick={handleClick}
       style={{display: 'flex', justifyContent: 'center', ...style}}
     >
+      {isSaving && <AiOutlineLoading className='animate-spin'/>}
+      {isCompleted && <AiOutlineCheckCircle className='text-sm'/>}
+      {isFailed && <AiOutlineCloseCircle className='text-sm'/>}
       {children}
     </div>
   )
